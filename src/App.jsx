@@ -1,74 +1,68 @@
-import { useState } from 'react'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { TextField, Button, Box, Typography, Container } from "@mui/material";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [formData, setFormData] = useState({
+    username: "",
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form data submitted:", formData);
+  };
 
   return (
-    <div
-      className="App"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh', // ocupa toda la altura
-      }}
-    >
-      {/* Navbar arriba */}
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      {/* Navbar */}
       <Navbar />
 
-      {/* Contenido principal */}
-      <main
-        style={{
-          flexGrow: 1, // ocupa todo el espacio disponible
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center', // centra verticalmente
-          alignItems: 'center', // centra horizontalmente
-          padding: '2rem',
-        }}
-      >
-        <div>
-          <a href="https://vite.dev" target="_blank" rel="noreferrer">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://react.dev" target="_blank" rel="noreferrer">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
-        </div>
-
-        <h1>Vite + React</h1>
-
-        <div
-          className="card"
-          style={{
-            margin: '2rem auto',
-            padding: '1rem',
-            border: '1px solid #ccc',
-            borderRadius: '8px',
-            textAlign: 'center',
+      {/* Contenedor central de ancho máximo, igual que Navbar y Footer */}
+      <Container maxWidth="lg" sx={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", mt: 8, mb: 4 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            width: "100%",
+            maxWidth: 400,
+            padding: 4,
+            border: "1px solid #ccc",
+            borderRadius: 2,
+            backgroundColor: "white",
+            boxShadow: 3,
           }}
         >
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test HMR
-          </p>
-        </div>
+          <Typography variant="h5" align="center">
+            Sign Up
+          </Typography>
 
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
-      </main>
+          <TextField label="Username" name="username" value={formData.username} onChange={handleChange} required />
+          <TextField label="Name" name="name" value={formData.name} onChange={handleChange} required />
+          <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required />
+          <TextField label="Password" name="password" type="password" value={formData.password} onChange={handleChange} required />
 
-      {/* Footer abajo */}
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </Box>
+      </Container>
+
+      {/* Footer */}
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
