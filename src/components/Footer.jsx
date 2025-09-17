@@ -5,13 +5,17 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        width: '100vw',          // ocupa todo el ancho de la ventana
+        width: '100%',            // ocupa todo el ancho
+        position: 'fixed',        // fijo en la parte inferior
+        bottom: 0,
+        left: 0,
         py: 2,
         px: 4,
-        bgcolor: '#1976d2',      // azul como Navbar
+        bgcolor: '#1976d2',       // mismo color que navbar
         color: '#fff',
         borderTop: '2px solid #000',
         textAlign: 'center',
+        zIndex: 1200,             // encima de otros contenidos
       }}
     >
       <Typography variant="body2" sx={{ mb: 1 }}>
@@ -36,7 +40,7 @@ export default function Footer() {
           Sanitas
         </Link>
       </Typography>
-      <Typography variant="body2">Made with ❤️ using React + Vite + MUI</Typography>
+      <Typography variant="body2">Hackaton 8ª Edición</Typography>
     </Box>
   );
 }
