@@ -1,35 +1,53 @@
-import { Box, Typography, TextField, Button, Paper } from "@mui/material";
+import { useState } from "react";
+import { Container, Box, Typography, TextField, Button } from "@mui/material";
 
-function CreateUser() {
+export default function CreateUser() {
+  const [formData, setFormData] = useState({
+    username: "",
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("CreateUser data:", formData);
+  };
+
   return (
-    <Paper
-      elevation={3}
-      sx={{
-        maxWidth: 400,
-        mx: "auto",
-        mt: 8,
-        p: 4,
-        borderRadius: 2,
-        textAlign: "center",
-      }}
+    <Container
+      maxWidth="sm"
+      sx={{ mt: 8, mb: 2, display: "flex", justifyContent: "center", alignItems: "center" }}
     >
-      <Typography variant="h5" gutterBottom>
-        Crear cuenta
-      </Typography>
       <Box
         component="form"
-        sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        onSubmit={handleSubmit}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          width: "100%",
+          padding: 4,
+          border: "1px solid #ccc",
+          borderRadius: 2,
+          backgroundColor: "white",
+          boxShadow: 3,
+        }}
       >
-        <TextField label="Username" name="username" required />
-        <TextField label="Name" name="name" required />
-        <TextField label="Email" name="email" type="email" required />
-        <TextField label="Password" name="password" type="password" required />
+        <Typography variant="h5" align="center">
+          Crear cuenta
+        </Typography>
+        <TextField label="Username" name="username" value={formData.username} onChange={handleChange} required />
+        <TextField label="Name" name="name" value={formData.name} onChange={handleChange} required />
+        <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required />
+        <TextField label="Password" name="password" type="password" value={formData.password} onChange={handleChange} required />
         <Button type="submit" variant="contained" color="primary">
-          Registrarse
+          Crear cuenta
         </Button>
       </Box>
-    </Paper>
+    </Container>
   );
 }
-
-export default CreateUser;
