@@ -25,7 +25,7 @@ const Navbar = () => {
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         {/* Nombre a la izquierda */}
         <Typography variant="h6">
-          Mi Proyecto
+          Sanitas
         </Typography>
 
         {/* Botones grandes en escritorio */}
