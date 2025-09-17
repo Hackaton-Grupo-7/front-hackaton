@@ -1,371 +1,280 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, AlertTriangle, Trash2, Shield, Eye } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel, RadioGroup, FormControlLabel, Radio, Paper, Grid, IconButton } from "@mui/material";
+import { Plus, AlertTriangle, Trash2, Shield, Eye } from "lucide-react";
 
 const medicamentosDisponibles = [
-  'Paracetamol',
-  'Ibuprofeno',
-  'Amoxicilina',
-  'Omeprazol',
-  'Aspirina',
-  'Loratadina',
-  'Metformina',
-  'Atorvastatina',
-  'Penicilina',
-  'Cefalexina',
-  'Ciprofloxacino',
-  'Diclofenaco',
-  'Naproxeno',
-  'Prednisona',
-  'Insulina',
-  'Warfarina'
+  "Paracetamol", "Ibuprofeno", "Amoxicilina", "Omeprazol",
+  "Aspirina", "Loratadina", "Metformina", "Atorvastatina",
+  "Penicilina", "Cefalexina", "Ciprofloxacino", "Diclofenaco",
+  "Naproxeno", "Prednisona", "Insulina", "Warfarina"
 ];
 
 const tiposReaccion = [
-  'Erupción cutánea',
-  'Urticaria',
-  'Picazón',
-  'Hinchazón facial',
-  'Dificultad respiratoria',
-  'Náuseas y vómitos',
-  'Diarrea',
-  'Mareos',
-  'Dolor de cabeza',
-  'Shock anafiláctico',
-  'Fiebre',
-  'Dolor abdominal',
-  'Confusión mental',
-  'Palpitaciones',
-  'Otro'
+  "Erupción cutánea","Urticaria","Picazón","Hinchazón facial",
+  "Dificultad respiratoria","Náuseas y vómitos","Diarrea",
+  "Mareos","Dolor de cabeza","Shock anafiláctico",
+  "Fiebre","Dolor abdominal","Confusión mental",
+  "Palpitaciones","Otro"
 ];
 
 const severidad = [
-  { valor: 'leve', label: 'Leve', color: 'yellow', descripcion: 'Molestias menores, no requiere tratamiento urgente' },
-  { valor: 'moderada', label: 'Moderada', color: 'orange', descripcion: 'Síntomas notables que requieren atención médica' },
-  { valor: 'severa', label: 'Severa', color: 'red', descripcion: 'Reacción grave que requiere atención médica inmediata' }
+  { valor: "leve", label: "Leve", color: "#facc15", descripcion: "Molestias menores, no requiere tratamiento urgente" },
+  { valor: "moderada", label: "Moderada", color: "#f97316", descripcion: "Síntomas notables que requieren atención médica" },
+  { valor: "severa", label: "Severa", color: "#ef4444", descripcion: "Reacción grave que requiere atención médica inmediata" }
 ];
 
-function App() {
-  const [medicamento, setMedicamento] = useState('');
-  const [medicamentoPersonalizado, setMedicamentoPersonalizado] = useState('');
-  const [reaccion, setReaccion] = useState('');
-  const [reaccionPersonalizada, setReaccionPersonalizada] = useState('');
-  const [nivelSeveridad, setNivelSeveridad] = useState('');
-  const [notas, setNotas] = useState('');
+export default function App({ darkMode }) {
+  const [medicamento, setMedicamento] = useState("");
+  const [medicamentoPersonalizado, setMedicamentoPersonalizado] = useState("");
+  const [reaccion, setReaccion] = useState("");
+  const [reaccionPersonalizada, setReaccionPersonalizada] = useState("");
+  const [nivelSeveridad, setNivelSeveridad] = useState("");
+  const [notas, setNotas] = useState("");
   const [listaAlergias, setListaAlergias] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   // Cargar datos al iniciar
   useEffect(() => {
-    const datosGuardados = JSON.parse(localStorage.getItem('alergiasMedicamentos') || '[]');
+    const datosGuardados = JSON.parse(localStorage.getItem("alergiasMedicamentos") || "[]");
     setListaAlergias(datosGuardados);
   }, []);
 
   // Guardar cuando cambia la lista
   useEffect(() => {
-    localStorage.setItem('alergiasMedicamentos', JSON.stringify(listaAlergias));
+    localStorage.setItem("alergiasMedicamentos", JSON.stringify(listaAlergias));
   }, [listaAlergias]);
 
   const handleAgregar = () => {
-    const medicamentoFinal = medicamento === 'Otro' ? medicamentoPersonalizado : medicamento;
-    const reaccionFinal = reaccion === 'Otro' ? reaccionPersonalizada : reaccion;
-    
+    const medicamentoFinal = medicamento === "Otro" ? medicamentoPersonalizado : medicamento;
+    const reaccionFinal = reaccion === "Otro" ? reaccionPersonalizada : reaccion;
     if (!medicamentoFinal || !reaccionFinal || !nivelSeveridad) return;
-    
-    // Verificar si ya existe esta alergia
-    const yaExiste = listaAlergias.some(alergia => 
-      alergia.medicamento.toLowerCase() === medicamentoFinal.toLowerCase()
-    );
-    
+
+    const yaExiste = listaAlergias.some(alergia => alergia.medicamento.toLowerCase() === medicamentoFinal.toLowerCase());
     if (yaExiste) {
-      alert('Ya existe un registro de alergia para este medicamento. Puedes eliminarlo y agregar uno nuevo si necesitas actualizarlo.');
+      alert("Ya existe un registro de alergia para este medicamento.");
       return;
     }
-    
+
     const nuevaAlergia = {
       id: Date.now(),
       medicamento: medicamentoFinal,
       reaccion: reaccionFinal,
       severidad: nivelSeveridad,
-      notas: notas,
+      notas,
       fechaRegistro: new Date().toISOString()
     };
-    
+
     setListaAlergias([...listaAlergias, nuevaAlergia]);
-    
-    // Reset campos
-    setMedicamento('');
-    setMedicamentoPersonalizado('');
-    setReaccion('');
-    setReaccionPersonalizada('');
-    setNivelSeveridad('');
-    setNotas('');
-    setMostrarFormulario(false);
+    setMedicamento(""); setMedicamentoPersonalizado("");
+    setReaccion(""); setReaccionPersonalizada("");
+    setNivelSeveridad(""); setNotas(""); setMostrarFormulario(false);
   };
 
   const handleEliminar = (id) => {
-    const confirmar = window.confirm('¿Estás seguro de que deseas eliminar este registro de alergia?');
-    if (confirmar) {
-      setListaAlergias(prevLista => prevLista.filter(alergia => alergia.id !== id));
+    if (window.confirm("¿Estás seguro de que deseas eliminar este registro de alergia?")) {
+      setListaAlergias(prev => prev.filter(a => a.id !== id));
     }
   };
 
-  const getSeveridadColor = (severidad) => {
-    const config = {
-      'leve': 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      'moderada': 'bg-orange-100 text-orange-800 border-orange-200',
-      'severa': 'bg-red-100 text-red-800 border-red-200'
-    };
-    return config[severidad] || 'bg-gray-100 text-gray-800 border-gray-200';
+  const getSeveridadColor = (valor) => {
+    const config = { leve: "#fef3c7", moderada: "#ffedd5", severa: "#fee2e2" };
+    return config[valor] || "#e5e7eb";
   };
 
-  const getSeveridadIcon = (severidad) => {
-    if (severidad === 'severa') return <AlertTriangle className="w-4 h-4" />;
-    if (severidad === 'moderada') return <AlertTriangle className="w-4 h-4" />;
-    return <Eye className="w-4 h-4" />;
+  const getSeveridadIcon = (valor) => {
+    if (valor === "severa") return <AlertTriangle style={{ width: 16, height: 16, marginRight: 4, color: "#ef4444" }} />;
+    if (valor === "moderada") return <AlertTriangle style={{ width: 16, height: 16, marginRight: 4, color: "#f97316" }} />;
+    return <Eye style={{ width: 16, height: 16, marginRight: 4, color: "#facc15" }} />;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+    <Box sx={{ py: 4, px: 2, minHeight: "calc(100vh - 124px)", bgcolor: darkMode ? "#121212" : "#f9fafb" }}>
+      <Box sx={{ maxWidth: 900, mx: "auto" }}>
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-red-600 rounded-full mb-4">
-            <AlertTriangle className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Control de Alergias</h1>
-          <p className="text-gray-600">Registra y gestiona tus alergias a medicamentos</p>
-          
+        <Box sx={{ textAlign: "center", mb: 6 }}>
+          <Box sx={{ display: "inline-flex", justifyContent: "center", alignItems: "center", width: 64, height: 64, borderRadius: "50%", bgcolor: "#ef4444", mx: "auto", mb: 2 }}>
+            <AlertTriangle style={{ color: "#fff", width: 32, height: 32 }} />
+          </Box>
+          <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>Control de Alergias</Typography>
+          <Typography sx={{ color: darkMode ? "#ccc" : "#4b5563" }}>
+            Registra y gestiona tus alergias a medicamentos
+          </Typography>
+
           {listaAlergias.length > 0 && (
-            <div className="mt-4 p-3 bg-red-100 border border-red-200 rounded-lg inline-block">
-              <div className="flex items-center text-red-700">
-                <Shield className="w-5 h-5 mr-2" />
-                <span className="font-medium">Tienes {listaAlergias.length} alergia(s) registrada(s)</span>
-              </div>
-            </div>
+            <Paper sx={{ mt: 2, p: 2, bgcolor: "#fee2e2", border: "1px solid #fca5a5", display: "inline-flex", alignItems: "center" }}>
+              <Shield style={{ marginRight: 8 }} />
+              <Typography fontWeight={500}>Tienes {listaAlergias.length} alergia(s) registrada(s)</Typography>
+            </Paper>
           )}
-        </div>
+        </Box>
 
         {/* Botón para mostrar formulario */}
         {!mostrarFormulario && (
-          <div className="text-center mb-8">
-            <button
+          <Box sx={{ textAlign: "center", mb: 4 }}>
+            <Button
+              variant="contained"
+              color="error"
+              startIcon={<Plus />}
               onClick={() => setMostrarFormulario(true)}
-              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2 mx-auto"
+              sx={{ py: 1.5, px: 4 }}
             >
-              <Plus className="w-5 h-5" />
-              <span>Registrar Nueva Alergia</span>
-            </button>
-          </div>
+              Registrar Nueva Alergia
+            </Button>
+          </Box>
         )}
 
         {/* Formulario */}
         {mostrarFormulario && (
-          <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold text-gray-800 flex items-center">
-                <Plus className="w-6 h-6 mr-2 text-red-600" />
-                Registrar Alergia a Medicamento
-              </h2>
-              <button
-                onClick={() => setMostrarFormulario(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                ✕
-              </button>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Paper sx={{ p: 4, mb: 6, borderRadius: 3, boxShadow: 3 }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+              <Typography variant="h5" sx={{ fontWeight: 600, display: "flex", alignItems: "center" }}>
+                <Plus style={{ marginRight: 8 }} /> Registrar Alergia a Medicamento
+              </Typography>
+              <Button onClick={() => setMostrarFormulario(false)}>✕</Button>
+            </Box>
+
+            <Grid container spacing={3}>
               {/* Medicamento */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Medicamento *
-                </label>
-                <select
-                  value={medicamento}
-                  onChange={(e) => setMedicamento(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
-                >
-                  <option value="">-- Selecciona un medicamento --</option>
-                  {medicamentosDisponibles.map((med) => (
-                    <option key={med} value={med}>
-                      {med}
-                    </option>
-                  ))}
-                  <option value="Otro">Otro (especificar)</option>
-                </select>
-                
-                {medicamento === 'Otro' && (
-                  <input
-                    type="text"
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <InputLabel>Medicamento *</InputLabel>
+                  <Select value={medicamento} onChange={(e) => setMedicamento(e.target.value)}>
+                    <MenuItem value="">-- Selecciona un medicamento --</MenuItem>
+                    {medicamentosDisponibles.map(m => <MenuItem key={m} value={m}>{m}</MenuItem>)}
+                    <MenuItem value="Otro">Otro (especificar)</MenuItem>
+                  </Select>
+                </FormControl>
+                {medicamento === "Otro" && (
+                  <TextField
+                    fullWidth
+                    placeholder="Especifica el medicamento"
                     value={medicamentoPersonalizado}
                     onChange={(e) => setMedicamentoPersonalizado(e.target.value)}
-                    placeholder="Especifica el medicamento"
-                    className="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
+                    sx={{ mt: 2 }}
                   />
                 )}
-              </div>
+              </Grid>
 
               {/* Reacción */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Tipo de Reacción *
-                </label>
-                <select
-                  value={reaccion}
-                  onChange={(e) => setReaccion(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
-                >
-                  <option value="">-- Selecciona la reacción --</option>
-                  {tiposReaccion.map((tipo) => (
-                    <option key={tipo} value={tipo}>
-                      {tipo}
-                    </option>
-                  ))}
-                </select>
-                
-                {reaccion === 'Otro' && (
-                  <input
-                    type="text"
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <InputLabel>Tipo de Reacción *</InputLabel>
+                  <Select value={reaccion} onChange={(e) => setReaccion(e.target.value)}>
+                    <MenuItem value="">-- Selecciona la reacción --</MenuItem>
+                    {tiposReaccion.map(r => <MenuItem key={r} value={r}>{r}</MenuItem>)}
+                  </Select>
+                </FormControl>
+                {reaccion === "Otro" && (
+                  <TextField
+                    fullWidth
+                    placeholder="Describe la reacción"
                     value={reaccionPersonalizada}
                     onChange={(e) => setReaccionPersonalizada(e.target.value)}
-                    placeholder="Describe la reacción"
-                    className="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
+                    sx={{ mt: 2 }}
                   />
                 )}
-              </div>
+              </Grid>
 
               {/* Severidad */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nivel de Severidad *
-                </label>
-                <div className="space-y-2">
-                  {severidad.map((nivel) => (
-                    <label key={nivel.valor} className="flex items-center space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="severidad"
-                        value={nivel.valor}
-                        checked={nivelSeveridad === nivel.valor}
-                        onChange={(e) => setNivelSeveridad(e.target.value)}
-                        className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500"
+              <Grid item xs={12}>
+                <FormControl>
+                  <Typography sx={{ mb: 1, fontWeight: 500 }}>Nivel de Severidad *</Typography>
+                  <RadioGroup value={nivelSeveridad} onChange={(e) => setNivelSeveridad(e.target.value)} row>
+                    {severidad.map(n => (
+                      <FormControlLabel
+                        key={n.valor}
+                        value={n.valor}
+                        control={<Radio sx={{ color: n.color }} />}
+                        label={(
+                          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                            {getSeveridadIcon(n.valor)}
+                            <Typography>{n.label}</Typography>
+                          </Box>
+                        )}
                       />
-                      <div>
-                        <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getSeveridadColor(nivel.valor)}`}>
-                          {getSeveridadIcon(nivel.valor)}
-                          <span className="ml-1">{nivel.label}</span>
-                        </span>
-                        <p className="text-xs text-gray-500 mt-1">{nivel.descripcion}</p>
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
+                    ))}
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
 
               {/* Notas */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Notas Adicionales
-                </label>
-                <textarea
+              <Grid item xs={12}>
+                <TextField
+                  label="Notas adicionales"
+                  multiline
+                  rows={4}
+                  fullWidth
                   value={notas}
                   onChange={(e) => setNotas(e.target.value)}
-                  placeholder="Información adicional sobre la reacción, tratamiento recibido, etc."
-                  rows="4"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
                 />
-              </div>
-            </div>
+              </Grid>
+            </Grid>
 
             {/* Botones */}
-            <div className="flex justify-end space-x-4 mt-6">
-              <button
-                onClick={() => setMostrarFormulario(false)}
-                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Cancelar
-              </button>
-              <button
+            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mt: 3 }}>
+              <Button variant="outlined" onClick={() => setMostrarFormulario(false)}>Cancelar</Button>
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<Plus />}
                 onClick={handleAgregar}
-                disabled={!medicamento || (!medicamentoPersonalizado && medicamento === 'Otro') || !reaccion || (!reaccionPersonalizada && reaccion === 'Otro') || !nivelSeveridad}
-                className="bg-red-600 hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center space-x-2"
+                disabled={!medicamento || (medicamento==="Otro" && !medicamentoPersonalizado) || !reaccion || (reaccion==="Otro" && !reaccionPersonalizada) || !nivelSeveridad}
               >
-                <Plus className="w-5 h-5" />
-                <span>Registrar Alergia</span>
-              </button>
-            </div>
-          </div>
+                Registrar Alergia
+              </Button>
+            </Box>
+          </Paper>
         )}
 
         {/* Lista de alergias */}
-        <div className="bg-white rounded-2xl shadow-xl p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
-            <AlertTriangle className="w-6 h-6 mr-2 text-red-600" />
-            Mis Alergias Registradas ({listaAlergias.length})
-          </h2>
-
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {listaAlergias.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-8 h-8 text-gray-400" />
-              </div>
-              <p className="text-gray-500 text-lg">No hay alergias registradas</p>
-              <p className="text-gray-400 text-sm">Es importante registrar tus alergias para evitar reacciones adversas</p>
-            </div>
+            <Paper sx={{ textAlign: "center", py: 6, borderRadius: 3, bgcolor: darkMode ? "#1f2937" : "#f3f4f6" }}>
+              <Shield sx={{ fontSize: 40, color: "#9ca3af", mb: 1 }} />
+              <Typography sx={{ color: "#6b7280" }}>No hay alergias registradas</Typography>
+              <Typography sx={{ color: "#9ca3af", fontSize: 14 }}>Es importante registrar tus alergias para evitar reacciones adversas</Typography>
+            </Paper>
           ) : (
-            <div className="space-y-4">
-              {listaAlergias.map((item) => (
-                <div key={item.id} className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-100">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <div className="flex items-center mb-3">
-                        <AlertTriangle className="w-5 h-5 mr-2 text-red-600" />
-                        <h3 className="font-semibold text-lg text-gray-800">{item.medicamento}</h3>
-                        <span className={`ml-3 inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getSeveridadColor(item.severidad)}`}>
-                          {getSeveridadIcon(item.severidad)}
-                          <span className="ml-1 capitalize">{item.severidad}</span>
-                        </span>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm mb-3">
-                        <div>
-                          <span className="font-medium text-gray-700">Reacción:</span>
-                          <p className="text-gray-600">{item.reaccion}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-gray-700">Fecha de registro:</span>
-                          <p className="text-gray-600">{new Date(item.fechaRegistro).toLocaleDateString()}</p>
-                        </div>
-                      </div>
-                      
-                      {item.notas && (
-                        <div className="mt-3 p-3 bg-white rounded-lg border">
-                          <span className="font-medium text-gray-700 text-sm">Notas:</span>
-                          <p className="text-gray-600 text-sm mt-1">{item.notas}</p>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className="ml-4">
-                      <button
-                        onClick={() => handleEliminar(item.id)}
-                        className="p-2 bg-red-100 text-red-600 hover:bg-red-200 rounded-lg transition-colors flex items-center"
-                        title="Eliminar registro"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            listaAlergias.map(item => (
+              <Paper key={item.id} sx={{ p: 3, borderRadius: 3, bgcolor: darkMode ? "#1f2937" : "#fff", boxShadow: 3 }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Box>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                      <AlertTriangle sx={{ mr: 1, color: "#ef4444" }} />
+                      <Typography sx={{ fontWeight: 600 }}>{item.medicamento}</Typography>
+                      <Box sx={{ ml: 2, display: "inline-flex", alignItems: "center", px: 1, py: 0.5, bgcolor: getSeveridadColor(item.severidad), borderRadius: 1 }}>
+                        {getSeveridadIcon(item.severidad)}
+                        <Typography sx={{ fontSize: 12, textTransform: "capitalize" }}>{item.severidad}</Typography>
+                      </Box>
+                    </Box>
+                    <Grid container spacing={1}>
+                      <Grid item xs={12} md={6}>
+                        <Typography sx={{ fontWeight: 500 }}>Reacción:</Typography>
+                        <Typography>{item.reaccion}</Typography>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <Typography sx={{ fontWeight: 500 }}>Fecha:</Typography>
+                        <Typography>{new Date(item.fechaRegistro).toLocaleDateString()}</Typography>
+                      </Grid>
+                    </Grid>
+                    {item.notas && (
+                      <Box sx={{ mt: 2, p: 2, borderRadius: 1, border: "1px solid #d1d5db" }}>
+                        <Typography sx={{ fontWeight: 500, fontSize: 14 }}>Notas:</Typography>
+                        <Typography sx={{ fontSize: 14 }}>{item.notas}</Typography>
+                      </Box>
+                    )}
+                  </Box>
+                  <Box sx={{ ml: 2 }}>
+                    <IconButton onClick={() => handleEliminar(item.id)} color="error">
+                      <Trash2 />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </Paper>
+            ))
           )}
-        </div>
-
-
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }
-
-export default App;

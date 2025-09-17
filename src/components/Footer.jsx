@@ -6,9 +6,7 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        position: "fixed",
-        bottom: 0,
-        width: "100%",
+        mt: 'auto', // empuja el footer al final si el contenido es pequeño
         py: 2,
         px: 4,
         bgcolor: '#1976d2',
@@ -19,11 +17,23 @@ export default function Footer() {
     >
       <Typography variant="body2" sx={{ mb: 1 }}>
         Proyecto 2025{' '}
-        <Link href="https://factoriaf5.org/" target="_blank" rel="noopener" underline="hover" sx={{ color: '#fff', fontWeight: 'bold' }}>
+        <Link
+          href="https://factoriaf5.org/"
+          target="_blank"
+          rel="noopener"
+          underline="hover"
+          sx={{ color: '#fff', fontWeight: 'bold' }}
+        >
           Factoria F5
         </Link>{' '}
         en colaboración con{' '}
-        <Link href="https://www.sanitas.es/" target="_blank" rel="noopener" underline="hover" sx={{ color: '#fff', fontWeight: 'bold' }}>
+        <Link
+          href="https://www.sanitas.es/"
+          target="_blank"
+          rel="noopener"
+          underline="hover"
+          sx={{ color: '#fff', fontWeight: 'bold' }}
+        >
           Sanitas
         </Link>
       </Typography>
