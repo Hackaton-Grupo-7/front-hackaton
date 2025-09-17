@@ -1,8 +1,24 @@
+/* CSS Global corregido */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  /* Removido max-width: 1280px; */
+  /* Removido margin: 0 auto; */
+  /* Removido padding: 2rem; */
+  /* Removido text-align: center; */
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {

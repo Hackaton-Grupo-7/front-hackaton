@@ -9,9 +9,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
+import { useNavigate } from "react-router-dom"; // <--- Importamos navigate
 
 const Navbar = ({ darkMode, toggleDarkMode }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate(); // <--- Hook para navegar programáticamente
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -19,11 +21,12 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
   return (
     <AppBar position="fixed" color={darkMode ? "default" : "primary"}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6">Sanimed</Typography>
+        <Typography variant="h6">Sanitas</Typography>
 
         {/* Botones grandes en escritorio */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
-          <Button color="inherit">Inicio</Button>
+          <Button color="inherit" onClick={() => navigate("/")}>Inicio</Button>
+          <Button color="inherit" onClick={() => navigate("/medications")}>Medications</Button> {/* Nuevo botón */}
           <IconButton color="inherit" onClick={toggleDarkMode}>
             <Brightness4Icon />
           </IconButton>
@@ -35,7 +38,8 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
             <MenuIcon />
           </IconButton>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-            <MenuItem onClick={handleClose}>Inicio</MenuItem>
+            <MenuItem onClick={() => { navigate("/"); handleClose(); }}>Inicio</MenuItem>
+            <MenuItem onClick={() => { navigate("/medications"); handleClose(); }}>Medications</MenuItem> {/* Nuevo item */}
             <MenuItem
               onClick={() => {
                 toggleDarkMode();
