@@ -1,19 +1,31 @@
 import { Box, Typography, TextField, Button, Container } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function CreateUser({ darkMode, NAVBAR_HEIGHT }) {
-  const [formData, setFormData] = useState({ username: "", name: "", email: "", password: "" });
+export default function CreateUser({ darkMode }) {
+  const [formData, setFormData] = useState({
+    username: "",
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const navigate = useNavigate();
+
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("CreateUser data:", formData);
+    // Simulación de registro correcto
+    navigate("/dashboard");
   };
 
   return (
     <Box
       sx={{
-        minHeight: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+        minHeight: "calc(100vh - 124px)", // espacio navbar + footer
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -39,12 +51,42 @@ export default function CreateUser({ darkMode, NAVBAR_HEIGHT }) {
             boxShadow: 3,
           }}
         >
-          <Typography variant="h5" align="center">Crear cuenta</Typography>
-          <TextField label="Username" name="username" value={formData.username} onChange={handleChange} required />
-          <TextField label="Name" name="name" value={formData.name} onChange={handleChange} required />
-          <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required />
-          <TextField label="Password" name="password" type="password" value={formData.password} onChange={handleChange} required />
-          <Button type="submit" variant="contained" color="primary">Crear cuenta</Button>
+          <Typography variant="h5" align="center">
+            Crear cuenta
+          </Typography>
+          <TextField
+            label="Username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            label="Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <Button type="submit" variant="contained" color="primary">
+            Crear cuenta
+          </Button>
         </Box>
       </Container>
     </Box>
