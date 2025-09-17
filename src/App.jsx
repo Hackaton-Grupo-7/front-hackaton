@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
 import "./App.css";
-
+import medications from "./pages/medications"
 function App() {
   const [formData, setFormData] = useState({
     username: "",
