@@ -1,67 +1,60 @@
 import { useState } from "react";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Box } from "@mui/material";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { TextField, Button, Box, Typography, Container } from "@mui/material";
-import "./App.css";
-import medications from "./pages/medications"
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import CreateUser from "./pages/CreateUser";
+import Medications from "./pages/Medications"; // tu nueva página
+
 function App() {
-  const [formData, setFormData] = useState({
-    username: "",
-    name: "",
-    email: "",
-    password: "",
-  });
+  const NAVBAR_HEIGHT = 64;
+  const [darkMode, setDarkMode] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form data submitted:", formData);
-  };
+  const toggleDarkMode = () => setDarkMode(!darkMode);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* Navbar */}
-      <Navbar />
+    <Router>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          bgcolor: darkMode ? "#000" : "#fff",
+          color: darkMode ? "#fff" : "#000",
+        }}
+      >
+        {/* Navbar con toggle dark mode */}
+        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
-      {/* Contenedor central de ancho máximo, igual que Navbar y Footer */}
-      <Container maxWidth="lg" sx={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", mt: 8, mb: 4 }}>
+        {/* Contenido principal centrado */}
         <Box
-          component="form"
-          onSubmit={handleSubmit}
           sx={{
+            flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: 2,
+            justifyContent: "center",
+            alignItems: "center",
+            pt: `${NAVBAR_HEIGHT}px`, // evita que quede oculto por el navbar
             width: "100%",
-            maxWidth: 400,
-            padding: 4,
-            border: "1px solid #ccc",
-            borderRadius: 2,
-            backgroundColor: "white",
-            boxShadow: 3,
+            px: 2, // padding horizontal para móviles
           }}
         >
-          <Typography variant="h5" align="center">
-            Sign Up
-          </Typography>
-
-          <TextField label="Username" name="username" value={formData.username} onChange={handleChange} required />
-          <TextField label="Name" name="name" value={formData.name} onChange={handleChange} required />
-          <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required />
-          <TextField label="Password" name="password" type="password" value={formData.password} onChange={handleChange} required />
-
-          <Button type="submit" variant="contained" color="primary">
-            Submit
-          </Button>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/create-user" element={<CreateUser />} />
+            <Route path="/medications" element={<Medications />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
         </Box>
-      </Container>
 
-      {/* Footer */}
-      <Footer />
-    </div>
+        {/* Footer */}
+        <Footer darkMode={darkMode} />
+      </Box>
+    </Router>
   );
 }
 
