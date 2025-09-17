@@ -12,7 +12,6 @@ import Dashboard from "./pages/Dashboard";
 import Allergies from "./pages/control/Allergies";
 import ControlPanel from "./pages/control/ControlPanel";
 import Medications from "./pages/control/Medications";
-import Schedule from "./pages/control/Schedule"; // añadida
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -41,7 +40,6 @@ export default function App() {
             <Route path="/control/allergies" element={<Allergies />} />
             <Route path="/control/panel" element={<ControlPanel />} />
             <Route path="/control/medications" element={<Medications />} />
-            <Route path="/control/schedule" element={<Schedule />} /> {/* Horarios */}
           </Routes>
         </Box>
       </Layout>
