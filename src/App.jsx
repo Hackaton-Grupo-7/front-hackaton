@@ -8,33 +8,45 @@ import CreateUser from "./pages/CreateUser";
 import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
-  const NAVBAR_HEIGHT = 64;
   const [darkMode, setDarkMode] = useState(false);
-
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
   return (
     <Router>
       <Box
         sx={{
+          minHeight: "100vh",
+          width: "100%",
           display: "flex",
           flexDirection: "column",
-          minHeight: "100vh",
           bgcolor: darkMode ? "#000" : "#fff",
           color: darkMode ? "#fff" : "#000",
         }}
       >
+        {/* Navbar Fixed */}
         <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
-        <Box sx={{ flex: 1 }}>
+        {/* Contenido principal con padding-top para compensar navbar fixed */}
+        <Box 
+          component="main"
+          sx={{ 
+            flex: 1,
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            paddingTop: "64px", // Altura del navbar para evitar que el contenido quede debajo
+            minHeight: "100vh", // Altura mínima total de la ventana
+          }}
+        >
           <Routes>
-            <Route path="/" element={<Home darkMode={darkMode} NAVBAR_HEIGHT={NAVBAR_HEIGHT} />} />
-            <Route path="/login" element={<Login darkMode={darkMode} NAVBAR_HEIGHT={NAVBAR_HEIGHT} />} />
-            <Route path="/create-user" element={<CreateUser darkMode={darkMode} NAVBAR_HEIGHT={NAVBAR_HEIGHT} />} />
+            <Route path="/" element={<Home darkMode={darkMode} />} />
+            <Route path="/login" element={<Login darkMode={darkMode} />} />
+            <Route path="/create-user" element={<CreateUser darkMode={darkMode} />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Box>
 
+        {/* Footer (si lo tienes) */}
         <Footer darkMode={darkMode} />
       </Box>
     </Router>
