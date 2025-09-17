@@ -9,12 +9,28 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div
+      className="App"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh', // ocupa toda la altura
+      }}
+    >
       {/* Navbar arriba */}
       <Navbar />
 
       {/* Contenido principal */}
-      <main style={{ flexGrow: 1, padding: '2rem', textAlign: 'center' }}>
+      <main
+        style={{
+          flexGrow: 1, // ocupa todo el espacio disponible
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center', // centra verticalmente
+          alignItems: 'center', // centra horizontalmente
+          padding: '2rem',
+        }}
+      >
         <div>
           <a href="https://vite.dev" target="_blank" rel="noreferrer">
             <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -26,7 +42,16 @@ function App() {
 
         <h1>Vite + React</h1>
 
-        <div className="card" style={{ margin: '2rem auto', padding: '1rem', border: '1px solid #ccc', borderRadius: '8px' }}>
+        <div
+          className="card"
+          style={{
+            margin: '2rem auto',
+            padding: '1rem',
+            border: '1px solid #ccc',
+            borderRadius: '8px',
+            textAlign: 'center',
+          }}
+        >
           <button onClick={() => setCount((count) => count + 1)}>
             count is {count}
           </button>
