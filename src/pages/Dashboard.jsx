@@ -1,8 +1,17 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+
+  const buttonStyle = {
+    minWidth: 170,
+    minHeight: 100,
+    fontSize: "1.1rem",
+    borderRadius: 2,
+    boxShadow: 3,
+    textTransform: "none",
+  };
 
   return (
     <Box
@@ -12,25 +21,52 @@ export default function Dashboard() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        gap: 2,
+        px: 2,
         textAlign: "center",
       }}
     >
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
         Panel de Salud
       </Typography>
-      <Button variant="contained" onClick={() => navigate("/control/allergies")}>
-        Alergias
-      </Button>
-      <Button variant="contained" onClick={() => navigate("/control/panel")}>
-        Panel de Control
-      </Button>
-      <Button variant="contained" onClick={() => navigate("/control/medications")}>
-        Medicaciones
-      </Button>
-      <Button variant="contained" onClick={() => navigate("/control/schedule")}>
-        Horarios
-      </Button>
+
+      <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: 400 }}>
+        <Grid item>
+          <Button
+            variant="contained"
+            sx={buttonStyle}
+            onClick={() => navigate("/control/allergies")}
+          >
+            Alergias
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            sx={buttonStyle}
+            onClick={() => navigate("/control/panel")}
+          >
+            Panel de Control
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            sx={buttonStyle}
+            onClick={() => navigate("/control/medications")}
+          >
+            Medicaciones
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            sx={buttonStyle}
+            onClick={() => navigate("/control/schedule")}
+          >
+            Horarios
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
