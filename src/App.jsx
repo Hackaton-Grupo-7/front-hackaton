@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
-import Medications from "./pages/Medications"; // tu nueva página
+import Medications from "./pages/control/Medications"; // tu nueva página
 
 function App() {
   const NAVBAR_HEIGHT = 64;
