@@ -1,15 +1,18 @@
 import { Box, Typography, Button } from "@mui/material";
 
-export default function Home() {
+export default function Home({ darkMode, NAVBAR_HEIGHT }) {
   return (
     <Box
       sx={{
+        minHeight: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "80vh",
         textAlign: "center",
+        bgcolor: darkMode ? "#000" : "#fff",
+        color: darkMode ? "#fff" : "#000",
+        px: 2,
       }}
     >
       <Typography variant="h3" gutterBottom>
