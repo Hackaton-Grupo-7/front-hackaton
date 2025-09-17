@@ -1,53 +1,42 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Box, Typography, Link } from '@mui/material';
 
-const Footer = () => {
+export default function Footer() {
   return (
     <Box
       component="footer"
       sx={{
-        width: "100%",               // Ocupa todo el ancho de la pantalla
-        backgroundColor: "#1976d2",
-        color: "white",
+        width: '100vw',          // ocupa todo el ancho de la ventana
         py: 2,
         px: 4,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        boxSizing: "border-box",
+        bgcolor: '#1976d2',      // azul como Navbar
+        color: '#fff',
+        borderTop: '2px solid #000',
+        textAlign: 'center',
       }}
     >
-      <Typography variant="body1" sx={{ textAlign: "center" }}>
-        Proyecto 2025{" "}
+      <Typography variant="body2" sx={{ mb: 1 }}>
+        Proyecto 2025{' '}
         <Link
           href="https://factoriaf5.org/"
           target="_blank"
           rel="noopener"
-          color="inherit"
           underline="hover"
+          sx={{ color: '#fff', fontWeight: 'bold' }}
         >
           Factoria F5
-        </Link>{" "}
-        en colaboración con{" "}
+        </Link>{' '}
+        en colaboración con{' '}
         <Link
           href="https://www.sanitas.es/"
           target="_blank"
           rel="noopener"
-          color="inherit"
           underline="hover"
+          sx={{ color: '#fff', fontWeight: 'bold' }}
         >
           Sanitas
         </Link>
       </Typography>
-
-      <Typography variant="body2" sx={{ textAlign: "center", mt: 1 }}>
-        Made with ❤️ using React + Vite + MUI
-      </Typography>
+      <Typography variant="body2">Made with ❤️ using React + Vite + MUI</Typography>
     </Box>
   );
-};
-
-export default Footer;
+}
