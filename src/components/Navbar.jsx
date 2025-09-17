@@ -19,7 +19,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
   return (
     <AppBar position="fixed" color={darkMode ? "default" : "primary"}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6">Sanitas</Typography>
+        <Typography variant="h6">Sanimed</Typography>
 
         {/* Botones grandes en escritorio */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
