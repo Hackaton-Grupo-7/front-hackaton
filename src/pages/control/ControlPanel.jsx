@@ -1,260 +1,183 @@
-import React, { useState } from 'react';
-import { Pill, Bell, AlertTriangle, Clock, ChevronRight, Activity, Shield, Calendar, Users } from 'lucide-react';
+import React, { useState } from "react";
+import { Box, Typography, Grid, Paper, Button, IconButton } from "@mui/material";
+import { Pill, Bell, AlertTriangle, Clock, ChevronRight, Activity, Shield, Calendar, Users } from "lucide-react";
 
 const menuOptions = [
   {
-    id: 'medicamentos',
-    title: 'Medicamentos',
-    description: 'Gestiona tu lista de medicamentos y dosis',
+    id: "medicamentos",
+    title: "Medicamentos",
+    description: "Gestiona tu lista de medicamentos y dosis",
     icon: Pill,
-    color: 'blue',
-    gradient: 'from-blue-500 to-blue-600',
-    bgGradient: 'from-blue-50 to-indigo-100',
-    features: ['Lista de medicamentos', 'Control de dosis', 'Historial de tomas']
+    color: "#3b82f6",
+    gradient: "linear-gradient(90deg,#3b82f6,#2563eb)",
+    bgGradient: "linear-gradient(90deg,#dbeafe,#e0f2fe)",
+    features: ["Lista de medicamentos", "Control de dosis", "Historial de tomas"]
   },
   {
-    id: 'alarmas',
-    title: 'Alarmas',
-    description: 'Configura recordatorios para tus medicamentos',
+    id: "alarmas",
+    title: "Alarmas",
+    description: "Configura recordatorios para tus medicamentos",
     icon: Bell,
-    color: 'green',
-    gradient: 'from-green-500 to-green-600',
-    bgGradient: 'from-green-50 to-emerald-100',
-    features: ['Recordatorios automáticos', 'Notificaciones push', 'Horarios personalizados']
+    color: "#10b981",
+    gradient: "linear-gradient(90deg,#10b981,#059669)",
+    bgGradient: "linear-gradient(90deg,#d1fae5,#d9f99d)",
+    features: ["Recordatorios automáticos", "Notificaciones push", "Horarios personalizados"]
   },
   {
-    id: 'alergias',
-    title: 'Alergias',
-    description: 'Registra y controla tus alergias a medicamentos',
+    id: "alergias",
+    title: "Alergias",
+    description: "Registra y controla tus alergias a medicamentos",
     icon: AlertTriangle,
-    color: 'red',
-    gradient: 'from-red-500 to-red-600',
-    bgGradient: 'from-red-50 to-pink-100',
-    features: ['Registro de alergias', 'Tipos de reacciones', 'Niveles de severidad']
+    color: "#ef4444",
+    gradient: "linear-gradient(90deg,#ef4444,#dc2626)",
+    bgGradient: "linear-gradient(90deg,#fee2e2,#fecaca)",
+    features: ["Registro de alergias", "Tipos de reacciones", "Niveles de severidad"]
   },
   {
-    id: 'horarios',
-    title: 'Horarios',
-    description: 'Organiza tus horarios de medicación',
+    id: "horarios",
+    title: "Horarios",
+    description: "Organiza tus horarios de medicación",
     icon: Clock,
-    color: 'purple',
-    gradient: 'from-purple-500 to-purple-600',
-    bgGradient: 'from-purple-50 to-indigo-100',
-    features: ['Calendario médico', 'Planificación semanal', 'Seguimiento diario']
+    color: "#8b5cf6",
+    gradient: "linear-gradient(90deg,#8b5cf6,#7c3aed)",
+    bgGradient: "linear-gradient(90deg,#ede9fe,#e0e7ff)",
+    features: ["Calendario médico", "Planificación semanal", "Seguimiento diario"]
   }
 ];
 
-function App() {
+export default function Dashboard({ darkMode }) {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   const handleCardClick = (option) => {
     alert(`Navegando a ${option.title}...`);
-    // Aquí implementarías la navegación real a cada sección
-  };
-
-  const getColorClasses = (color) => {
-    const colors = {
-      blue: {
-        bg: 'bg-blue-100',
-        text: 'text-blue-700',
-        border: 'border-blue-200',
-        hover: 'hover:bg-blue-50'
-      },
-      green: {
-        bg: 'bg-green-100',
-        text: 'text-green-700',
-        border: 'border-green-200',
-        hover: 'hover:bg-green-50'
-      },
-      red: {
-        bg: 'bg-red-100',
-        text: 'text-red-700',
-        border: 'border-red-200',
-        hover: 'hover:bg-red-50'
-      },
-      purple: {
-        bg: 'bg-purple-100',
-        text: 'text-purple-700',
-        border: 'border-purple-200',
-        hover: 'hover:bg-purple-50'
-      }
-    };
-    return colors[color];
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
+    <Box sx={{ py: 4, px: 2, minHeight: "calc(100vh - 124px)", bgcolor: darkMode ? "#121212" : "#f9fafb" }}>
+      <Box sx={{ maxWidth: 1200, mx: "auto" }}>
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mb-6 shadow-lg">
-            <Activity className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="text-5xl font-bold text-gray-800 mb-4">
-            Centro de Salud
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <Box sx={{ textAlign: "center", mb: 8 }}>
+          <Box sx={{
+            display: "inline-flex", justifyContent: "center", alignItems: "center",
+            width: 80, height: 80, borderRadius: "50%", bgcolor: "#3b82f6", mx: "auto", mb: 2, boxShadow: 3
+          }}>
+            <Activity style={{ color: "#fff", width: 32, height: 32 }} />
+          </Box>
+          <Typography variant="h3" sx={{ fontWeight: 700, mb: 1 }}>Centro de Salud</Typography>
+          <Typography variant="body1" sx={{ color: darkMode ? "#ccc" : "#4b5563", maxWidth: 800, mx: "auto" }}>
             Tu plataforma integral para el control y seguimiento de medicamentos, alergias y horarios de tratamiento
-          </p>
-        </div>
+          </Typography>
+        </Box>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Pill className="w-6 h-6 text-blue-600" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-500">Medicamentos</p>
-                <p className="text-2xl font-semibold text-gray-900">0</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <Bell className="w-6 h-6 text-green-600" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-500">Alarmas Activas</p>
-                <p className="text-2xl font-semibold text-gray-900">0</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-red-100 rounded-lg">
-                <Shield className="w-6 h-6 text-red-600" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-500">Alergias</p>
-                <p className="text-2xl font-semibold text-gray-900">0</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Calendar className="w-6 h-6 text-purple-600" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-500">Próxima Toma</p>
-                <p className="text-sm font-semibold text-gray-900">No programada</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Menu Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {menuOptions.map((option) => {
+        <Grid container spacing={3} sx={{ mb: 8 }}>
+          {menuOptions.map((option, idx) => {
             const Icon = option.icon;
-            const colorClasses = getColorClasses(option.color);
-            
             return (
-              <div
-                key={option.id}
-                onClick={() => handleCardClick(option)}
-                onMouseEnter={() => setHoveredCard(option.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className={`
-                  relative group cursor-pointer transition-all duration-300 transform
-                  ${hoveredCard === option.id ? 'scale-105 shadow-2xl' : 'shadow-lg hover:shadow-xl'}
-                `}
-              >
-                {/* Background Gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${option.bgGradient} rounded-2xl opacity-50`}></div>
-                
-                {/* Card Content */}
-                <div className="relative bg-white rounded-2xl p-8 border border-gray-200 h-full">
-                  {/* Icon Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className={`p-4 rounded-2xl bg-gradient-to-r ${option.gradient} shadow-lg`}>
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
-                    <ChevronRight 
-                      className={`
-                        w-6 h-6 text-gray-400 transition-all duration-300
-                        ${hoveredCard === option.id ? 'text-gray-600 translate-x-1' : ''}
-                      `} 
-                    />
-                  </div>
-
-                  {/* Title and Description */}
-                  <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
-                      {option.title}
-                    </h2>
-                    <p className="text-gray-600 text-base leading-relaxed">
-                      {option.description}
-                    </p>
-                  </div>
-
-                  {/* Features List */}
-                  <div className="space-y-3">
-                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                      Características
-                    </h3>
-                    <ul className="space-y-2">
-                      {option.features.map((feature, index) => (
-                        <li key={index} className="flex items-center text-sm text-gray-600">
-                          <div className={`w-2 h-2 rounded-full ${colorClasses.bg} mr-3`}></div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Action Button */}
-                  <div className="mt-8">
-                    <div className={`
-                      w-full py-3 px-4 rounded-xl border-2 text-center font-semibold transition-all duration-300
-                      ${colorClasses.border} ${colorClasses.text} ${colorClasses.bg} ${colorClasses.hover}
-                      group-hover:shadow-md
-                    `}>
-                      Acceder a {option.title}
-                    </div>
-                  </div>
-
-                  {/* Hover Effect Indicator */}
-                  <div className={`
-                    absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${option.gradient} rounded-t-2xl
-                    transform origin-left transition-transform duration-300
-                    ${hoveredCard === option.id ? 'scale-x-100' : 'scale-x-0'}
-                  `}></div>
-                </div>
-              </div>
+              <Grid item xs={12} md={3} key={option.id}>
+                <Paper
+                  sx={{
+                    p: 2, borderRadius: 3, border: "1px solid #d1d5db", boxShadow: 2,
+                    display: "flex", alignItems: "center", gap: 2,
+                    cursor: "pointer", transition: "transform 0.3s, box-shadow 0.3s",
+                    "&:hover": { transform: "scale(1.05)", boxShadow: 6 }
+                  }}
+                  onClick={() => handleCardClick(option)}
+                >
+                  <Box sx={{ p: 1.5, borderRadius: 2, bgcolor: option.bgGradient, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Icon style={{ color: option.color, width: 24, height: 24 }} />
+                  </Box>
+                  <Box>
+                    <Typography sx={{ fontSize: 14, fontWeight: 500, color: "#6b7280" }}>{option.title}</Typography>
+                    <Typography sx={{ fontSize: 20, fontWeight: 600 }}>{0}</Typography>
+                  </Box>
+                </Paper>
+              </Grid>
             );
           })}
-        </div>
+        </Grid>
+
+        {/* Main Menu Cards */}
+        <Grid container spacing={4}>
+          {menuOptions.map(option => {
+            const Icon = option.icon;
+            return (
+              <Grid item xs={12} md={6} key={option.id}>
+                <Paper
+                  onMouseEnter={() => setHoveredCard(option.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                  onClick={() => handleCardClick(option)}
+                  sx={{
+                    position: "relative", p: 4, borderRadius: 3, boxShadow: 3, cursor: "pointer",
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    "&:hover": { transform: "scale(1.03)", boxShadow: 6 },
+                    overflow: "hidden"
+                  }}
+                >
+                  {/* Background Gradient */}
+                  <Box sx={{
+                    position: "absolute", inset: 0, borderRadius: 3, opacity: 0.2,
+                    background: option.bgGradient
+                  }} />
+                  {/* Content */}
+                  <Box sx={{ position: "relative" }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+                      <Box sx={{ p: 2, borderRadius: 2, background: option.gradient, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Icon style={{ color: "#fff", width: 28, height: 28 }} />
+                      </Box>
+                      <ChevronRight style={{
+                        color: hoveredCard === option.id ? "#374151" : "#9ca3af",
+                        transition: "all 0.3s"
+                      }} />
+                    </Box>
+                    <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>{option.title}</Typography>
+                    <Typography sx={{ color: "#6b7280", mb: 2 }}>{option.description}</Typography>
+                    <Box sx={{ mb: 2 }}>
+                      <Typography sx={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", color: "#6b7280", mb: 1 }}>Características</Typography>
+                      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                        {option.features.map((f, i) => (
+                          <Box key={i} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                            <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: option.color }} />
+                            <Typography sx={{ fontSize: 14 }}>{f}</Typography>
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                    <Box sx={{
+                      mt: 3, py: 1.5, textAlign: "center", fontWeight: 600,
+                      border: `2px solid ${option.color}`, borderRadius: 2,
+                      color: option.color,
+                      transition: "all 0.3s",
+                      "&:hover": { boxShadow: 3 }
+                    }}>
+                      Acceder a {option.title}
+                    </Box>
+                  </Box>
+                </Paper>
+              </Grid>
+            );
+          })}
+        </Grid>
 
         {/* Footer Info */}
-        <div className="mt-16 text-center">
-          <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
-            <div className="flex items-center justify-center mb-4">
-              <Users className="w-6 h-6 text-blue-600 mr-2" />
-              <h3 className="text-xl font-semibold text-gray-800">Información Importante</h3>
-            </div>
-            <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Esta plataforma está diseñada para ayudarte a gestionar tu medicación de forma segura y eficiente. 
-              Siempre consulta con tu médico antes de realizar cambios en tu tratamiento. En caso de emergencia 
-              médica, contacta inmediatamente a los servicios de emergencia de tu localidad.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+        <Box sx={{ mt: 12, textAlign: "center" }}>
+          <Paper sx={{ p: 4, borderRadius: 3, boxShadow: 3 }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", mb: 2 }}>
+              <Users style={{ width: 24, height: 24, color: "#3b82f6", marginRight: 6 }} />
+              <Typography sx={{ fontWeight: 600, fontSize: 18 }}>Información Importante</Typography>
+            </Box>
+            <Typography sx={{ color: "#6b7280", maxWidth: 800, mx: "auto" }}>
+              Esta plataforma está diseñada para ayudarte a gestionar tu medicación de forma segura y eficiente. Siempre consulta con tu médico antes de realizar cambios en tu tratamiento. En caso de emergencia médica, contacta inmediatamente a los servicios de emergencia de tu localidad.
+            </Typography>
+            <Box sx={{ mt: 3, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 2, color: "#9ca3af", fontSize: 14 }}>
               <span>📱 Disponible en móvil</span>
               <span>🔒 Datos seguros</span>
               <span>⏰ Recordatorios inteligentes</span>
               <span>📊 Seguimiento detallado</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Box>
+          </Paper>
+        </Box>
+      </Box>
+    </Box>
   );
 }
-
-export default App;
