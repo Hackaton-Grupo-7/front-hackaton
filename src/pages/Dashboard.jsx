@@ -61,7 +61,7 @@ export default function Dashboard() {
           <Button
             variant="contained"
             sx={buttonStyle}
-            onClick={() => navigate("/control/schedule")}
+            onClick={() => navigate("/control/schedules")}
           >
             Horarios
           </Button>
