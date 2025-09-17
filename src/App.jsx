@@ -24,8 +24,8 @@ function Home() {
       <Button href="#/login" variant="contained" color="primary" sx={{ m: 1 }}>
         Iniciar sesión
       </Button>
-      <Button href="#/register" variant="outlined" color="secondary" sx={{ m: 1 }}>
-        Registrarse
+      <Button href="#/create-user" variant="outlined" color="secondary" sx={{ m: 1 }}>
+        Crear cuenta
       </Button>
     </Box>
   );
@@ -70,14 +70,14 @@ function Login() {
   );
 }
 
-// Página de registro
-function Register() {
+// Página de crear usuario
+function CreateUser() {
   const [formData, setFormData] = useState({ username: "", name: "", email: "", password: "" });
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Register data:", formData);
+    console.log("CreateUser data:", formData);
   };
 
   return (
@@ -100,7 +100,7 @@ function Register() {
           boxShadow: 3,
         }}
       >
-        <Typography variant="h5" align="center">Registrarse</Typography>
+        <Typography variant="h5" align="center">Crear cuenta</Typography>
         <TextField label="Username" name="username" value={formData.username} onChange={handleChange} required />
         <TextField label="Name" name="name" value={formData.name} onChange={handleChange} required />
         <TextField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required />
@@ -121,7 +121,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/create-user" element={<CreateUser />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Box>
