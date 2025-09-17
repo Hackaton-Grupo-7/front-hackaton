@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box } from "@mui/material";
 import { useState } from "react";
 
-import Layout from "./components/Layout"; // contiene Navbar + Footer
+import Layout from "./components/Layout"; // Navbar + Footer
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -12,7 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import Allergies from "./pages/control/Allergies";
 import ControlPanel from "./pages/control/ControlPanel";
 import Medications from "./pages/control/Medications";
-import Schedule from "./pages/control/Schedule"; // añadida
+import Schedule from "./pages/control/Schedule"; // <-- añadida
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -20,17 +20,7 @@ export default function App() {
   return (
     <Router>
       <Layout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
-        {/* Contenedor central de páginas */}
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            px: 2,
-          }}
-        >
+        <Box sx={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", px: 2 }}>
           <Routes>
             <Route path="/" element={<Home darkMode={darkMode} />} />
             <Route path="/login" element={<Login darkMode={darkMode} />} />

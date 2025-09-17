@@ -1,12 +1,14 @@
 // src/pages/Home.jsx
 import { Box, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Home({ darkMode }) {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
+        minHeight: "calc(100vh - 124px)", // respeta navbar + footer
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -18,16 +20,19 @@ export default function Home({ darkMode }) {
       }}
     >
       <Typography variant="h3" gutterBottom>
-        Bienvenido a nuestra Hackathon!
+        Bienvenido
       </Typography>
-      <Box sx={{ display: "flex", gap: 2, mt: 2, flexWrap: "wrap", justifyContent: "center" }}>
-        <Button href="#/login" variant="contained" color="primary">
-          Iniciar sesión
-        </Button>
-        <Button href="#/create-user" variant="outlined" color="secondary">
-          Crear cuenta
-        </Button>
-      </Box>
+      <Typography variant="body1" gutterBottom>
+        Prueba
+      </Typography>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate("/login")}
+      >
+        Comenzar
+      </Button>
     </Box>
   );
 }
