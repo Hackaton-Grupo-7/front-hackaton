@@ -284,14 +284,6 @@ export default function Alarms({ darkMode }) {
           Atrás
         </Button>
         <Button 
-          startIcon={<HomeIcon />} 
-          onClick={() => navigate('/dashboard')} 
-          variant="outlined"
-          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
-        >
-          Inicio
-        </Button>
-        <Button 
           onClick={() => navigate('/login')} 
           variant="outlined" 
           color="error"

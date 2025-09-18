@@ -16,27 +16,70 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
     <AppBar position="fixed" color={darkMode ? "default" : "primary"}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         
-        {/* Logo + Título */}
-        <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => navigate("/")}>
-          <img src={logo} alt="Sanimed Logo" style={{ height: 70, marginRight: 10 }} />
-          <Typography variant="h3" sx={{ fontFamily: "'Segoe UI', Roboto, sans-serif", fontWeight: 'bold' }}>
-            Sanimed
-          </Typography>
+        {/* Logo + Título + Eslogan */}
+        <Box
+          sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+          onClick={() => navigate("/")}
+        >
+          <img src={logo} alt="Sanimed Logo" style={{ height: 90, marginRight: 12 }} />
+          <Box>
+            <Typography
+              variant="h3"
+              sx={{
+                fontFamily: "'Segoe UI', Roboto, sans-serif",
+                fontWeight: "bold",
+                lineHeight: 1,
+              }}
+            >
+              Sanimed
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontStyle: "italic",
+                fontSize: "1rem",
+                color: darkMode ? "#555" : "#f1f1f1",
+              }}
+            >
+              ¡Tu salud, siempre a tiempo!
+            </Typography>
+          </Box>
         </Box>
 
         {/* Botones escritorio */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
-          <Button color="inherit" onClick={() => navigate("/home")}>Inicio</Button>
-          <Button color="inherit" onClick={() => navigate("/creators")}>Contacto</Button>
-
-          {isLoggedIn && (
-            <>
-              <Button color="inherit" onClick={() => navigate("/dashboard")}>Dashboard</Button>
-              <Button color="inherit" onClick={() => navigate("/control/allergies")}>Allergies</Button>
-              <Button color="inherit" onClick={() => navigate("/control/medications")}>Medications</Button>
-              <Button color="inherit" onClick={() => navigate("/control/panel")}>Control Panel</Button>
-            </>
-          )}
+          <Button
+            color="inherit"
+            onClick={() => navigate("/")}
+            sx={{
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+              textTransform: "none",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                textDecoration: "underline",
+                transform: "scale(1.05)",
+              },
+            }}
+          >
+            Inicio
+          </Button>
+          <Button
+            color="inherit"
+            onClick={() => navigate("/creators")}
+            sx={{
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+              textTransform: "none",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                textDecoration: "underline",
+                transform: "scale(1.05)",
+              },
+            }}
+          >
+            Contactos
+          </Button>
 
           <IconButton color="inherit" onClick={toggleDarkMode}>
             <Brightness4Icon />
