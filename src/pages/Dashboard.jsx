@@ -14,7 +14,8 @@ const menuOptions = [
     bgGradient: "linear-gradient(90deg,#dbeafe,#e0f2fe)",
     bgGradientDark: "linear-gradient(90deg,#1e3a8a,#1e40af)",
     features: ["Lista de medicamentos", "Control de dosis", "Historial de tomas"],
-    route: "/control/medications"
+    route: "/control/medications",
+    count: 12
   },
   {
     id: "alarmas",
@@ -26,7 +27,8 @@ const menuOptions = [
     bgGradient: "linear-gradient(90deg,#d1fae5,#d9f99d)",
     bgGradientDark: "linear-gradient(90deg,#065f46,#047857)",
     features: ["Recordatorios automáticos", "Notificaciones push", "Horarios personalizados"],
-    route: "/control/alarms"
+    route: "/control/alarms",
+    count: 5
   },
   {
     id: "alergias",
@@ -38,7 +40,8 @@ const menuOptions = [
     bgGradient: "linear-gradient(90deg,#fee2e2,#fecaca)",
     bgGradientDark: "linear-gradient(90deg,#991b1b,#b91c1c)",
     features: ["Registro de alergias", "Tipos de reacciones", "Niveles de severidad"],
-    route: "/control/allergies"
+    route: "/control/allergies",
+    count: 3
   },
   {
     id: "horarios",
@@ -50,7 +53,8 @@ const menuOptions = [
     bgGradient: "linear-gradient(90deg,#ede9fe,#e0e7ff)",
     bgGradientDark: "linear-gradient(90deg,#5b21b6,#6d28d9)",
     features: ["Calendario médico", "Planificación semanal", "Seguimiento diario"],
-    route: "/control/schedules"
+    route: "/control/schedules",
+    count: 8
   }
 ];
 
@@ -67,7 +71,7 @@ export default function Dashboard({ darkMode }) {
     <Box sx={{ py: 4, px: 2, minHeight: "calc(100vh - 124px)", bgcolor: darkMode ? "#121212" : "#f9fafb" }}>
       <Box sx={{ maxWidth: 1200, mx: "auto" }}>
         {/* Header */}
-        <Box sx={{ textAlign: "center", mb: 8 }}>
+        <Box sx={{ textAlign: "center", mb: 6 }}>
           <Box sx={{
             display: "inline-flex", justifyContent: "center", alignItems: "center",
             width: 80, height: 80, borderRadius: "50%", bgcolor: "#3b82f6", mx: "auto", mb: 2, boxShadow: 3
@@ -80,13 +84,29 @@ export default function Dashboard({ darkMode }) {
           </Typography>
         </Box>
 
+        {/* Contadores */}
+        <Grid container spacing={4} sx={{ mb: 6, justifyContent: "center" }}>
+          {menuOptions.map(option => (
+            <Grid item xs={12} sm={6} md={3} key={`counter-${option.id}`}>
+              <Paper sx={{
+                p: 3, display: "flex", flexDirection: "column", alignItems: "center",
+                justifyContent: "center", borderRadius: 3, boxShadow: 3, textAlign: "center",
+                bgcolor: paperBg, border: paperBorder
+              }}>
+                <Typography sx={{ fontSize: 14, fontWeight: 500, color: textSecondary }}>{option.title}</Typography>
+                <Typography sx={{ fontSize: 28, fontWeight: 700, color: option.color }}>{option.count}</Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+
         {/* Main Menu Cards */}
-        <Grid container spacing={4}>
+        <Grid container spacing={4} justifyContent="center">
           {menuOptions.map(option => {
             const Icon = option.icon;
             const bgGradient = darkMode ? option.bgGradientDark : option.bgGradient;
             return (
-              <Grid item xs={12} md={6} key={option.id}>
+              <Grid item xs={12} sm={6} md={5} key={option.id}>
                 <Paper
                   onMouseEnter={() => setHoveredCard(option.id)}
                   onMouseLeave={() => setHoveredCard(null)}
@@ -101,7 +121,7 @@ export default function Dashboard({ darkMode }) {
                 >
                   {/* Background Gradient */}
                   <Box sx={{
-                    position: "absolute", inset: 0, borderRadius: 3, opacity: 0.2,
+                    position: "absolute", inset: 0, borderRadius: 3, opacity: 0.15,
                     background: bgGradient
                   }} />
                   {/* Content */}

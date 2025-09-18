@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 
 import Layout from "./components/Layout"; // Navbar + Footer
+import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -31,6 +32,7 @@ export default function App() {
             px: 2,
           }}
         >
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home darkMode={darkMode} />} />
             <Route path="/login" element={<Login darkMode={darkMode} />} />
