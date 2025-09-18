@@ -81,7 +81,16 @@ export default function Dashboard({ darkMode }) {
           }}>
             <Activity style={{ color: "#fff", width: 32, height: 32 }} />
           </Box>
-          <Typography variant="h3" sx={{ fontWeight: 700, mb: 1, color: colors.textPrimary }}>Centro de Salud</Typography>
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 700,
+              mb: 1,
+              color: darkMode ? "#e5e5e5" : "#111827"
+            }}
+          >
+            Centro de Salud
+          </Typography>
           <Typography variant="body1" sx={{ color: colors.textSecondary, maxWidth: 800, mx: "auto" }}>
             Tu plataforma integral para el control y seguimiento de medicamentos, alergias y horarios de tratamiento
           </Typography>
