@@ -1,7 +1,7 @@
 // Footer.jsx
 import { Box, Typography, Link } from '@mui/material';
 
-export default function Footer() {
+export default function Footer({ darkMode }) {
   return (
     <Box
       component="footer"
@@ -9,10 +9,11 @@ export default function Footer() {
         mt: 'auto', // empuja el footer al final si el contenido es pequeño
         py: 2,
         px: 4,
-        bgcolor: '#1976d2',
+        bgcolor: darkMode ? '#1a1a1a' : '#1976d2',
         color: '#fff',
-        borderTop: '2px solid #000',
+        borderTop: darkMode ? '2px solid #333' : '2px solid #000',
         textAlign: 'center',
+        width: '100%',
       }}
     >
       <Typography variant="body2" sx={{ mb: 1 }}>

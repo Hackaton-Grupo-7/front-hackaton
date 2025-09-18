@@ -24,7 +24,7 @@ const alergiasDisponiblesBase = [
   "Paracetamol", "Codeína", "Morfina", "Insulina"
 ];
 
-function Allergies() {
+function Allergies({ darkMode }) {
   const [nombre, setNombre] = useState("");
   const [nombrePersonalizado, setNombrePersonalizado] = useState("");
   const [listaAlergias, setListaAlergias] = useState([]);
@@ -83,8 +83,8 @@ function Allergies() {
       
       if (nombre === "Otro" && !nombrePersonalizado.trim()) {
         alert("Por favor ingresa el nombre de la alergia");
-        return;
-      }
+      return;
+    }
 
       const created = await createAllergy({ name: nombreFinal });
       if (created) {
@@ -109,7 +109,15 @@ function Allergies() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        py: 4,
+        bgcolor: darkMode ? "#121212" : "#f9f9f9",
+        color: darkMode ? "#fff" : "#000",
+        minHeight: "100vh"
+      }}
+    >
       {/* Header */}
       <Box sx={{ textAlign: "center", mb: 6 }}>
         <Box sx={{
@@ -143,7 +151,13 @@ function Allergies() {
 
       {/* Formulario */}
       {mostrarFormulario && (
-        <Paper sx={{ mb: 4, p: 2 }}>
+        <Paper sx={{ 
+          mb: 4, 
+          p: 2,
+          bgcolor: darkMode ? "#1e1e1e" : "#fff",
+          color: darkMode ? "#fff" : "#000",
+          border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+        }}>
           <CardHeader
             title="Nueva Alergia"
             action={<IconButton onClick={() => setMostrarFormulario(false)}><TrashIcon /></IconButton>}
@@ -196,14 +210,24 @@ function Allergies() {
         </Typography>
 
         {listaAlergias.length === 0 ? (
-          <Paper sx={{ p: 4, textAlign: "center" }}>
-            <WarningIcon sx={{ fontSize: 60, color: "grey.400", mb: 2 }} />
+          <Paper sx={{ 
+            p: 4, 
+            textAlign: "center",
+            bgcolor: darkMode ? "#1e1e1e" : "#fff",
+            color: darkMode ? "#fff" : "#000",
+            border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+          }}>
+            <WarningIcon sx={{ fontSize: 60, color: darkMode ? "#666" : "grey.400", mb: 2 }} />
             <Typography>No hay alergias agregadas</Typography>
           </Paper>
         ) : (
           <Stack spacing={2}>
             {listaAlergias.map((item) => (
-              <Card key={item.id}>
+              <Card key={item.id} sx={{
+                bgcolor: darkMode ? "#1e1e1e" : "#fff",
+                color: darkMode ? "#fff" : "#000",
+                border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+              }}>
                 <CardContent>
                   <Grid container alignItems="center" spacing={2}>
                     <Grid item xs>
@@ -221,8 +245,8 @@ function Allergies() {
               </Card>
             ))}
           </Stack>
-        )}
-      </Box>
+                  )}
+                </Box>
 
       {/* Botones de navegación */}
       <Box mt={6} display="flex" justifyContent="space-between">
@@ -235,7 +259,7 @@ function Allergies() {
         <Button onClick={() => { clearAuth(); navigate('/login'); }} variant="outlined" color="error">
           Cerrar Sesión
         </Button>
-    </Box>
+              </Box>
     </Container>
   );
 }

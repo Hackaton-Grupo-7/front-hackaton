@@ -44,7 +44,13 @@ export default function CreateUser({ darkMode }) {
         px: 2,
       }}
     >
-      <Container maxWidth="sm">
+      <Container 
+        maxWidth="sm"
+        sx={{
+          bgcolor: darkMode ? "#121212" : "#f9f9f9",
+          color: darkMode ? "#fff" : "#000",
+        }}
+      >
         <Box
           component="form"
           onSubmit={handleSubmit}

@@ -3,21 +3,44 @@ import { useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button, IconButton, Box, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
+import { clearAuth } from "../services/authStorage";
 import logo from "../assets/logo.png"; // Pon tu logo aquí
 
-const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
+const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn, setIsLoggedIn }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
 
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
 
+  const handleLogoClick = () => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  };
+
+  const handleInicioClick = () => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  };
+
+  const handleLogout = () => {
+    clearAuth();
+    setIsLoggedIn(false);
+    navigate("/");
+  };
+
   return (
     <AppBar position="fixed" color={darkMode ? "default" : "primary"}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         
         {/* Logo + Título */}
-        <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => navigate("/")}>
+        <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={handleLogoClick}>
           <img src={logo} alt="Sanimed Logo" style={{ height: 70, marginRight: 10 }} />
           <Typography variant="h3" sx={{ fontFamily: "'Segoe UI', Roboto, sans-serif", fontWeight: 'bold' }}>
             Sanimed
@@ -26,15 +49,16 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
 
         {/* Botones escritorio */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
-          <Button color="inherit" onClick={() => navigate("/")}>Inicio</Button>
+          <Button color="inherit" onClick={handleInicioClick}>Inicio</Button>
           <Button color="inherit" onClick={() => navigate("/about")}>Nosotros</Button>
 
           {isLoggedIn && (
             <>
-              <Button color="inherit" onClick={() => navigate("/dashboard")}>Dashboard</Button>
-              <Button color="inherit" onClick={() => navigate("/control/allergies")}>Allergies</Button>
-              <Button color="inherit" onClick={() => navigate("/control/medications")}>Medications</Button>
-              <Button color="inherit" onClick={() => navigate("/control/panel")}>Control Panel</Button>
+              <Button color="inherit" onClick={() => navigate("/control/alarms")}>Alarmas</Button>
+              <Button color="inherit" onClick={() => navigate("/control/schedules")}>Horarios</Button>
+              <Button color="inherit" onClick={() => navigate("/control/allergies")}>Alergias</Button>
+              <Button color="inherit" onClick={() => navigate("/control/medications")}>Medicacion</Button>
+              <Button color="inherit" onClick={handleLogout}>Cerrar Sesión</Button>
             </>
           )}
 
@@ -49,7 +73,7 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
             <MenuIcon />
           </IconButton>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-            <MenuItem onClick={() => { navigate("/"); handleMenuClose(); }}>Home</MenuItem>
+            <MenuItem onClick={() => { handleInicioClick(); handleMenuClose(); }}>Home</MenuItem>
             <MenuItem onClick={() => { navigate("/about"); handleMenuClose(); }}>About</MenuItem>
 
             {isLoggedIn && (
@@ -58,6 +82,7 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
                 <MenuItem onClick={() => { navigate("/control/allergies"); handleMenuClose(); }}>Allergies</MenuItem>
                 <MenuItem onClick={() => { navigate("/control/medications"); handleMenuClose(); }}>Medications</MenuItem>
                 <MenuItem onClick={() => { navigate("/control/panel"); handleMenuClose(); }}>Control Panel</MenuItem>
+                <MenuItem onClick={() => { handleLogout(); handleMenuClose(); }}>Cerrar Sesión</MenuItem>
               </>
             )}
 

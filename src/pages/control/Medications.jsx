@@ -27,7 +27,12 @@ const medicamentosDisponiblesBase = [
   "Metformina", "Atorvastatina"
 ];
 
-function Medications() {
+/**
+ * Medications component for managing medication list
+ * @param {Object} props - Component props
+ * @param {boolean} props.darkMode - Whether dark mode is enabled
+ */
+function Medications({ darkMode }) {
   const [medicamento, setMedicamento] = useState("");
   const [nombrePersonalizado, setNombrePersonalizado] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -136,7 +141,15 @@ function Medications() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        py: 4,
+        bgcolor: darkMode ? "#121212" : "#f9f9f9",
+        color: darkMode ? "#fff" : "#000",
+        minHeight: "100vh"
+      }}
+    >
       {/* Header */}
       <Box sx={{ textAlign: "center", mb: 6 }}>
         <Box sx={{
@@ -170,7 +183,13 @@ function Medications() {
 
       {/* Formulario */}
       {mostrarFormulario && (
-        <Paper sx={{ mb: 4, p: 2 }}>
+        <Paper sx={{ 
+          mb: 4, 
+          p: 2,
+          bgcolor: darkMode ? "#1e1e1e" : "#fff",
+          color: darkMode ? "#fff" : "#000",
+          border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+        }}>
           <CardHeader
             title="Nuevo Medicamento"
             action={<IconButton onClick={() => setMostrarFormulario(false)}><TrashIcon /></IconButton>}
@@ -248,14 +267,24 @@ function Medications() {
         </Typography>
 
         {listaMedicamentos.length === 0 ? (
-          <Paper sx={{ p: 4, textAlign: "center" }}>
-            <MedicationIcon sx={{ fontSize: 60, color: "grey.400", mb: 2 }} />
+          <Paper sx={{ 
+            p: 4, 
+            textAlign: "center",
+            bgcolor: darkMode ? "#1e1e1e" : "#fff",
+            color: darkMode ? "#fff" : "#000",
+            border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+          }}>
+            <MedicationIcon sx={{ fontSize: 60, color: darkMode ? "#666" : "grey.400", mb: 2 }} />
             <Typography>No hay medicamentos agregados</Typography>
           </Paper>
         ) : (
           <Stack spacing={2}>
             {listaMedicamentos.map((item) => (
-              <Card key={item.id}>
+              <Card key={item.id} sx={{
+                bgcolor: darkMode ? "#1e1e1e" : "#fff",
+                color: darkMode ? "#fff" : "#000",
+                border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+              }}>
                 <CardContent>
                   <Grid container alignItems="center" spacing={2}>
                     <Grid item xs>
@@ -263,12 +292,24 @@ function Medications() {
                         <MedicationIcon /> {item.nombre}
                       </Typography>
                       
-                      <Typography color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+                      <Typography sx={{ 
+                        display: "flex", 
+                        alignItems: "center", 
+                        gap: 1, 
+                        mt: 1,
+                        color: darkMode ? "#fff" : "text.secondary"
+                      }}>
                         Dosis: {item.dosis}
                       </Typography>
                       
                       {item.hora && (
-                        <Typography color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
+                        <Typography sx={{ 
+                          display: "flex", 
+                          alignItems: "center", 
+                          gap: 1, 
+                          mt: 0.5,
+                          color: darkMode ? "#fff" : "text.secondary"
+                        }}>
                           Hora: {item.hora}
                         </Typography>
                       )}
