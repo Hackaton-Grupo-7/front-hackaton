@@ -110,11 +110,10 @@ El modo oscuro se aplica a **todas las páginas**, manteniendo contraste y visib
 
 ## 👥 Colaboradores Backend
 
-- **Paula Calvo García** - Valencia  
-- **Saba Ur Rehman** - Valencia  
-- **Dmytro Belei** - Digital Academy  
-- **Efrén Tomás Campa** - Digital Academy
-
+| Digital Academy             | Valencia                  |
+|-----------------------------|---------------------------|
+| **Dmytro Belei**                | **Paula Calvo García**        |
+| **Efrén Tomás Campa**          | **Saba Ur Rehman**            |
 ---
 
 ## 📌 Cómo ejecutar el proyecto
