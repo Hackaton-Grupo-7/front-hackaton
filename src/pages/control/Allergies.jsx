@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box, Typography, Button, TextField, Select, MenuItem, FormControl,
   InputLabel, RadioGroup, FormControlLabel, Radio, Paper, Grid, IconButton
 } from "@mui/material";
-import { Plus, AlertTriangle, Trash2, Shield, Eye } from "lucide-react";
+import { 
+  Plus, AlertTriangle, Trash2, Shield, Eye,
+  ArrowLeft as ArrowBackIcon, Home as HomeIcon 
+} from "lucide-react";
 
 const medicamentosDisponibles = [
   "Paracetamol", "Ibuprofeno", "Amoxicilina", "Omeprazol",
@@ -27,6 +31,7 @@ const severidad = [
 ];
 
 export default function App({ darkMode }) {
+  const navigate = useNavigate();
   const [medicamento, setMedicamento] = useState("");
   const [medicamentoPersonalizado, setMedicamentoPersonalizado] = useState("");
   const [reaccion, setReaccion] = useState("");
@@ -268,7 +273,7 @@ export default function App({ darkMode }) {
       )}
 
       {/* Lista */}
-      <Box sx={{ display: "grid", gap: 3 }}>
+      <Box sx={{ display: "grid", gap: 3, mb: 4 }}>
         {listaAlergias.length === 0 ? (
           <Paper sx={{ textAlign: "center", py: 6, borderRadius: 3, bgcolor: darkMode ? "#1f2937" : "#f3f4f6" }}>
             <Shield style={{ fontSize: 40, color: "#9ca3af", marginBottom: 8 }} />
@@ -332,6 +337,33 @@ export default function App({ darkMode }) {
             </Paper>
           ))
         )}
+      </Box>
+
+      <Box mt={6} display="flex" justifyContent="space-between" flexWrap="wrap" gap={2}>
+        <Button 
+          startIcon={<ArrowBackIcon />} 
+          onClick={() => navigate(-1)} 
+          variant="outlined"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Atrás
+        </Button>
+        <Button 
+          startIcon={<HomeIcon />} 
+          onClick={() => navigate('/dashboard')} 
+          variant="outlined"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Inicio
+        </Button>
+        <Button 
+          onClick={() => navigate('/login')} 
+          variant="outlined" 
+          color="error"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Cerrar Sesión
+        </Button>
       </Box>
     </Box>
   );

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box, Container, Typography, Button, TextField,
   Checkbox, FormControlLabel, Select, MenuItem,
@@ -6,10 +7,15 @@ import {
   Stack, Paper, Chip, Switch
 } from "@mui/material";
 import {
-  Add as AddIcon, Medication as MedicationIcon,
-  AccessTime as ClockIcon, Notifications as BellIcon,
-  NotificationsOff as BellOffIcon, Delete as TrashIcon,
-  Replay as RotateCcwIcon
+  Add as AddIcon, 
+  Medication as MedicationIcon,
+  AccessTime as ClockIcon, 
+  Notifications as BellIcon,
+  NotificationsOff as BellOffIcon, 
+  Delete as TrashIcon,
+  Replay as RotateCcwIcon,
+  ArrowBack as ArrowBackIcon,
+  Home as HomeIcon
 } from "@mui/icons-material";
 
 // MOCK de medicamentos
@@ -26,6 +32,7 @@ const mockAlarms = [
 ];
 
 export default function Alarms({ darkMode }) {
+  const navigate = useNavigate();
   const [alarms, setAlarms] = useState([]);
   const [medications, setMedications] = useState([]);
   const [newAlarm, setNewAlarm] = useState({ medicationId: "", time: "", frequency: "", days: "", active: true });
@@ -153,6 +160,7 @@ export default function Alarms({ darkMode }) {
                 value={newAlarm.medicationId} 
                 displayEmpty
                 onChange={(e) => handleNewAlarmChange("medicationId", e.target.value)}
+                sx={{ mb: 2 }}
               >
                 <MenuItem value="">-- Selecciona medicamento --</MenuItem>
                 {medications.map((m) => (
@@ -167,6 +175,7 @@ export default function Alarms({ darkMode }) {
                 onChange={(e) => handleNewAlarmChange("time", e.target.value)}
                 InputLabelProps={{ shrink: true }}
                 fullWidth
+                sx={{ mb: 2 }}
               />
               
               <TextField
@@ -174,6 +183,7 @@ export default function Alarms({ darkMode }) {
                 onChange={(e) => handleNewAlarmChange("frequency", e.target.value)}
                 label="Frecuencia (ej: cada 8h)"
                 fullWidth
+                sx={{ mb: 2 }}
               />
               
               <TextField
@@ -183,6 +193,7 @@ export default function Alarms({ darkMode }) {
                 label="Duración (días)"
                 inputProps={{ min: 1 }}
                 fullWidth
+                sx={{ mb: 2 }}
               />
               
               <FormControlLabel
@@ -193,7 +204,7 @@ export default function Alarms({ darkMode }) {
                   />
                 }
                 label={newAlarm.active ? "Activar recordatorio" : "Sin recordatorio"}
-                sx={{ color: textColor }}
+                sx={{ color: textColor, mb: 2 }}
               />
               
               <Box textAlign="right">
@@ -261,6 +272,33 @@ export default function Alarms({ darkMode }) {
             })}
           </Stack>
         )}
+      </Box>
+      
+      <Box mt={6} display="flex" justifyContent="space-between" flexWrap="wrap" gap={2}>
+        <Button 
+          startIcon={<ArrowBackIcon />} 
+          onClick={() => navigate(-1)} 
+          variant="outlined"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Atrás
+        </Button>
+        <Button 
+          startIcon={<HomeIcon />} 
+          onClick={() => navigate('/dashboard')} 
+          variant="outlined"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Inicio
+        </Button>
+        <Button 
+          onClick={() => navigate('/login')} 
+          variant="outlined" 
+          color="error"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Cerrar Sesión
+        </Button>
       </Box>
     </Container>
   );

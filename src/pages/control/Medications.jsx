@@ -254,7 +254,6 @@ function Medications() {
         )}
       </Box>
 
-      {/* 🔻 Botones de navegación al final */}
       <Box mt={6} display="flex" justifyContent="space-between">
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} variant="outlined">
           Atrás
