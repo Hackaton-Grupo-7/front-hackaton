@@ -75,10 +75,20 @@ export default function Dashboard({ darkMode }) {
       <Box sx={{ maxWidth: 1200, mx: "auto" }}>
         {/* Header */}
         <Box sx={{ textAlign: "center", mb: 6 }}>
-          <Box sx={{
-            display: "inline-flex", justifyContent: "center", alignItems: "center",
-            width: 80, height: 80, borderRadius: "50%", bgcolor: "#3b82f6", mx: "auto", mb: 2, boxShadow: 3
-          }}>
+          <Box
+            sx={{
+              display: "inline-flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: 80,
+              height: 80,
+              borderRadius: "50%",
+              bgcolor: "#3b82f6",
+              mx: "auto",
+              mb: 2,
+              boxShadow: 3
+            }}
+          >
             <Activity style={{ color: "#fff", width: 32, height: 32 }} />
           </Box>
           <Typography
@@ -87,84 +97,235 @@ export default function Dashboard({ darkMode }) {
           >
             Mi Control de Medicación
           </Typography>
-          <Typography variant="body1" sx={{ color: colors.textSecondary, maxWidth: 800, mx: "auto" }}>
-            Tu plataforma integral para el control y seguimiento de medicamentos, alergias y horarios de tratamiento
+          <Typography
+            variant="body1"
+            sx={{ color: colors.textSecondary, maxWidth: 800, mx: "auto" }}
+          >
+            Tu plataforma integral para el control y seguimiento de medicamentos,
+            alergias y horarios de tratamiento
           </Typography>
         </Box>
 
-        {/* Main Menu Cards */}
-        <Grid container spacing={4} justifyContent="center" alignItems="stretch">
-          {menuOptions.map(option => {
+        {/* ✅ 4 tarjetas en una sola fila en pantallas grandes */}
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          alignItems="stretch"
+          sx={{
+            flexWrap: "wrap",               // en pantallas pequeñas se envuelven
+            "@media (min-width:1200px)": {  // en escritorio grande: todas en una línea
+              flexWrap: "nowrap"
+            }
+          }}
+        >
+          {menuOptions.map((option) => {
             const Icon = option.icon;
             const bgGradient = darkMode ? option.bgGradientDark : option.bgGradient;
             return (
-              <Grid item xs={12} sm={6} md={3} key={option.id}>
+              <Grid
+                item
+                key={option.id}
+                sx={{
+                  flex: "1 1 23%",          // 🔑 ~23% para que quepan las 4
+                  maxWidth: "23%",
+                  display: "flex",
+                  "@media (max-width:1199px)": {
+                    flex: "1 1 45%",       // se acomodan en 2 columnas en tablets
+                    maxWidth: "45%"
+                  },
+                  "@media (max-width:600px)": {
+                    flex: "1 1 100%",
+                    maxWidth: "100%"
+                  }
+                }}
+              >
                 <Paper
                   onMouseEnter={() => setHoveredCard(option.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                   onClick={() => navigate(option.route)}
                   sx={{
                     position: "relative",
-                    p: 4,
+                    p: 2,
                     borderRadius: 3,
-                    boxShadow: 3,
+                    boxShadow: hoveredCard === option.id ? 6 : 3,
                     cursor: "pointer",
-                    transition: "transform 0.3s, box-shadow 0.3s",
-                    "&:hover": { transform: "scale(1.03)", boxShadow: 6 },
-                    overflow: "visible",
+                    transition: "all 0.3s ease-in-out",
+                    transform:
+                      hoveredCard === option.id ? "translateY(-6px) scale(1.02)" : "none",
+                    overflow: "hidden",
                     bgcolor: colors.paperBg,
                     border: colors.paperBorder,
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
-                    height: 350,
-                    color: colors.textPrimary
+                    height: 340, // un poco más pequeño
+                    color: colors.textPrimary,
+                    "&::before": {
+                      content: '""',
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: 4,
+                      background: option.gradient,
+                      transform: hoveredCard === option.id ? "scaleX(1)" : "scaleX(0)",
+                      transformOrigin: "left",
+                      transition: "transform 0.3s ease-in-out"
+                    }
                   }}
                 >
-                  {/* Contador dentro de la tarjeta */}
-                  <Box sx={{
-                    position: "absolute",
-                    top: 16,
-                    right: 16,
-                    bgcolor: option.color,
-                    color: "#fff",
-                    px: 2,
-                    py: 0.5,
-                    borderRadius: 2,
-                    fontWeight: 700,
-                    fontSize: 14,
-                    boxShadow: 1
-                  }}>
+                  {/* Contador */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 12,
+                      right: 12,
+                      bgcolor: option.color,
+                      color: "#fff",
+                      width: 28,
+                      height: 28,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: "50%",
+                      fontWeight: 700,
+                      fontSize: 13,
+                      boxShadow: 2,
+                      zIndex: 2
+                    }}
+                  >
                     {option.count}
                   </Box>
 
-                  {/* Background Gradient */}
-                  <Box sx={{ position: "absolute", inset: 0, borderRadius: 3, opacity: 0.15, background: bgGradient }} />
+                  {/* Fondo gradiente */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 3,
+                      opacity: 0.1,
+                      background: bgGradient,
+                      transition: "opacity 0.3s ease-in-out",
+                      "&:hover": { opacity: 0.2 }
+                    }}
+                  />
 
                   {/* Contenido */}
-                  <Box sx={{ position: "relative", display: "flex", flexDirection: "column", height: "100%" }}>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                      <Box sx={{ p: 2, borderRadius: 2, background: option.gradient, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <Icon style={{ color: "#fff", width: 28, height: 28 }} />
+                  <Box
+                    sx={{
+                      position: "relative",
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "100%",
+                      zIndex: 1
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        mb: 2
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          p: 1.5,
+                          borderRadius: 2,
+                          background: option.gradient,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          boxShadow: `0 4px 12px ${option.color}40`
+                        }}
+                      >
+                        <Icon style={{ color: "#fff", width: 24, height: 24 }} />
                       </Box>
-                      <ChevronRight style={{ color: hoveredCard === option.id ? "#d1d5db" : "#9ca3af", transition: "all 0.3s" }} />
+                      <ChevronRight
+                        style={{
+                          color:
+                            hoveredCard === option.id
+                              ? option.color
+                              : colors.textSecondary,
+                          transition: "all 0.3s",
+                          transform:
+                            hoveredCard === option.id ? "translateX(4px)" : "none"
+                        }}
+                      />
                     </Box>
-                    <Box sx={{ flex: 1 }}>
-                      <Typography variant="h5" sx={{ fontWeight: 700, mb: 1, color: colors.textPrimary }}>{option.title}</Typography>
-                      <Typography sx={{ color: colors.textSecondary, mb: 2 }}>{option.description}</Typography>
-                      <Box sx={{ mb: 2 }}>
-                        <Typography sx={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", color: colors.textSecondary, mb: 1 }}>Características</Typography>
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                          {option.features.map((f, i) => (
-                            <Box key={i} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: option.color }} />
-                              <Typography sx={{ fontSize: 14, color: colors.textPrimary }}>{f}</Typography>
-                            </Box>
-                          ))}
-                        </Box>
+
+                    <Box sx={{ flex: 1, mb: 1 }}>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: 700, mb: 0.5, color: colors.textPrimary }}
+                      >
+                        {option.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: colors.textSecondary,
+                          mb: 1.5,
+                          minHeight: "36px",
+                          fontSize: "0.85rem"
+                        }}
+                      >
+                        {option.description}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: 11,
+                          fontWeight: 600,
+                          textTransform: "uppercase",
+                          color: colors.textSecondary,
+                          mb: 0.5
+                        }}
+                      >
+                        Características
+                      </Typography>
+                      <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+                        {option.features.map((f, i) => (
+                          <Box key={i} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                            <Box
+                              sx={{
+                                width: 6,
+                                height: 6,
+                                borderRadius: "50%",
+                                bgcolor: option.color,
+                                boxShadow: `0 0 6px ${option.color}`,
+                                flexShrink: 0
+                              }}
+                            />
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: colors.textPrimary,
+                                fontSize: "0.75rem",
+                                lineHeight: 1.2
+                              }}
+                            >
+                              {f}
+                            </Typography>
+                          </Box>
+                        ))}
                       </Box>
                     </Box>
-                    <Box sx={{ mt: 3, py: 1.5, textAlign: "center", fontWeight: 600, border: `2px solid ${option.color}`, borderRadius: 2, color: option.color, transition: "all 0.3s", "&:hover": { boxShadow: 3 } }}>
+
+                    <Box
+                      sx={{
+                        mt: "auto",
+                        py: 1,
+                        textAlign: "center",
+                        fontWeight: 600,
+                        border: `2px solid ${option.color}30`,
+                        background:
+                          hoveredCard === option.id ? `${option.color}15` : "transparent",
+                        borderRadius: 2,
+                        color: option.color,
+                        transition: "all 0.3s",
+                        fontSize: "0.85rem"
+                      }}
+                    >
                       Acceder a {option.title}
                     </Box>
                   </Box>
