@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Grid, Paper } from "@mui/material";
-import { Pill, Bell, AlertTriangle, Clock, ChevronRight, Activity, Users } from "lucide-react";
+import { Pill, Bell, AlertTriangle, Clock, ChevronRight, Activity } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const menuOptions = [
@@ -62,13 +62,16 @@ export default function Dashboard({ darkMode }) {
   const [hoveredCard, setHoveredCard] = useState(null);
   const navigate = useNavigate();
 
-  const textColor = darkMode ? "#e5e7eb" : "#111827";
-  const textSecondary = darkMode ? "#9ca3af" : "#6b7280";
-  const paperBg = darkMode ? "#1f2937" : "#fff";
-  const paperBorder = darkMode ? "1px solid #374151" : "1px solid #d1d5db";
+  const colors = {
+    textPrimary: darkMode ? "#e5e7eb" : "#111827",
+    textSecondary: darkMode ? "#9ca3af" : "#6b7280",
+    paperBg: darkMode ? "#1f2937" : "#fff",
+    paperBorder: darkMode ? "1px solid #374151" : "1px solid #d1d5db",
+    pageBg: darkMode ? "#121212" : "#f9fafb",
+  };
 
   return (
-    <Box sx={{ py: 4, px: 2, minHeight: "calc(100vh - 124px)", bgcolor: darkMode ? "#121212" : "#f9fafb" }}>
+    <Box sx={{ py: 4, px: 2, minHeight: "100vh", bgcolor: colors.pageBg }}>
       <Box sx={{ maxWidth: 1200, mx: "auto" }}>
         {/* Header */}
         <Box sx={{ textAlign: "center", mb: 6 }}>
@@ -78,8 +81,8 @@ export default function Dashboard({ darkMode }) {
           }}>
             <Activity style={{ color: "#fff", width: 32, height: 32 }} />
           </Box>
-          <Typography variant="h3" sx={{ fontWeight: 700, mb: 1, color: textColor }}>Centro de Salud</Typography>
-          <Typography variant="body1" sx={{ color: textSecondary, maxWidth: 800, mx: "auto" }}>
+          <Typography variant="h3" sx={{ fontWeight: 700, mb: 1, color: colors.textPrimary }}>Centro de Salud</Typography>
+          <Typography variant="body1" sx={{ color: colors.textSecondary, maxWidth: 800, mx: "auto" }}>
             Tu plataforma integral para el control y seguimiento de medicamentos, alergias y horarios de tratamiento
           </Typography>
         </Box>
@@ -91,9 +94,9 @@ export default function Dashboard({ darkMode }) {
               <Paper sx={{
                 p: 3, display: "flex", flexDirection: "column", alignItems: "center",
                 justifyContent: "center", borderRadius: 3, boxShadow: 3, textAlign: "center",
-                bgcolor: paperBg, border: paperBorder
+                bgcolor: colors.paperBg, border: colors.paperBorder
               }}>
-                <Typography sx={{ fontSize: 14, fontWeight: 500, color: textSecondary }}>{option.title}</Typography>
+                <Typography sx={{ fontSize: 14, fontWeight: 500, color: colors.textSecondary }}>{option.title}</Typography>
                 <Typography sx={{ fontSize: 28, fontWeight: 700, color: option.color }}>{option.count}</Typography>
               </Paper>
             </Grid>
@@ -101,7 +104,7 @@ export default function Dashboard({ darkMode }) {
         </Grid>
 
         {/* Main Menu Cards */}
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={4} justifyContent="center" alignItems="stretch">
           {menuOptions.map(option => {
             const Icon = option.icon;
             const bgGradient = darkMode ? option.bgGradientDark : option.bgGradient;
@@ -116,7 +119,10 @@ export default function Dashboard({ darkMode }) {
                     transition: "transform 0.3s, box-shadow 0.3s",
                     "&:hover": { transform: "scale(1.03)", boxShadow: 6 },
                     overflow: "hidden",
-                    bgcolor: paperBg, border: paperBorder
+                    bgcolor: colors.paperBg, border: colors.paperBorder,
+                    display: "flex", flexDirection: "column", justifyContent: "space-between",
+                    height: 350,
+                    color: colors.textPrimary
                   }}
                 >
                   {/* Background Gradient */}
@@ -125,7 +131,7 @@ export default function Dashboard({ darkMode }) {
                     background: bgGradient
                   }} />
                   {/* Content */}
-                  <Box sx={{ position: "relative" }}>
+                  <Box sx={{ position: "relative", display: "flex", flexDirection: "column", height: "100%" }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
                       <Box sx={{
                         p: 2, borderRadius: 2, background: option.gradient,
@@ -138,17 +144,19 @@ export default function Dashboard({ darkMode }) {
                         transition: "all 0.3s"
                       }} />
                     </Box>
-                    <Typography variant="h5" sx={{ fontWeight: 700, mb: 1, color: textColor }}>{option.title}</Typography>
-                    <Typography sx={{ color: textSecondary, mb: 2 }}>{option.description}</Typography>
-                    <Box sx={{ mb: 2 }}>
-                      <Typography sx={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", color: textSecondary, mb: 1 }}>Características</Typography>
-                      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                        {option.features.map((f, i) => (
-                          <Box key={i} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                            <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: option.color }} />
-                            <Typography sx={{ fontSize: 14, color: textColor }}>{f}</Typography>
-                          </Box>
-                        ))}
+                    <Box sx={{ flex: 1 }}>
+                      <Typography variant="h5" sx={{ fontWeight: 700, mb: 1, color: colors.textPrimary }}>{option.title}</Typography>
+                      <Typography sx={{ color: colors.textSecondary, mb: 2 }}>{option.description}</Typography>
+                      <Box sx={{ mb: 2 }}>
+                        <Typography sx={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", color: colors.textSecondary, mb: 1 }}>Características</Typography>
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                          {option.features.map((f, i) => (
+                            <Box key={i} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                              <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: option.color }} />
+                              <Typography sx={{ fontSize: 14, color: colors.textPrimary }}>{f}</Typography>
+                            </Box>
+                          ))}
+                        </Box>
                       </Box>
                     </Box>
                     <Box sx={{

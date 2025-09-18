@@ -24,8 +24,7 @@ export default function Login({ darkMode }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        bgcolor: darkMode ? "#000" : "#fff",
-        color: darkMode ? "#fff" : "#000",
+        bgcolor: darkMode ? "#000" : "#f9fafb",
         px: 2,
       }}
     >
@@ -37,8 +36,8 @@ export default function Login({ darkMode }) {
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            p: 4,
-            border: "1px solid #ccc",
+            width: "100%",
+            padding: 4,
             borderRadius: 2,
             bgcolor: darkMode ? "#333" : "#fff",
             color: darkMode ? "#fff" : "#000",
@@ -48,6 +47,7 @@ export default function Login({ darkMode }) {
           <Typography variant="h5" align="center">
             Iniciar Sesión
           </Typography>
+
           <TextField
             label="Email"
             name="email"
@@ -55,6 +55,10 @@ export default function Login({ darkMode }) {
             value={formData.email}
             onChange={handleChange}
             required
+            sx={{
+              input: { color: darkMode ? "#fff" : "#000" },
+              label: { color: darkMode ? "#ccc" : "#6b7280" },
+            }}
           />
           <TextField
             label="Password"
@@ -63,14 +67,20 @@ export default function Login({ darkMode }) {
             value={formData.password}
             onChange={handleChange}
             required
+            sx={{
+              input: { color: darkMode ? "#fff" : "#000" },
+              label: { color: darkMode ? "#ccc" : "#6b7280" },
+            }}
           />
+
           <Button type="submit" variant="contained" color="primary">
             Entrar
           </Button>
+
           <Button
             component={Link}
             to="/create-user"
-            variant="outlined"
+            variant="contained"
             color="secondary"
           >
             Registrarse
