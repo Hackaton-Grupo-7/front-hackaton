@@ -74,7 +74,7 @@ Cada tarjeta del dashboard incluye un **contador de elementos** y es completamen
 
 ---
 
-## 🧪 Tests implementados
+## ​✅​ Tests implementados
 
 Actualmente tenemos 3 tests unitarios para garantizar la estabilidad de las páginas críticas:
 
@@ -86,7 +86,7 @@ Todos los tests utilizan **React Testing Library** y **Jest**, asegurando cobert
 
 ---
 
-## ⚡ Tecnologías usadas
+## 💻​ Tecnologías usadas
 
 - **React 19** + Vite
 - **Material UI (MUI)**
