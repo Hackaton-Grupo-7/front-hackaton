@@ -151,17 +151,29 @@ export default function App({ darkMode }) {
           <Grid container spacing={3}>
             {/* Medicamento */}
             <Grid item xs={12} md={6}>
-              <FormControl fullWidth>
-                <InputLabel>Medicamento *</InputLabel>
-                <Select value={medicamento} onChange={(e) => setMedicamento(e.target.value)}>
-                  <MenuItem value="">-- Selecciona un medicamento --</MenuItem>
-                  {medicamentosDisponibles.map(m => <MenuItem key={m} value={m}>{m}</MenuItem>)}
+              <FormControl fullWidth variant="outlined">
+                <InputLabel id="medicamento-label">Medicamento *</InputLabel>
+                <Select
+                  labelId="medicamento-label"
+                  id="medicamento"
+                  value={medicamento}
+                  onChange={(e) => setMedicamento(e.target.value)}
+                  label="Medicamento *"
+                  displayEmpty
+                >
+                  <MenuItem value="">
+                    <em>-- Selecciona un medicamento --</em>
+                  </MenuItem>
+                  {medicamentosDisponibles.map(m => (
+                    <MenuItem key={m} value={m}>{m}</MenuItem>
+                  ))}
                   <MenuItem value="Otro">Otro (especificar)</MenuItem>
                 </Select>
               </FormControl>
               {medicamento === "Otro" && (
                 <TextField
                   fullWidth
+                  variant="outlined"
                   placeholder="Especifica el medicamento"
                   value={medicamentoPersonalizado}
                   onChange={(e) => setMedicamentoPersonalizado(e.target.value)}
@@ -172,17 +184,29 @@ export default function App({ darkMode }) {
 
             {/* Reacción */}
             <Grid item xs={12} md={6}>
-              <FormControl fullWidth>
-                <InputLabel>Tipo de Reacción *</InputLabel>
-                <Select value={reaccion} onChange={(e) => setReaccion(e.target.value)}>
-                  <MenuItem value="">-- Selecciona la reacción --</MenuItem>
-                  {tiposReaccion.map(r => <MenuItem key={r} value={r}>{r}</MenuItem>)}
+              <FormControl fullWidth variant="outlined">
+                <InputLabel id="reaccion-label">Tipo de Reacción *</InputLabel>
+                <Select
+                  labelId="reaccion-label"
+                  id="reaccion"
+                  value={reaccion}
+                  onChange={(e) => setReaccion(e.target.value)}
+                  label="Tipo de Reacción *"
+                  displayEmpty
+                >
+                  <MenuItem value="">
+                    <em>-- Selecciona la reacción --</em>
+                  </MenuItem>
+                  {tiposReaccion.map(r => (
+                    <MenuItem key={r} value={r}>{r}</MenuItem>
+                  ))}
                   <MenuItem value="Otro">Otro (especificar)</MenuItem>
                 </Select>
               </FormControl>
               {reaccion === "Otro" && (
                 <TextField
                   fullWidth
+                  variant="outlined"
                   placeholder="Describe la reacción"
                   value={reaccionPersonalizada}
                   onChange={(e) => setReaccionPersonalizada(e.target.value)}
@@ -220,6 +244,7 @@ export default function App({ darkMode }) {
                 multiline
                 rows={4}
                 fullWidth
+                variant="outlined"
                 value={notas}
                 onChange={(e) => setNotas(e.target.value)}
               />
