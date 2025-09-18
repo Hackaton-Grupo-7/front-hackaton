@@ -2,6 +2,7 @@
 import { Box, Typography, TextField, Button, Container } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { register } from "../services/authService";
 
 export default function CreateUser({ darkMode }) {
   const [formData, setFormData] = useState({
@@ -10,17 +11,26 @@ export default function CreateUser({ darkMode }) {
     email: "",
     password: "",
   });
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
 
   const navigate = useNavigate();
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Simulated registration:", formData);
-    // Simulación: redirige al login
-    navigate("/login");
+    setSubmitting(true)
+    setError("")
+    try {
+      await register(formData)
+      navigate("/login");
+    } catch (err) {
+      setError(err.response.data.message)
+    } finally {
+      setSubmitting(false)
+    }
   };
 
   return (
@@ -89,8 +99,11 @@ export default function CreateUser({ darkMode }) {
             InputLabelProps={{ style: { color: darkMode ? "#ccc" : "#333" } }}
             InputProps={{ style: { color: darkMode ? "#fff" : "#000" } }}
           />
-          <Button type="submit" variant="contained" sx={{ bgcolor: "#3ecf8e", "&:hover": { bgcolor: "#10b981" } }}>
-            Crear cuenta
+          {error && (
+            <Typography color="error" variant="body2">{error}</Typography>
+          )}
+          <Button type="submit" variant="contained" disabled={submitting} sx={{ bgcolor: "#3ecf8e", "&:hover": { bgcolor: "#10b981" } }}>
+            {submitting ? 'Creando...' : 'Crear cuenta'}
           </Button>
         </Box>
       </Container>
