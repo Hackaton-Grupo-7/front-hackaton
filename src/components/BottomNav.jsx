@@ -25,13 +25,6 @@ export default function BottomNav({ darkMode, handleLogout }) {
     >
       <Stack direction="row" spacing={2} justifyContent="center">
         <Button
-          variant="contained"
-          color="primary"
-          onClick={() => navigate("/")}
-        >
-          Inicio
-        </Button>
-        <Button
           variant="outlined"
           color="secondary"
           onClick={() => navigate(-1)}
@@ -51,3 +44,4 @@ export default function BottomNav({ darkMode, handleLogout }) {
     </Box>
   );
 }
+

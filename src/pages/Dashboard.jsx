@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { Box, Typography, Grid, Paper } from "@mui/material";
-import { Pill, Bell, AlertTriangle, Clock, ChevronRight, Activity } from "lucide-react";
+import { Box, Typography, Grid, Paper, useTheme } from "@mui/material";
+import {
+  Pill,
+  Bell,
+  AlertTriangle,
+  Clock,
+  ChevronRight,
+  Activity
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+  
 const menuOptions = [
   {
     id: "medicamentos",
@@ -26,7 +33,11 @@ const menuOptions = [
     gradient: "linear-gradient(90deg,#10b981,#059669)",
     bgGradient: "linear-gradient(90deg,#d1fae5,#d9f99d)",
     bgGradientDark: "linear-gradient(90deg,#065f46,#047857)",
-    features: ["Recordatorios automáticos", "Notificaciones push", "Horarios personalizados"],
+    features: [
+      "Recordatorios automáticos",
+      "Notificaciones push",
+      "Horarios personalizados"
+    ],
     route: "/control/alarms",
     count: 5
   },
@@ -58,16 +69,18 @@ const menuOptions = [
   }
 ];
 
-export default function Dashboard({ darkMode }) {
+export default function Dashboard() {
   const [hoveredCard, setHoveredCard] = useState(null);
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   const colors = {
-    textPrimary: darkMode ? "#e5e7eb" : "#111827",
-    textSecondary: darkMode ? "#9ca3af" : "#6b7280",
-    paperBg: darkMode ? "#1f2937" : "#fff",
-    paperBorder: darkMode ? "1px solid #374151" : "1px solid #d1d5db",
-    pageBg: darkMode ? "#121212" : "#f9fafb",
+    textPrimary: theme.palette.text.primary,
+    textSecondary: theme.palette.text.secondary,
+    paperBg: theme.palette.background.paper,
+    paperBorder: `1px solid ${theme.palette.divider}`,
+    pageBg: theme.palette.background.default
   };
 
   return (
@@ -93,7 +106,7 @@ export default function Dashboard({ darkMode }) {
           </Box>
           <Typography
             variant="h3"
-            sx={{ fontWeight: 700, mb: 1, color: darkMode ? "#e5e5e5" : "#111827" }}
+            sx={{ fontWeight: 700, mb: 1, color: colors.textPrimary }}
           >
             Mi Control de Medicación
           </Typography>
@@ -106,32 +119,33 @@ export default function Dashboard({ darkMode }) {
           </Typography>
         </Box>
 
-        {/* ✅ 4 tarjetas en una sola fila en pantallas grandes */}
+        {/* Tarjetas */}
         <Grid
           container
           spacing={2}
           justifyContent="center"
           alignItems="stretch"
           sx={{
-            flexWrap: "wrap",               // en pantallas pequeñas se envuelven
-            "@media (min-width:1200px)": {  // en escritorio grande: todas en una línea
+            flexWrap: "wrap",
+            "@media (min-width:1200px)": {
               flexWrap: "nowrap"
             }
           }}
         >
           {menuOptions.map((option) => {
             const Icon = option.icon;
-            const bgGradient = darkMode ? option.bgGradientDark : option.bgGradient;
+            const bgGradient = isDark ? option.bgGradientDark : option.bgGradient;
+
             return (
               <Grid
                 item
                 key={option.id}
                 sx={{
-                  flex: "1 1 23%",          // 🔑 ~23% para que quepan las 4
+                  flex: "1 1 23%",
                   maxWidth: "23%",
                   display: "flex",
                   "@media (max-width:1199px)": {
-                    flex: "1 1 45%",       // se acomodan en 2 columnas en tablets
+                    flex: "1 1 45%",
                     maxWidth: "45%"
                   },
                   "@media (max-width:600px)": {
@@ -152,13 +166,15 @@ export default function Dashboard({ darkMode }) {
                     cursor: "pointer",
                     transition: "all 0.3s ease-in-out",
                     transform:
-                      hoveredCard === option.id ? "translateY(-6px) scale(1.02)" : "none",
+                      hoveredCard === option.id
+                        ? "translateY(-6px) scale(1.02)"
+                        : "none",
                     overflow: "hidden",
                     bgcolor: colors.paperBg,
                     border: colors.paperBorder,
                     display: "flex",
                     flexDirection: "column",
-                    height: 340, // un poco más pequeño
+                    height: 340,
                     color: colors.textPrimary,
                     "&::before": {
                       content: '""',
@@ -168,7 +184,8 @@ export default function Dashboard({ darkMode }) {
                       right: 0,
                       height: 4,
                       background: option.gradient,
-                      transform: hoveredCard === option.id ? "scaleX(1)" : "scaleX(0)",
+                      transform:
+                        hoveredCard === option.id ? "scaleX(1)" : "scaleX(0)",
                       transformOrigin: "left",
                       transition: "transform 0.3s ease-in-out"
                     }
@@ -257,7 +274,7 @@ export default function Dashboard({ darkMode }) {
                     <Box sx={{ flex: 1, mb: 1 }}>
                       <Typography
                         variant="h6"
-                        sx={{ fontWeight: 700, mb: 0.5, color: colors.textPrimary }}
+                        sx={{ fontWeight: 700, mb: 0.5 }}
                       >
                         {option.title}
                       </Typography>
@@ -299,7 +316,6 @@ export default function Dashboard({ darkMode }) {
                             <Typography
                               variant="body2"
                               sx={{
-                                color: colors.textPrimary,
                                 fontSize: "0.75rem",
                                 lineHeight: 1.2
                               }}
@@ -333,6 +349,7 @@ export default function Dashboard({ darkMode }) {
               </Grid>
             );
           })}
+          
         </Grid>
       </Box>
     </Box>

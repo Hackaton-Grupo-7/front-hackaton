@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box, Grid, Typography, Tabs, Tab, Button,
   Select, MenuItem, Card, CardContent, CardHeader,
@@ -9,7 +10,9 @@ import {
   CalendarToday, AccessTime, Notifications,
   Add, NotificationsActive, Delete,
   CheckCircle, Medication, NotificationsNone,
-  Schedule as ScheduleIcon
+  Schedule as ScheduleIcon,
+  ArrowBack as ArrowBackIcon,
+  Home as HomeIcon
 } from "@mui/icons-material";
 
 const medicamentosEjemplo = [
@@ -26,6 +29,7 @@ const horasDelDia = [
 const diasSemana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
 
 function Schedule() {
+  const navigate = useNavigate();
   const [vistaActual, setVistaActual] = useState("semanal");
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [horarios, setHorarios] = useState([]);
@@ -210,7 +214,7 @@ function Schedule() {
           <CalendarToday sx={{ fontSize:40 }} />
         </Box>
         <Typography variant="h4" fontWeight="bold" gutterBottom>Horarios y Programación</Typography>
-        <Typography variant="h6" color="text.secondary">Organiza tus medicamentos por días y horarios</Typography>
+        <Typography variant="h6" color="text.secondary">Organiza tus medicamentos por días and horarios</Typography>
       </Box>
 
       <Paper sx={{ mb:4 }}>
@@ -274,6 +278,34 @@ function Schedule() {
       {vistaActual==="semanal" && renderVistaSemanal()}
       {vistaActual==="diaria" && renderVistaDiaria()}
       {vistaActual==="alarmas" && renderProximasAlarmas()}
+
+    
+      <Box mt={6} display="flex" justifyContent="space-between" flexWrap="wrap" gap={2}>
+        <Button 
+          startIcon={<ArrowBackIcon />} 
+          onClick={() => navigate(-1)} 
+          variant="outlined"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Atrás
+        </Button>
+        <Button 
+          startIcon={<HomeIcon />} 
+          onClick={() => navigate('/dashboard')} 
+          variant="outlined"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Inicio
+        </Button>
+        <Button 
+          onClick={() => navigate('/login')} 
+          variant="outlined" 
+          color="error"
+          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
+        >
+          Cerrar Sesión
+        </Button>
+      </Box>
     </Container>
   );
 }

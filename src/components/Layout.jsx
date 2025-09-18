@@ -2,7 +2,7 @@
 import { Box } from "@mui/material";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import BottomNav from "./BottomNav"; // <-- importamos
+
 
 const FOOTER_HEIGHT = 64;
 const NAVBAR_HEIGHT = 64;
@@ -38,8 +38,6 @@ export default function Layout({ children, darkMode, toggleDarkMode, handleLogou
         {children}
       </Box>
 
-      {/* Barra inferior visible en todas las páginas */}
-      <BottomNav darkMode={darkMode} handleLogout={handleLogout} />
 
       <Footer />
     </Box>

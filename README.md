@@ -1,3 +1,4 @@
+
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=300&size=18&duration=2000&pause=1000&color=9D45C3&width=435&lines=Bienvenid%40+al+repositorio+de+Sanimed;proyecto+para+la+8%C2%AA+Hackaton;Organizada+por+Fundaci%C3%B3n+Somos+F5)](https://git.io/typing-svg)
 
 # Sanimed - Frontend
@@ -132,5 +133,5 @@ npm run test
 > 📝 Nota final
 >
 > Sanimed ofrece un control integral sobre medicación y salud, con un frontend moderno, pruebas unitarias y experiencia de usuario cuidada.  
-> Cumple todos los criterios de evaluación de la hackaton: originalidad, arquitectura frontend y backend, UX/UI, CRUD, tests, conexión backend-frontend, funcionalidad, mantenibilidad y organización del equipo.
+> Esperamos cumplir con todos los criterios de evaluación de la hackaton: originalidad, arquitectura frontend y backend, UX/UI, CRUD, tests, conexión backend-frontend, funcionalidad, mantenibilidad y organización del equipo.
 
