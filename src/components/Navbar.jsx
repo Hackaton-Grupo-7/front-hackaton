@@ -64,10 +64,9 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
           >
             Inicio
           </Button>
-
           <Button
             color="inherit"
-            onClick={() => navigate("/about")}
+            onClick={() => navigate("/creators")}
             sx={{
               fontSize: "1.1rem",
               fontWeight: "bold",
@@ -93,8 +92,8 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
             <MenuIcon />
           </IconButton>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-            <MenuItem onClick={() => { navigate("/"); handleMenuClose(); }}>Home</MenuItem>
-            <MenuItem onClick={() => { navigate("/about"); handleMenuClose(); }}>About</MenuItem>
+            <MenuItem onClick={() => { navigate("/home"); handleMenuClose(); }}>Inicio</MenuItem>
+            <MenuItem onClick={() => { navigate("/creators"); handleMenuClose(); }}>Contacto</MenuItem>
 
             {isLoggedIn && (
               <>

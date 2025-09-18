@@ -124,6 +124,7 @@ function Medications() {
   };
 
   return (
+
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header */}
       <Box sx={{ textAlign: "center", mb: 6 }}>
@@ -134,6 +135,7 @@ function Medications() {
           display: "inline-flex", alignItems: "center", justifyContent: "center", mb: 3
         }}>
           <MedicationIcon sx={{ fontSize: 40 }} />
+
         </Box>
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Control de Medicamentos

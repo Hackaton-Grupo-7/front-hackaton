@@ -1,28 +1,14 @@
-<<<<<<< HEAD
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=300&size=18&duration=2000&pause=1000&color=9D45C3&width=435&lines=Bienvenid%40+al+repositorio+de+Sanimed;proyecto+para+la+8%C2%AA+Hackaton;Organizada+por+Fundaci%C3%B3n+Somos+F5)](https://git.io/typing-svg)
 
-Currently, two official plugins are available:
+# Sanimed - Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&duration=1600&pause=1000&color=3C57C3&center=true&vCenter=true&width=435&lines=Bienvenid%40+al+repositorio+de+Sanimed;Participaci%C3%B3n+en++la+8%C2%AA+Hackaton;Organizada+por+Fundaci%C3%B3n+Somos+F5;con+la+colaboraci%C3%B3n+de+Sanitas)](https://git.io/typing-svg)
-
-# 💊​ Sanimed - Frontend
-
-**Sanimed** es una aplicación web desarrollada durante la **8ª Hackaton organizada por Fundación Somos F5 con la colaboración de Sanitas**.  
-Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación, alergias y horarios de toma con alarmas**, combinando una experiencia intuitiva y funcional con un frontend modular y escalable.
+**Sanimed** es una aplicación web desarrollada durante la **8ª Hackaton organizada por Fundación Somos F5**.  
+Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación, alergias y horarios de toma**, combinando una experiencia intuitiva y funcional con un frontend modular y escalable.
 
 ---
 
-## 🔷​ Objetivos del proyecto
+## 🚀 Objetivos del proyecto
 
 - Permitir la gestión de **medicamentos** y dosis.
 - Configurar **alarmas y recordatorios** de toma.
@@ -33,10 +19,10 @@ Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación
 
 ---
 
-## 🧱​ Estructura del frontend
+## 🏗 Estructura del frontend
 
 ```
-📁 FRONT-HACKATON 
+📁 Proyecto raíz
 ├── .gitignore
 ├── babel.config.js
 ├── eslint.config.js
@@ -72,10 +58,7 @@ Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación
 │ ├── Dashboard.jsx
 │ ├── Home.jsx
 │ └── Login.jsx
-
 ```
-
----
 ## 📋 Funcionalidades principales del Dashboard
 
 | Sección        | Qué hace                                                                 |
@@ -91,7 +74,7 @@ Cada tarjeta del dashboard incluye un **contador de elementos** y es completamen
 
 ## 🧪 Tests implementados
 
-Actualmente tenemos 3 tests unitarios para garantizar la estabilidad de las páginas críticas:
+Actualmente tenemos tests unitarios para garantizar la estabilidad de las páginas críticas:
 
 1. **Login:** Comprueba que el encabezado "Iniciar Sesión" se renderiza correctamente.
 2. **Allergies:** Comprueba que el encabezado "Alergias" se renderiza.
@@ -108,6 +91,7 @@ Todos los tests utilizan **React Testing Library** y **Jest**, asegurando cobert
 - **React Router Dom**
 - **Jest + React Testing Library**
 - **ESLint** y **Babel** para calidad y compatibilidad de código
+- **CSS-in-JS con Emotion**
 
 ---
 
@@ -124,13 +108,14 @@ El modo oscuro se aplica a **todas las páginas**, manteniendo contraste y visib
 
 ## 👥 Colaboradores Backend
 
-| Digital Academy             | Valencia                  |
-|-----------------------------|---------------------------|
-| **Dmytro Belei**                | **Paula Calvo García**        |
-| **Efrén Tomás Campa**          | **Saba Ur Rehman**            |
+- **Paula Calvo García** - Valencia  
+- **Saba Ur Rehman** - Valencia  
+- **Dmytro Belei** - Digital Academy  
+- **Efrén Tomás Campa** - Digital Academy
+
 ---
 
-## ❓​ Cómo ejecutar el proyecto
+## 📌 Cómo ejecutar el proyecto
 
 ```bash
 # Instalar dependencias
@@ -143,9 +128,10 @@ npm run dev
 npm run test
 
 ```
+---
+
 > 📝 Nota final
 >
-> **Sanimed** ofrece un control integral sobre medicación y salud, con un frontend moderno, pruebas unitarias y experiencia de usuario cuidada.  
-> Cumple todos los criterios de evaluación de la hackaton: originalidad, arquitectura frontend y backend, UX/UI, CRUD, tests, conexión backend-frontend, funcionalidad, mantenibilidad y organización del equipo.
+> Sanimed ofrece un control integral sobre medicación y salud, con un frontend moderno, pruebas unitarias y experiencia de usuario cuidada.  
+> Esperamos cumplir con todos los criterios de evaluación de la hackaton: originalidad, arquitectura frontend y backend, UX/UI, CRUD, tests, conexión backend-frontend, funcionalidad, mantenibilidad y organización del equipo.
 
->>>>>>> f7d775095871ab974463d1f2cd4b820f9e645bf6
