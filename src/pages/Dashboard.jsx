@@ -83,34 +83,14 @@ export default function Dashboard({ darkMode }) {
           </Box>
           <Typography
             variant="h3"
-            sx={{
-              fontWeight: 700,
-              mb: 1,
-              color: darkMode ? "#e5e5e5" : "#111827"
-            }}
+            sx={{ fontWeight: 700, mb: 1, color: darkMode ? "#e5e5e5" : "#111827" }}
           >
-            Centro de Salud
+            Mi Control de Medicación
           </Typography>
           <Typography variant="body1" sx={{ color: colors.textSecondary, maxWidth: 800, mx: "auto" }}>
             Tu plataforma integral para el control y seguimiento de medicamentos, alergias y horarios de tratamiento
           </Typography>
         </Box>
-
-        {/* Contadores */}
-        <Grid container spacing={4} sx={{ mb: 6, justifyContent: "center" }}>
-          {menuOptions.map(option => (
-            <Grid item xs={12} sm={6} md={3} key={`counter-${option.id}`}>
-              <Paper sx={{
-                p: 3, display: "flex", flexDirection: "column", alignItems: "center",
-                justifyContent: "center", borderRadius: 3, boxShadow: 3, textAlign: "center",
-                bgcolor: colors.paperBg, border: colors.paperBorder
-              }}>
-                <Typography sx={{ fontSize: 14, fontWeight: 500, color: colors.textSecondary }}>{option.title}</Typography>
-                <Typography sx={{ fontSize: 28, fontWeight: 700, color: option.color }}>{option.count}</Typography>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
 
         {/* Main Menu Cards */}
         <Grid container spacing={4} justifyContent="center" alignItems="stretch">
@@ -118,40 +98,56 @@ export default function Dashboard({ darkMode }) {
             const Icon = option.icon;
             const bgGradient = darkMode ? option.bgGradientDark : option.bgGradient;
             return (
-              <Grid item xs={12} sm={6} md={5} key={option.id}>
+              <Grid item xs={12} sm={6} md={3} key={option.id}>
                 <Paper
                   onMouseEnter={() => setHoveredCard(option.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                   onClick={() => navigate(option.route)}
                   sx={{
-                    position: "relative", p: 4, borderRadius: 3, boxShadow: 3, cursor: "pointer",
+                    position: "relative",
+                    p: 4,
+                    borderRadius: 3,
+                    boxShadow: 3,
+                    cursor: "pointer",
                     transition: "transform 0.3s, box-shadow 0.3s",
                     "&:hover": { transform: "scale(1.03)", boxShadow: 6 },
-                    overflow: "hidden",
-                    bgcolor: colors.paperBg, border: colors.paperBorder,
-                    display: "flex", flexDirection: "column", justifyContent: "space-between",
+                    overflow: "visible",
+                    bgcolor: colors.paperBg,
+                    border: colors.paperBorder,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
                     height: 350,
                     color: colors.textPrimary
                   }}
                 >
-                  {/* Background Gradient */}
+                  {/* Contador dentro de la tarjeta */}
                   <Box sx={{
-                    position: "absolute", inset: 0, borderRadius: 3, opacity: 0.15,
-                    background: bgGradient
-                  }} />
-                  {/* Content */}
+                    position: "absolute",
+                    top: 16,
+                    right: 16,
+                    bgcolor: option.color,
+                    color: "#fff",
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 2,
+                    fontWeight: 700,
+                    fontSize: 14,
+                    boxShadow: 1
+                  }}>
+                    {option.count}
+                  </Box>
+
+                  {/* Background Gradient */}
+                  <Box sx={{ position: "absolute", inset: 0, borderRadius: 3, opacity: 0.15, background: bgGradient }} />
+
+                  {/* Contenido */}
                   <Box sx={{ position: "relative", display: "flex", flexDirection: "column", height: "100%" }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                      <Box sx={{
-                        p: 2, borderRadius: 2, background: option.gradient,
-                        display: "flex", alignItems: "center", justifyContent: "center"
-                      }}>
+                      <Box sx={{ p: 2, borderRadius: 2, background: option.gradient, display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <Icon style={{ color: "#fff", width: 28, height: 28 }} />
                       </Box>
-                      <ChevronRight style={{
-                        color: hoveredCard === option.id ? "#d1d5db" : "#9ca3af",
-                        transition: "all 0.3s"
-                      }} />
+                      <ChevronRight style={{ color: hoveredCard === option.id ? "#d1d5db" : "#9ca3af", transition: "all 0.3s" }} />
                     </Box>
                     <Box sx={{ flex: 1 }}>
                       <Typography variant="h5" sx={{ fontWeight: 700, mb: 1, color: colors.textPrimary }}>{option.title}</Typography>
@@ -168,13 +164,7 @@ export default function Dashboard({ darkMode }) {
                         </Box>
                       </Box>
                     </Box>
-                    <Box sx={{
-                      mt: 3, py: 1.5, textAlign: "center", fontWeight: 600,
-                      border: `2px solid ${option.color}`, borderRadius: 2,
-                      color: option.color,
-                      transition: "all 0.3s",
-                      "&:hover": { boxShadow: 3 }
-                    }}>
+                    <Box sx={{ mt: 3, py: 1.5, textAlign: "center", fontWeight: 600, border: `2px solid ${option.color}`, borderRadius: 2, color: option.color, transition: "all 0.3s", "&:hover": { boxShadow: 3 } }}>
                       Acceder a {option.title}
                     </Box>
                   </Box>
