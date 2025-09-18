@@ -148,7 +148,7 @@ function Medications({ darkMode }) {
           <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} variant="outlined" sx={{ color: textPrimary, borderColor: textSecondary }}>
             Atrás
           </Button>
-          <Button startIcon={<HomeIcon />} onClick={() => navigate('/dashboard')} variant="outlined" sx={{ color: textPrimary, borderColor: textSecondary }}>
+          <Button startIcon={<HomeIcon />} onClick={() => navigate('/home')} variant="outlined" sx={{ color: textPrimary, borderColor: textSecondary }}>
             Inicio
           </Button>
           <Button onClick={() => navigate('/login')} variant="outlined" sx={{ color: textPrimary, borderColor: textSecondary }}>
