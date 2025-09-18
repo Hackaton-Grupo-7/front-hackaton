@@ -116,7 +116,7 @@ El modo oscuro se aplica a **todas las páginas**, manteniendo contraste y visib
 | **Efrén Tomás Campa**          | **Saba Ur Rehman**            |
 ---
 
-## 📌 Cómo ejecutar el proyecto
+## ❓​ Cómo ejecutar el proyecto
 
 ```bash
 # Instalar dependencias
