@@ -26,8 +26,8 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
 
         {/* Botones escritorio */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
-          <Button color="inherit" onClick={() => navigate("/")}>Home</Button>
-          <Button color="inherit" onClick={() => navigate("/about")}>About</Button>
+          <Button color="inherit" onClick={() => navigate("/")}>Inicio</Button>
+          <Button color="inherit" onClick={() => navigate("/about")}>Nosotros</Button>
 
           {isLoggedIn && (
             <>
