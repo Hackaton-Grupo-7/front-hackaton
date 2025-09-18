@@ -133,4 +133,4 @@ npm run test
 > **Sanimed** ofrece un control integral sobre medicación y salud, con un frontend moderno, pruebas unitarias y experiencia de usuario cuidada.  
 > Cumple todos los criterios de evaluación de la hackaton: originalidad, arquitectura frontend y backend, UX/UI, CRUD, tests, conexión backend-frontend, funcionalidad, mantenibilidad y organización del equipo.
 
->>>>>>> f7d775095871ab974463d1f2cd4b820f9e645bf6
+---
