@@ -16,57 +16,78 @@ export default function Footer({ darkMode }) {
         width: '100%',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between', // imágenes a izquierda/derecha
-        }}
-      >
-
-        <Box
-          component="img"
-          src="src\assets\logo-factoria.png"
-          alt="Logo izquierda"
-          sx={{ height: 60 }}
-        />
-
-        {/* Texto centrado */}
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h6" sx={{ mb: 1, fontSize: '1.1rem' }}>
-            Proyecto 2025{' '}
-            <Link
-              href="https://factoriaf5.org/"
-              target="_blank"
-              rel="noopener"
-              underline="hover"
-              sx={{ color: '#fff', fontWeight: 'bold', fontSize: '1.1rem' }}
-            >
-              Factoria F5
-            </Link>{' '}
-            en colaboración con{' '}
-            <Link
-              href="https://www.sanitas.es/"
-              target="_blank"
-              rel="noopener"
-              underline="hover"
-              sx={{ color: '#fff', fontWeight: 'bold', fontSize: '1.1rem' }}
-            >
-              Sanitas
-            </Link>
-          </Typography>
-          <Typography variant="h6" sx={{ fontSize: '1.1rem' }}>
-            Hackaton 8ª Edición
-          </Typography>
-        </Box>
-
-
-        <Box
-          component="img"
-          src="src\assets\LogotipoSanitas.png"
-          alt="Logo derecha"
-          sx={{ height: 70 }}
-        />
+      {/* Contenido centrado único */}
+      <Box sx={{ textAlign: 'center' }}>
+        <Typography
+          variant="h6"
+          sx={{
+            mb: 1,
+            fontSize: '1.1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: 1
+          }}
+        >
+          Proyecto 2025{' '}
+          <Link
+            href="https://factoriaf5.org/"
+            target="_blank"
+            rel="noopener"
+            underline="none"
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              '&:hover': {
+                opacity: 0.8,
+                transform: 'scale(1.05)',
+                transition: 'all 0.2s ease'
+              }
+            }}
+          >
+            <Box
+              component="img"
+              src="src/assets/logo-factoria.png"
+              alt="Factoria F5"
+              sx={{
+                height: 32,
+                mx: 0.5,
+                verticalAlign: 'middle'
+              }}
+            />
+          </Link>
+          {' '}en colaboración con{' '}
+          <Link
+            href="https://www.sanitas.es/"
+            target="_blank"
+            rel="noopener"
+            underline="none"
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              '&:hover': {
+                opacity: 0.8,
+                transform: 'scale(1.05)',
+                transition: 'all 0.2s ease'
+              }
+            }}
+          >
+            <Box
+              component="img"
+              src="src/assets/LogoSanitas.png"
+              alt="Sanitas"
+              sx={{
+                height: 34,
+                mx: 0.5,
+                verticalAlign: 'middle'
+              }}
+            />
+          </Link>
+        </Typography>
+        <Typography variant="h6" sx={{ fontSize: '1.1rem' }}>
+          Hackaton 8ª Edición
+        </Typography>
       </Box>
     </Box>
   );

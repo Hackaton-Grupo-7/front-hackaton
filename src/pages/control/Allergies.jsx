@@ -342,16 +342,8 @@ function Allergies({ darkMode }) {
               </Card>
             ))}
           </Stack>
-                  )}
-                </Box>
-                </CardContent>
-              </Card>
-            ))}
-          </Stack>
         )}
       </Box>
-
-
     </Container>
   );
 }
