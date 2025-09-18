@@ -9,14 +9,16 @@ import {
   Add as AddIcon, Medication as MedicationIcon,
   AccessTime as ClockIcon, Notifications as BellIcon,
   NotificationsOff as BellOffIcon, Delete as TrashIcon,
-  Replay as RotateCcwIcon
+  Replay as RotateCcwIcon,
+  ArrowBack as ArrowBackIcon,
+  Home as HomeIcon
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const medicamentosDisponibles = [
-  "Paracetamol","Ibuprofeno","Amoxicilina",
-  "Omeprazol","Aspirina","Loratadina",
-  "Metformina","Atorvastatina"
+  "Paracetamol", "Ibuprofeno", "Amoxicilina",
+  "Omeprazol", "Aspirina", "Loratadina",
+  "Metformina", "Atorvastatina"
 ];
 
 function Medications() {
@@ -28,12 +30,11 @@ function Medications() {
   const [notificacionPermitida, setNotificacionPermitida] = useState(false);
   const navigate = useNavigate();
 
-  // Cargar / guardar
+  // Cargar datos guardados
   useEffect(() => {
     const datosGuardados = localStorage.getItem("medicamentos");
     if (datosGuardados) {
       const arr = JSON.parse(datosGuardados);
-      // convertir fechas guardadas a objetos Date
       arr.forEach(m => {
         m.proximaToma = new Date(m.proximaToma);
         if (m.ultimaToma) m.ultimaToma = new Date(m.ultimaToma);
@@ -77,7 +78,9 @@ function Medications() {
       proximaToma: new Date(Date.now() + parseInt(frecuencia) * 60 * 60 * 1000)
     };
     setListaMedicamentos(prev => [...prev, nuevoMedicamento]);
-    setMedicamento(""); setFrecuencia(""); setAlarma(false);
+    setMedicamento("");
+    setFrecuencia("");
+    setAlarma(false);
     setMostrarFormulario(false);
     if (alarma && notificacionPermitida) {
       mostrarNotificacion("Medicamento agregado", `Recordatorio activado para ${medicamento} cada ${frecuencia} horas.`);
@@ -249,6 +252,19 @@ function Medications() {
             ))}
           </Stack>
         )}
+      </Box>
+
+      {/* 🔻 Botones de navegación al final */}
+      <Box mt={6} display="flex" justifyContent="space-between">
+        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} variant="outlined">
+          Atrás
+        </Button>
+        <Button startIcon={<HomeIcon />} onClick={() => navigate('/dashboard')} variant="outlined">
+          Inicio
+        </Button>
+        <Button onClick={() => navigate('/login')} variant="outlined" color="error">
+          Cerrar Sesión
+        </Button>
       </Box>
     </Container>
   );
