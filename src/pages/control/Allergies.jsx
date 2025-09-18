@@ -131,7 +131,12 @@ function Allergies({ darkMode }) {
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Control de Alergias
         </Typography>
-        <Typography variant="h6" color="text.secondary">
+        <Typography
+          variant="h6"
+          sx={{
+            color: darkMode ? '#fff' : 'text.secondary'
+          }}
+        >
           Gestiona tus alergias de forma sencilla y segura
         </Typography>
       </Box>
@@ -160,28 +165,76 @@ function Allergies({ darkMode }) {
         }}>
           <CardHeader
             title="Nueva Alergia"
-            action={<IconButton onClick={() => setMostrarFormulario(false)}><TrashIcon /></IconButton>}
+            sx={{
+              color: darkMode ? "#fff" : "#000"
+            }}
+            action={
+              <IconButton
+                onClick={() => setMostrarFormulario(false)}
+                sx={{ color: darkMode ? "#fff" : "#000" }}
+              >
+                <TrashIcon />
+              </IconButton>
+            }
           />
           <CardContent>
             <Stack spacing={2}>
-                <TextField
+              <TextField
                 select
-                  fullWidth
+                fullWidth
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
+                sx={{
+                  '& .MuiInputLabel-root': {
+                    color: darkMode ? '#fff' : '#000',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: darkMode ? '#fff' : '#000',
+                    '& fieldset': {
+                      borderColor: darkMode ? '#fff' : '#e0e0e0',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: darkMode ? '#fff' : '#000',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: darkMode ? '#fff' : '#1976d2',
+                    },
+                  },
+                  '& .MuiSelect-select': {
+                    color: darkMode ? '#fff' : '#000',
+                  },
+                  '& .MuiSelect-icon': {
+                    color: darkMode ? '#fff' : '#000',
+                  }
+                }}
                 slotProps={{
                   select: {
                     native: true,
                   }
                 }}
               >
-                <option value="">-- Selecciona alergia --</option>
+                <option value="" style={{
+                  backgroundColor: darkMode ? '#1e1e1e' : '#fff',
+                  color: darkMode ? '#fff' : '#000'
+                }}>
+                  -- Selecciona alergia --
+                </option>
                 {opcionesAlergias.map((a) => (
-                  <option key={a} value={a}>{a}</option>
+                  <option key={a} value={a} style={{
+                    backgroundColor: darkMode ? '#1e1e1e' : '#fff',
+                    color: darkMode ? '#fff' : '#000'
+                  }}>
+                    {a}
+                  </option>
                 ))}
-                <option value="Otro">Otro</option>
+                <option value="Otro" style={{
+                  backgroundColor: darkMode ? '#1e1e1e' : '#fff',
+                  color: darkMode ? '#fff' : '#000'
+                }}>
+                  Otro
+                </option>
               </TextField>
-              
+
               {nombre === "Otro" && (
                 <TextField
                   fullWidth
@@ -189,15 +242,59 @@ function Allergies({ darkMode }) {
                   value={nombrePersonalizado}
                   onChange={(e) => setNombrePersonalizado(e.target.value)}
                   placeholder="Ingresa el nombre de la alergia"
+                  sx={{
+                    '& .MuiInputLabel-root': {
+                      color: darkMode ? '#fff' : '#000',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      color: darkMode ? '#fff' : '#000',
+                      '& fieldset': {
+                        borderColor: darkMode ? '#fff' : '#e0e0e0',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: darkMode ? '#fff' : '#000',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: darkMode ? '#fff' : '#1976d2',
+                      },
+                      '& input::placeholder': {
+                        color: darkMode ? '#bbb' : '#666',
+                        opacity: 1,
+                      },
+                    },
+                  }}
                 />
               )}
-              
+
               <Box textAlign="right">
-                <Button onClick={() => setMostrarFormulario(false)} sx={{ mr: 1 }}>Cancelar</Button>
-                <Button variant="contained" color="error" startIcon={<AddIcon />} onClick={handleAgregar}>
+                <Button
+                  onClick={() => setMostrarFormulario(false)}
+                  sx={{
+                    mr: 1,
+                    color: darkMode ? '#fff' : '#1976d2',
+                    '&:hover': {
+                      backgroundColor: darkMode ? 'rgba(255,255,255,0.08)' : 'rgba(25,118,210,0.04)'
+                    }
+                  }}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  startIcon={<AddIcon />}
+                  onClick={handleAgregar}
+                  sx={{
+                    backgroundColor: darkMode ? '#f44336' : undefined,
+                    color: darkMode ? '#fff' : undefined,
+                    '&:hover': {
+                      backgroundColor: darkMode ? '#d32f2f' : undefined
+                    }
+                  }}
+                >
                   Guardar
-            </Button>
-          </Box>
+                </Button>
+              </Box>
             </Stack>
           </CardContent>
         </Paper>
