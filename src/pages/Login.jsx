@@ -3,6 +3,7 @@ import { Box, Typography, TextField, Button, Container } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../services/authService";
+import { getMyUser } from "../services/userService";
 
 export default function Login({ darkMode }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -22,8 +23,19 @@ export default function Login({ darkMode }) {
       if (data?.token) {
         localStorage.setItem('token', data.token)
       }
+      if (data?.tokenType) {
+        localStorage.setItem('tokenType', data.tokenType)
+      } else {
+        localStorage.setItem('tokenType', 'Bearer')
+      }
       if (data?.refreshToken) {
         localStorage.setItem('refreshToken', data.refreshToken)
+      }
+      try {
+        const me = await getMyUser()
+        if (me) localStorage.setItem('user', JSON.stringify(me))
+      } catch (e) {
+        // ignore
       }
       navigate("/dashboard");
     } catch (err) {

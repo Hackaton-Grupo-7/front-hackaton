@@ -1,362 +1,243 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
 import {
-  Box, Typography, Button, TextField, Select, MenuItem, FormControl,
-  InputLabel, RadioGroup, FormControlLabel, Radio, Paper, Grid, IconButton
+  Box, Container, Typography, Button, TextField,
+  Card, CardContent, CardHeader, Grid, IconButton,
+  Stack, Paper
 } from "@mui/material";
-import { 
-  Plus, AlertTriangle, Trash2, Shield, Eye,
-  ArrowLeft as ArrowBackIcon, Home as HomeIcon 
-} from "lucide-react";
+import {
+  Add as AddIcon, Warning as WarningIcon,
+  Delete as TrashIcon,
+  ArrowBack as ArrowBackIcon,
+  Home as HomeIcon
+} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { clearAuth } from "../../services/authStorage";
+import {
+  listAllergies,
+  createAllergy,
+  deleteAllergy,
+  getAllergySuggestions,
+} from "../../services/allergyService";
 
-const medicamentosDisponibles = [
-  "Paracetamol", "Ibuprofeno", "Amoxicilina", "Omeprazol",
-  "Aspirina", "Loratadina", "Metformina", "Atorvastatina",
-  "Penicilina", "Cefalexina", "Ciprofloxacino", "Diclofenaco",
-  "Naproxeno", "Prednisona", "Insulina", "Warfarina"
+const alergiasDisponiblesBase = [
+  "Penicilina", "Sulfamidas", "Aspirina", "Ibuprofeno",
+  "Paracetamol", "Codeína", "Morfina", "Insulina"
 ];
 
-const tiposReaccion = [
-  "Erupción cutánea","Urticaria","Picazón","Hinchazón facial",
-  "Dificultad respiratoria","Náuseas y vómitos","Diarrea",
-  "Mareos","Dolor de cabeza","Shock anafiláctico",
-  "Fiebre","Dolor abdominal","Confusión mental",
-  "Palpitaciones","Otro"
-];
-
-const severidad = [
-  { valor: "leve", label: "Leve", color: "#facc15" },
-  { valor: "moderada", label: "Moderada", color: "#f97316" },
-  { valor: "severa", label: "Severa", color: "#ef4444" }
-];
-
-export default function App({ darkMode }) {
-  const navigate = useNavigate();
-  const [medicamento, setMedicamento] = useState("");
-  const [medicamentoPersonalizado, setMedicamentoPersonalizado] = useState("");
-  const [reaccion, setReaccion] = useState("");
-  const [reaccionPersonalizada, setReaccionPersonalizada] = useState("");
-  const [nivelSeveridad, setNivelSeveridad] = useState("");
-  const [notas, setNotas] = useState("");
+function Allergies() {
+  const [nombre, setNombre] = useState("");
+  const [nombrePersonalizado, setNombrePersonalizado] = useState("");
   const [listaAlergias, setListaAlergias] = useState([]);
+  const [opcionesAlergias, setOpcionesAlergias] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const datosGuardados = JSON.parse(localStorage.getItem("alergiasMedicamentos") || "[]");
-    setListaAlergias(datosGuardados);
+  const fetchAllergies = useCallback(async () => {
+    try {
+      const data = await listAllergies();
+      if (Array.isArray(data)) {
+        const mapped = data.map((a) => ({
+          id: a.id || Date.now() + Math.random(),
+          nombre: a.name || "Alergia",
+        }));
+        setListaAlergias(mapped);
+      }
+    } catch (error) {
+      console.error("Failed to load allergies", error);
+    }
   }, []);
 
+  // Cargar datos desde backend
   useEffect(() => {
-    localStorage.setItem("alergiasMedicamentos", JSON.stringify(listaAlergias));
-  }, [listaAlergias]);
-
-  const handleAgregar = () => {
-    const medicamentoFinal = medicamento === "Otro" ? medicamentoPersonalizado : medicamento;
-    const reaccionFinal = reaccion === "Otro" ? reaccionPersonalizada : reaccion;
-    if (!medicamentoFinal || !reaccionFinal || !nivelSeveridad) return;
-
-    const yaExiste = listaAlergias.some(a => a.medicamento.toLowerCase() === medicamentoFinal.toLowerCase());
-    if (yaExiste) {
-      alert("Ya existe un registro de alergia para este medicamento.");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
       return;
     }
 
-    const nuevaAlergia = {
-      id: Date.now(),
-      medicamento: medicamentoFinal,
-      reaccion: reaccionFinal,
-      severidad: nivelSeveridad,
-      notas,
-      fechaRegistro: new Date().toISOString()
-    };
+    (async () => {
+      try {
+        await fetchAllergies();
+      } catch (error) {
+        console.error("Failed to load allergies", error);
+      }
+      try {
+        const suggestions = await getAllergySuggestions();
+        if (Array.isArray(suggestions)) {
+          const names = suggestions.map((s) => s.name).filter(Boolean);
+          setOpcionesAlergias(names.length ? names : alergiasDisponiblesBase);
+        } else {
+          setOpcionesAlergias(alergiasDisponiblesBase);
+        }
+      } catch (error) {
+        console.error("Failed to load allergy suggestions", error);
+        setOpcionesAlergias(alergiasDisponiblesBase);
+      }
+    })();
+  }, [fetchAllergies, navigate]);
 
-    setListaAlergias([...listaAlergias, nuevaAlergia]);
-    setMedicamento(""); setMedicamentoPersonalizado("");
-    setReaccion(""); setReaccionPersonalizada("");
-    setNivelSeveridad(""); setNotas(""); setMostrarFormulario(false);
-  };
+  const handleAgregar = async () => {
+    if (!nombre) return;
+    try {
+      const nombreFinal = nombre === "Otro" ? nombrePersonalizado : nombre;
+      
+      if (nombre === "Otro" && !nombrePersonalizado.trim()) {
+        alert("Por favor ingresa el nombre de la alergia");
+        return;
+      }
 
-  const handleEliminar = (id) => {
-    if (window.confirm("¿Eliminar este registro de alergia?")) {
-      setListaAlergias(prev => prev.filter(a => a.id !== id));
+      const created = await createAllergy({ name: nombreFinal });
+      if (created) {
+        await fetchAllergies();
+      }
+    } catch (error) {
+      console.error("Failed to create allergy", error);
+    } finally {
+      setNombre("");
+      setNombrePersonalizado("");
+      setMostrarFormulario(false);
     }
   };
 
-  const getSeveridadColor = (valor) => {
-    const config = { leve: "#fef3c7", moderada: "#ffedd5", severa: "#fee2e2" };
-    return config[valor] || "#e5e7eb";
-  };
-
-  const getSeveridadIcon = (valor) => {
-    if (valor === "severa") return <AlertTriangle style={{ width: 16, height: 16, marginRight: 4, color: "#ef4444" }} />;
-    if (valor === "moderada") return <AlertTriangle style={{ width: 16, height: 16, marginRight: 4, color: "#f97316" }} />;
-    return <Eye style={{ width: 16, height: 16, marginRight: 4, color: "#facc15" }} />;
+  const handleEliminar = async (id) => {
+    try {
+      if (id) await deleteAllergy(id);
+      await fetchAllergies();
+    } catch (error) {
+      console.error("Failed to delete allergy", error);
+    }
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        width: "100%",
-        bgcolor: darkMode ? "#121212" : "#f9fafb",
-        color: darkMode ? "#e5e7eb" : "#111827",
-        py: 6,
-        px: 4
-      }}
-    >
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header */}
       <Box sx={{ textAlign: "center", mb: 6 }}>
-        <Box
-          sx={{
-            display: "inline-flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: 64,
-            height: 64,
+        <Box sx={{
+          width: 80, height: 80,
+          bgcolor: "error.main", color: "white",
             borderRadius: "50%",
-            bgcolor: "#ef4444",
-            mb: 2
-          }}
-        >
-          <AlertTriangle style={{ color: "#fff", width: 32, height: 32 }} />
+          display: "inline-flex", alignItems: "center", justifyContent: "center", mb: 3
+        }}>
+          <WarningIcon sx={{ fontSize: 40 }} />
         </Box>
-        <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
+        <Typography variant="h4" fontWeight="bold" gutterBottom>
           Control de Alergias
         </Typography>
-        <Typography sx={{ color: darkMode ? "#9ca3af" : "#4b5563" }}>
-          Registra y gestiona tus alergias a medicamentos
+        <Typography variant="h6" color="text.secondary">
+          Gestiona tus alergias de forma sencilla y segura
         </Typography>
       </Box>
 
-      {/* Botón mostrar formulario */}
+      {/* Botón agregar */}
       {!mostrarFormulario && (
-        <Box sx={{ textAlign: "center", mb: 4 }}>
+        <Box textAlign="center" mb={4}>
           <Button
-            variant="contained"
-            color="error"
-            startIcon={<Plus />}
+            variant="contained" size="large" color="error"
+            startIcon={<AddIcon />}
             onClick={() => setMostrarFormulario(true)}
-            sx={{ py: 1.5, px: 4 }}
           >
-            Registrar Nueva Alergia
+            Agregar Alergia
           </Button>
         </Box>
       )}
 
       {/* Formulario */}
       {mostrarFormulario && (
-        <Paper sx={{ p: 4, mb: 6, borderRadius: 3, boxShadow: 4, bgcolor: darkMode ? "#1f2937" : "#fff" }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-            <Typography variant="h5" sx={{ fontWeight: 600, display: "flex", alignItems: "center" }}>
-              <Plus style={{ marginRight: 8 }} /> Registrar Alergia a Medicamento
-            </Typography>
-            <Button onClick={() => setMostrarFormulario(false)}>✕</Button>
-          </Box>
-
-          <Grid container spacing={3}>
-            {/* Medicamento */}
-            <Grid item xs={12} md={6}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel id="medicamento-label">Medicamento *</InputLabel>
-                <Select
-                  labelId="medicamento-label"
-                  id="medicamento"
-                  value={medicamento}
-                  onChange={(e) => setMedicamento(e.target.value)}
-                  label="Medicamento *"
-                  displayEmpty
-                >
-                  <MenuItem value="">
-                    <em>-- Selecciona un medicamento --</em>
-                  </MenuItem>
-                  {medicamentosDisponibles.map(m => (
-                    <MenuItem key={m} value={m}>{m}</MenuItem>
-                  ))}
-                  <MenuItem value="Otro">Otro (especificar)</MenuItem>
-                </Select>
-              </FormControl>
-              {medicamento === "Otro" && (
+        <Paper sx={{ mb: 4, p: 2 }}>
+          <CardHeader
+            title="Nueva Alergia"
+            action={<IconButton onClick={() => setMostrarFormulario(false)}><TrashIcon /></IconButton>}
+          />
+          <CardContent>
+            <Stack spacing={2}>
+                <TextField
+                select
+                  fullWidth
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                slotProps={{
+                  select: {
+                    native: true,
+                  }
+                }}
+              >
+                <option value="">-- Selecciona alergia --</option>
+                {opcionesAlergias.map((a) => (
+                  <option key={a} value={a}>{a}</option>
+                ))}
+                <option value="Otro">Otro</option>
+              </TextField>
+              
+              {nombre === "Otro" && (
                 <TextField
                   fullWidth
-                  variant="outlined"
-                  placeholder="Especifica el medicamento"
-                  value={medicamentoPersonalizado}
-                  onChange={(e) => setMedicamentoPersonalizado(e.target.value)}
-                  sx={{ mt: 2 }}
+                  label="Nombre de la alergia"
+                  value={nombrePersonalizado}
+                  onChange={(e) => setNombrePersonalizado(e.target.value)}
+                  placeholder="Ingresa el nombre de la alergia"
                 />
               )}
-            </Grid>
-
-            {/* Reacción */}
-            <Grid item xs={12} md={6}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel id="reaccion-label">Tipo de Reacción *</InputLabel>
-                <Select
-                  labelId="reaccion-label"
-                  id="reaccion"
-                  value={reaccion}
-                  onChange={(e) => setReaccion(e.target.value)}
-                  label="Tipo de Reacción *"
-                  displayEmpty
-                >
-                  <MenuItem value="">
-                    <em>-- Selecciona la reacción --</em>
-                  </MenuItem>
-                  {tiposReaccion.map(r => (
-                    <MenuItem key={r} value={r}>{r}</MenuItem>
-                  ))}
-                  <MenuItem value="Otro">Otro (especificar)</MenuItem>
-                </Select>
-              </FormControl>
-              {reaccion === "Otro" && (
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  placeholder="Describe la reacción"
-                  value={reaccionPersonalizada}
-                  onChange={(e) => setReaccionPersonalizada(e.target.value)}
-                  sx={{ mt: 2 }}
-                />
-              )}
-            </Grid>
-
-            {/* Severidad */}
-            <Grid item xs={12}>
-              <FormControl>
-                <Typography sx={{ mb: 1, fontWeight: 500 }}>Nivel de Severidad *</Typography>
-                <RadioGroup value={nivelSeveridad} onChange={(e) => setNivelSeveridad(e.target.value)} row>
-                  {severidad.map(n => (
-                    <FormControlLabel
-                      key={n.valor}
-                      value={n.valor}
-                      control={<Radio sx={{ color: n.color }} />}
-                      label={(
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                          {getSeveridadIcon(n.valor)}
-                          <Typography>{n.label}</Typography>
-                        </Box>
-                      )}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-
-            {/* Notas */}
-            <Grid item xs={12}>
-              <TextField
-                label="Notas adicionales"
-                multiline
-                rows={4}
-                fullWidth
-                variant="outlined"
-                value={notas}
-                onChange={(e) => setNotas(e.target.value)}
-              />
-            </Grid>
-          </Grid>
-
-          {/* Botones */}
-          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mt: 3 }}>
-            <Button variant="outlined" onClick={() => setMostrarFormulario(false)}>Cancelar</Button>
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<Plus />}
-              onClick={handleAgregar}
-              disabled={!medicamento || (medicamento==="Otro" && !medicamentoPersonalizado) || !reaccion || (reaccion==="Otro" && !reaccionPersonalizada) || !nivelSeveridad}
-            >
-              Registrar Alergia
+              
+              <Box textAlign="right">
+                <Button onClick={() => setMostrarFormulario(false)} sx={{ mr: 1 }}>Cancelar</Button>
+                <Button variant="contained" color="error" startIcon={<AddIcon />} onClick={handleAgregar}>
+                  Guardar
             </Button>
           </Box>
+            </Stack>
+          </CardContent>
         </Paper>
       )}
 
-      {/* Lista */}
-      <Box sx={{ display: "grid", gap: 3, mb: 4 }}>
+      {/* Lista de alergias */}
+      <Box>
+        <Typography variant="h6" gutterBottom sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <WarningIcon /> Mis Alergias ({listaAlergias.length})
+        </Typography>
+
         {listaAlergias.length === 0 ? (
-          <Paper sx={{ textAlign: "center", py: 6, borderRadius: 3, bgcolor: darkMode ? "#1f2937" : "#f3f4f6" }}>
-            <Shield style={{ fontSize: 40, color: "#9ca3af", marginBottom: 8 }} />
-            <Typography sx={{ color: "#6b7280" }}>No hay alergias registradas</Typography>
-            <Typography sx={{ color: "#9ca3af", fontSize: 14 }}>Registra tus alergias para evitar reacciones adversas</Typography>
+          <Paper sx={{ p: 4, textAlign: "center" }}>
+            <WarningIcon sx={{ fontSize: 60, color: "grey.400", mb: 2 }} />
+            <Typography>No hay alergias agregadas</Typography>
           </Paper>
         ) : (
-          listaAlergias.map(item => (
-            <Paper
-              key={item.id}
-              sx={{
-                p: 3,
-                borderRadius: 3,
-                bgcolor: darkMode ? "#1f2937" : "#fff",
-                boxShadow: 4
-              }}
-            >
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Box>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                    <AlertTriangle style={{ marginRight: 8, color: "#ef4444" }} />
-                    <Typography sx={{ fontWeight: 600 }}>{item.medicamento}</Typography>
-                    <Box
-                      sx={{
-                        ml: 2,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        px: 1,
-                        py: 0.5,
-                        bgcolor: getSeveridadColor(item.severidad),
-                        borderRadius: 1
-                      }}
-                    >
-                      {getSeveridadIcon(item.severidad)}
-                      <Typography sx={{ fontSize: 12, textTransform: "capitalize" }}>
-                        {item.severidad}
+          <Stack spacing={2}>
+            {listaAlergias.map((item) => (
+              <Card key={item.id}>
+                <CardContent>
+                  <Grid container alignItems="center" spacing={2}>
+                    <Grid item xs>
+                      <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }} fontWeight="bold">
+                        <WarningIcon /> {item.nombre}
                       </Typography>
-                    </Box>
-                  </Box>
-                  <Grid container spacing={1}>
-                    <Grid item xs={12} md={6}>
-                      <Typography sx={{ fontWeight: 500 }}>Reacción:</Typography>
-                      <Typography>{item.reaccion}</Typography>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Typography sx={{ fontWeight: 500 }}>Fecha:</Typography>
-                      <Typography>{new Date(item.fechaRegistro).toLocaleDateString()}</Typography>
+                    <Grid item>
+                      <IconButton color="error" onClick={() => handleEliminar(item.id)}>
+                        <TrashIcon />
+                      </IconButton>
                     </Grid>
                   </Grid>
-                  {item.notas && (
-                    <Box sx={{ mt: 2, p: 2, borderRadius: 1, border: "1px solid #d1d5db" }}>
-                      <Typography sx={{ fontWeight: 500, fontSize: 14 }}>Notas:</Typography>
-                      <Typography sx={{ fontSize: 14 }}>{item.notas}</Typography>
-                    </Box>
-                  )}
-                </Box>
-                <IconButton onClick={() => handleEliminar(item.id)} color="error">
-                  <Trash2 />
-                </IconButton>
-              </Box>
-            </Paper>
-          ))
+                </CardContent>
+              </Card>
+            ))}
+          </Stack>
         )}
       </Box>
 
-      <Box mt={6} display="flex" justifyContent="space-between" flexWrap="wrap" gap={2}>
-        <Button 
-          startIcon={<ArrowBackIcon />} 
-          onClick={() => navigate(-1)} 
-          variant="outlined"
-          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
-        >
+      {/* Botones de navegación */}
+      <Box mt={6} display="flex" justifyContent="space-between">
+        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} variant="outlined">
           Atrás
         </Button>
-        <Button 
-          onClick={() => navigate('/login')} 
-          variant="outlined" 
-          color="error"
-          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
-        >
+        <Button startIcon={<HomeIcon />} onClick={() => navigate('/dashboard')} variant="outlined">
+          Inicio
+        </Button>
+        <Button onClick={() => { clearAuth(); navigate('/login'); }} variant="outlined" color="error">
           Cerrar Sesión
         </Button>
-      </Box>
     </Box>
+    </Container>
   );
 }
+
+export default Allergies;

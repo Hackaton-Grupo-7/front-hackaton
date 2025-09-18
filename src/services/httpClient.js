@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiBaseURL = import.meta.env.VITE_API_BASE_URL || ''
+const apiBaseURL = import.meta.env.VITE_API_BASE_URL
 
 export const httpClient = axios.create({
   baseURL: apiBaseURL,
@@ -9,8 +9,9 @@ export const httpClient = axios.create({
 
 httpClient.interceptors.request.use((config) => {
   const storedToken = localStorage.getItem('token')
+  const tokenType = localStorage.getItem('tokenType') || 'Bearer'
   if (storedToken) {
-    config.headers.Authorization = `Bearer ${storedToken}`
+    config.headers.Authorization = `${tokenType} ${storedToken}`
   }
   return config
 })
