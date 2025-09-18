@@ -7,7 +7,7 @@ import Footer from "./Footer";
 const FOOTER_HEIGHT = 64;
 const NAVBAR_HEIGHT = 64;
 
-export default function Layout({ children, darkMode, toggleDarkMode, handleLogout }) {
+export default function Layout({ children, darkMode, toggleDarkMode, isLoggedIn, setIsLoggedIn }) {
   return (
     <Box
       sx={{
@@ -20,7 +20,12 @@ export default function Layout({ children, darkMode, toggleDarkMode, handleLogou
         overflowX: "hidden",
       }}
     >
-      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} handleLogout={handleLogout} />
+      <Navbar 
+        darkMode={darkMode} 
+        toggleDarkMode={toggleDarkMode} 
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+      />
 
       <Box
         component="main"
@@ -33,13 +38,15 @@ export default function Layout({ children, darkMode, toggleDarkMode, handleLogou
           pb: `${FOOTER_HEIGHT}px`,
           boxSizing: "border-box",
           minHeight: `calc(100vh - ${NAVBAR_HEIGHT + FOOTER_HEIGHT}px)`,
+          bgcolor: darkMode ? "#121212" : "#f9f9f9",
+          color: darkMode ? "#fff" : "#000",
         }}
       >
         {children}
       </Box>
 
 
-      <Footer />
+      <Footer darkMode={darkMode} />
     </Box>
   );
 }

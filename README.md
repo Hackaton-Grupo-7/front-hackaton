@@ -7,7 +7,7 @@ Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación
 
 ---
 
-## 🚀 Objetivos del proyecto
+## 🔷​ Objetivos del proyecto
 
 - Permitir la gestión de **medicamentos** y dosis.
 - Configurar **alarmas y recordatorios** de toma.
@@ -18,10 +18,10 @@ Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación
 
 ---
 
-## 🏗 Estructura del frontend
+## 🧱​ Estructura del frontend
 
 ```
-📁 Proyecto raíz
+📁 FRONT-HACKATON 
 ├── .gitignore
 ├── babel.config.js
 ├── eslint.config.js
@@ -58,6 +58,8 @@ Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación
 │ ├── Home.jsx
 │ └── Login.jsx
 ```
+
+---
 ## 📋 Funcionalidades principales del Dashboard
 
 | Sección        | Qué hace                                                                 |
@@ -73,7 +75,7 @@ Cada tarjeta del dashboard incluye un **contador de elementos** y es completamen
 
 ## 🧪 Tests implementados
 
-Actualmente tenemos tests unitarios para garantizar la estabilidad de las páginas críticas:
+Actualmente estamos en proceso de creación de tests unitarios para garantizar la estabilidad de las páginas críticas:
 
 1. **Login:** Comprueba que el encabezado "Iniciar Sesión" se renderiza correctamente.
 2. **Allergies:** Comprueba que el encabezado "Alergias" se renderiza.
@@ -90,7 +92,6 @@ Todos los tests utilizan **React Testing Library** y **Jest**, asegurando cobert
 - **React Router Dom**
 - **Jest + React Testing Library**
 - **ESLint** y **Babel** para calidad y compatibilidad de código
-- **CSS-in-JS con Emotion**
 
 ---
 
@@ -114,7 +115,7 @@ El modo oscuro se aplica a **todas las páginas**, manteniendo contraste y visib
 
 ---
 
-## 📌 Cómo ejecutar el proyecto
+## ❓​ Cómo ejecutar el proyecto
 
 ```bash
 # Instalar dependencias

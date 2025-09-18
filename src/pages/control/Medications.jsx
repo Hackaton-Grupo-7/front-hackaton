@@ -27,7 +27,12 @@ const medicamentosDisponiblesBase = [
   "Metformina", "Atorvastatina"
 ];
 
-function Medications() {
+/**
+ * Medications component for managing medication list
+ * @param {Object} props - Component props
+ * @param {boolean} props.darkMode - Whether dark mode is enabled
+ */
+function Medications({ darkMode }) {
   const [medicamento, setMedicamento] = useState("");
   const [nombrePersonalizado, setNombrePersonalizado] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -136,8 +141,15 @@ function Medications() {
   };
 
   return (
-
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        py: 4,
+        bgcolor: darkMode ? "#121212" : "#f9f9f9",
+        color: darkMode ? "#fff" : "#000",
+        minHeight: "100vh"
+      }}
+    >
       {/* Header */}
       <Box sx={{ textAlign: "center", mb: 6 }}>
         <Box sx={{
@@ -147,12 +159,16 @@ function Medications() {
           display: "inline-flex", alignItems: "center", justifyContent: "center", mb: 3
         }}>
           <MedicationIcon sx={{ fontSize: 40 }} />
-
         </Box>
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Control de Medicamentos
         </Typography>
-        <Typography variant="h6" color="text.secondary">
+        <Typography
+          variant="h6"
+          sx={{
+            color: darkMode ? '#fff' : 'text.secondary'
+          }}
+        >
           Gestiona tu medicación de forma sencilla y segura
         </Typography>
       </Box>
@@ -172,10 +188,26 @@ function Medications() {
 
       {/* Formulario */}
       {mostrarFormulario && (
-        <Paper sx={{ mb: 4, p: 2 }}>
+        <Paper sx={{
+          mb: 4,
+          p: 2,
+          bgcolor: darkMode ? "#1e1e1e" : "#fff",
+          color: darkMode ? "#fff" : "#000",
+          border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+        }}>
           <CardHeader
             title="Nuevo Medicamento"
-            action={<IconButton onClick={() => setMostrarFormulario(false)}><TrashIcon /></IconButton>}
+            sx={{
+              color: darkMode ? "#fff" : "#000"
+            }}
+            action={
+              <IconButton
+                onClick={() => setMostrarFormulario(false)}
+                sx={{ color: darkMode ? "#fff" : "#000" }}
+              >
+                <TrashIcon />
+              </IconButton>
+            }
           />
           <CardContent>
             <Stack spacing={2}>
@@ -184,19 +216,57 @@ function Medications() {
                 fullWidth
                 value={medicamento}
                 onChange={(e) => setMedicamento(e.target.value)}
+                sx={{
+                  '& .MuiInputLabel-root': {
+                    color: darkMode ? '#fff' : '#000',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: darkMode ? '#fff' : '#000',
+                    '& fieldset': {
+                      borderColor: darkMode ? '#fff' : '#e0e0e0',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: darkMode ? '#fff' : '#000',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: darkMode ? '#fff' : '#1976d2',
+                    },
+                  },
+                  '& .MuiSelect-select': {
+                    color: darkMode ? '#fff' : '#000',
+                  },
+                  '& .MuiSelect-icon': {
+                    color: darkMode ? '#fff' : '#000',
+                  }
+                }}
                 slotProps={{
                   select: {
                     native: true,
                   }
                 }}
               >
-                <option value="">-- Selecciona medicamento --</option>
+                <option value="" style={{
+                  backgroundColor: darkMode ? '#1e1e1e' : '#fff',
+                  color: darkMode ? '#fff' : '#000'
+                }}>
+                  -- Selecciona medicamento --
+                </option>
                 {opcionesMedicamentos.map((m) => (
-                  <option key={m} value={m}>{m}</option>
+                  <option key={m} value={m} style={{
+                    backgroundColor: darkMode ? '#1e1e1e' : '#fff',
+                    color: darkMode ? '#fff' : '#000'
+                  }}>
+                    {m}
+                  </option>
                 ))}
-                <option value="Otro">Otro</option>
+                <option value="Otro" style={{
+                  backgroundColor: darkMode ? '#1e1e1e' : '#fff',
+                  color: darkMode ? '#fff' : '#000'
+                }}>
+                  Otro
+                </option>
               </TextField>
-              
+
               {medicamento === "Otro" && (
                 <TextField
                   fullWidth
@@ -204,8 +274,30 @@ function Medications() {
                   value={nombrePersonalizado}
                   onChange={(e) => setNombrePersonalizado(e.target.value)}
                   placeholder="Ingresa el nombre del medicamento"
+                  sx={{
+                    '& .MuiInputLabel-root': {
+                      color: darkMode ? '#fff' : '#000',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      color: darkMode ? '#fff' : '#000',
+                      '& fieldset': {
+                        borderColor: darkMode ? '#fff' : '#e0e0e0',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: darkMode ? '#fff' : '#000',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: darkMode ? '#fff' : '#1976d2',
+                      },
+                      '& input::placeholder': {
+                        color: darkMode ? '#bbb' : '#666',
+                        opacity: 1,
+                      },
+                    },
+                  }}
                 />
               )}
+
               <TextField
                 label="Descripción"
                 value={descripcion}
@@ -213,28 +305,113 @@ function Medications() {
                 multiline
                 minRows={2}
                 fullWidth
+                sx={{
+                  '& .MuiInputLabel-root': {
+                    color: darkMode ? '#fff' : '#000',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: darkMode ? '#fff' : '#000',
+                    '& fieldset': {
+                      borderColor: darkMode ? '#fff' : '#e0e0e0',
+                    },
+                    '& textarea': {
+                      color: darkMode ? '#fff' : '#000',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: darkMode ? '#fff' : '#000',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: darkMode ? '#fff' : '#1976d2',
+                    },
+                  },
+                }}
               />
+
               <TextField
-                type="number" 
+                type="number"
                 label="Dosis"
                 value={dosis}
                 onChange={(e) => setDosis(e.target.value)}
                 slotProps={{ input: { min: 0 } }}
                 fullWidth
+                sx={{
+                  '& .MuiInputLabel-root': {
+                    color: darkMode ? '#fff' : '#000',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: darkMode ? '#fff' : '#000',
+                    '& fieldset': {
+                      borderColor: darkMode ? '#fff' : '#e0e0e0',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: darkMode ? '#fff' : '#000',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: darkMode ? '#fff' : '#1976d2',
+                    },
+                    '& input': {
+                      color: darkMode ? '#fff' : '#000',
+                    },
+                  },
+                }}
               />
+
               <TextField
-                type="time" 
+                type="time"
                 label="Hora"
                 value={hora}
                 onChange={(e) => setHora(e.target.value)}
-                slotProps={{ 
-                  inputLabel: { shrink: true } 
+                slotProps={{
+                  inputLabel: { shrink: true }
                 }}
                 fullWidth
+                sx={{
+                  '& .MuiInputLabel-root': {
+                    color: darkMode ? '#fff' : '#000',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: darkMode ? '#fff' : '#000',
+                    '& fieldset': {
+                      borderColor: darkMode ? '#fff' : '#e0e0e0',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: darkMode ? '#fff' : '#000',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: darkMode ? '#fff' : '#1976d2',
+                    },
+                    '& input': {
+                      color: darkMode ? '#fff' : '#000',
+                    },
+                  },
+                }}
               />
+
               <Box textAlign="right">
-                <Button onClick={() => setMostrarFormulario(false)} sx={{ mr: 1 }}>Cancelar</Button>
-                <Button variant="contained" startIcon={<AddIcon />} onClick={handleAgregar}>
+                <Button
+                  onClick={() => setMostrarFormulario(false)}
+                  sx={{
+                    mr: 1,
+                    color: darkMode ? '#fff' : '#1976d2',
+                    '&:hover': {
+                      backgroundColor: darkMode ? 'rgba(255,255,255,0.08)' : 'rgba(25,118,210,0.04)'
+                    }
+                  }}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  variant="contained"
+                  startIcon={<AddIcon />}
+                  onClick={handleAgregar}
+                  sx={{
+                    backgroundColor: darkMode ? '#fff' : '#1976d2',
+                    color: darkMode ? '#000' : '#fff',
+                    '&:hover': {
+                      backgroundColor: darkMode ? '#e0e0e0' : '#1565c0'
+                    }
+                  }}
+                >
                   Guardar
                 </Button>
               </Box>
@@ -250,14 +427,24 @@ function Medications() {
         </Typography>
 
         {listaMedicamentos.length === 0 ? (
-          <Paper sx={{ p: 4, textAlign: "center" }}>
-            <MedicationIcon sx={{ fontSize: 60, color: "grey.400", mb: 2 }} />
+          <Paper sx={{ 
+            p: 4, 
+            textAlign: "center",
+            bgcolor: darkMode ? "#1e1e1e" : "#fff",
+            color: darkMode ? "#fff" : "#000",
+            border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+          }}>
+            <MedicationIcon sx={{ fontSize: 60, color: darkMode ? "#666" : "grey.400", mb: 2 }} />
             <Typography>No hay medicamentos agregados</Typography>
           </Paper>
         ) : (
           <Stack spacing={2}>
             {listaMedicamentos.map((item) => (
-              <Card key={item.id}>
+              <Card key={item.id} sx={{
+                bgcolor: darkMode ? "#1e1e1e" : "#fff",
+                color: darkMode ? "#fff" : "#000",
+                border: darkMode ? "1px solid #333" : "1px solid #e0e0e0"
+              }}>
                 <CardContent>
                   <Grid container alignItems="center" spacing={2}>
                     <Grid item xs>
@@ -265,12 +452,24 @@ function Medications() {
                         <MedicationIcon /> {item.nombre}
                       </Typography>
                       
-                      <Typography color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+                      <Typography sx={{ 
+                        display: "flex", 
+                        alignItems: "center", 
+                        gap: 1, 
+                        mt: 1,
+                        color: darkMode ? "#fff" : "text.secondary"
+                      }}>
                         Dosis: {item.dosis}
                       </Typography>
                       
                       {item.hora && (
-                        <Typography color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
+                        <Typography sx={{ 
+                          display: "flex", 
+                          alignItems: "center", 
+                          gap: 1, 
+                          mt: 0.5,
+                          color: darkMode ? "#fff" : "text.secondary"
+                        }}>
                           Hora: {item.hora}
                         </Typography>
                       )}

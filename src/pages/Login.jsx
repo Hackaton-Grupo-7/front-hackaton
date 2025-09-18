@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { login } from "../services/authService";
 import { getMyUser } from "../services/userService";
 
-export default function Login({ darkMode }) {
+export default function Login({ darkMode, setIsLoggedIn }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState("")
@@ -34,11 +34,12 @@ export default function Login({ darkMode }) {
       try {
         const me = await getMyUser()
         if (me) localStorage.setItem('user', JSON.stringify(me))
-      } catch (e) {
+      } catch {
         // ignore
       }
+      setIsLoggedIn(true);
       navigate("/dashboard");
-    } catch (err) {
+    } catch {
       setError("Usuario o contraseña inválidos")
     } finally {
       setSubmitting(false)

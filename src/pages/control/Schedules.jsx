@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Box, Grid, Typography, Tabs, Tab, Button,
   Select, MenuItem, Card, CardContent, CardHeader,
@@ -10,9 +9,7 @@ import {
   CalendarToday, AccessTime, Notifications,
   Add, NotificationsActive, Delete,
   CheckCircle, Medication, NotificationsNone,
-  Schedule as ScheduleIcon,
-  ArrowBack as ArrowBackIcon,
-  Home as HomeIcon
+  Schedule as ScheduleIcon
 } from "@mui/icons-material";
 
 const medicamentosEjemplo = [
@@ -28,8 +25,12 @@ const horasDelDia = [
 
 const diasSemana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
 
-function Schedule() {
-  const navigate = useNavigate();
+/**
+ * Schedule component for managing medication schedules
+ * @param {Object} props - Component props
+ * @param {boolean} props.darkMode - Whether dark mode is enabled
+ */
+function Schedule({ darkMode }) {
   const [vistaActual, setVistaActual] = useState("semanal");
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [horarios, setHorarios] = useState([]);
@@ -105,7 +106,12 @@ function Schedule() {
                             <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                               <Medication fontSize="small" /> {horario.medicamento}
                             </Typography>
-                            <Typography color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                            <Typography sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1,
+                              color: darkMode ? "#fff" : "text.secondary"
+                            }}>
                               <AccessTime sx={{ fontSize: 16 }} /> {horario.hora}
                             </Typography>
                             {horario.alarma && <Chip label="Alarma" size="small" color="primary" sx={{ mt: 1 }} />}
@@ -158,7 +164,12 @@ function Schedule() {
                       <Typography sx={{ display:"flex", alignItems:"center", gap:1 }}>
                         <Medication /> {horario.medicamento}
                       </Typography>
-                      <Typography color="text.secondary" sx={{ display:"flex", alignItems:"center", gap:1 }}>
+                      <Typography sx={{
+                        display:"flex",
+                        alignItems:"center",
+                        gap:1,
+                        color: darkMode ? "#fff" : "text.secondary"
+                      }}>
                         <AccessTime /> {horario.hora}
                       </Typography>
                     </Grid>
@@ -208,13 +219,21 @@ function Schedule() {
   );
 
   return (
-    <Container maxWidth="lg" sx={{ py:4 }}>
+    <Container
+      maxWidth="lg"
+      sx={{
+        py: 4,
+        bgcolor: darkMode ? "#121212" : "#f9f9f9",
+        color: darkMode ? "#fff" : "#000",
+        minHeight: "100vh"
+      }}
+    >
       <Box sx={{ textAlign:"center", mb:6 }}>
         <Box sx={{ width:80, height:80, bgcolor:"primary.main", color:"white", borderRadius:"50%", display:"inline-flex", alignItems:"center", justifyContent:"center", mb:3 }}>
           <CalendarToday sx={{ fontSize:40 }} />
         </Box>
         <Typography variant="h4" fontWeight="bold" gutterBottom>Horarios y Programación</Typography>
-        <Typography variant="h6" color="text.secondary">Organiza tus medicamentos por días and horarios</Typography>
+        <Typography variant="h6" color="text.secondary">Organiza tus medicamentos por días y horarios</Typography>
       </Box>
 
       <Paper sx={{ mb:4 }}>
@@ -278,26 +297,6 @@ function Schedule() {
       {vistaActual==="semanal" && renderVistaSemanal()}
       {vistaActual==="diaria" && renderVistaDiaria()}
       {vistaActual==="alarmas" && renderProximasAlarmas()}
-
-    
-      <Box mt={6} display="flex" justifyContent="space-between" flexWrap="wrap" gap={2}>
-        <Button 
-          startIcon={<ArrowBackIcon />} 
-          onClick={() => navigate(-1)} 
-          variant="outlined"
-          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
-        >
-          Atrás
-        </Button>
-        <Button 
-          onClick={() => navigate('/login')} 
-          variant="outlined" 
-          color="error"
-          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
-        >
-          Cerrar Sesión
-        </Button>
-      </Box>
     </Container>
   );
 }

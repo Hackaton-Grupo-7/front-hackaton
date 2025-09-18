@@ -3,14 +3,37 @@ import { useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button, IconButton, Box, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
+import { clearAuth } from "../services/authStorage";
 import logo from "../assets/logo.png"; // Pon tu logo aquí
 
-const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
+const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn, setIsLoggedIn }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
 
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
+
+  const handleLogoClick = () => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  };
+
+  const handleInicioClick = () => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  };
+
+  const handleLogout = () => {
+    clearAuth();
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <AppBar position="fixed" color={darkMode ? "default" : "primary"}>
@@ -19,7 +42,7 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
         {/* Logo + Título + Eslogan */}
         <Box
           sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-          onClick={() => navigate("/")}
+          onClick={handleLogoClick}
         >
           <img src={logo} alt="Sanimed Logo" style={{ height: 90, marginRight: 12 }} />
           <Box>
@@ -48,38 +71,18 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
 
         {/* Botones escritorio */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
-          <Button
-            color="inherit"
-            onClick={() => navigate("/")}
-            sx={{
-              fontSize: "1.1rem",
-              fontWeight: "bold",
-              textTransform: "none",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                textDecoration: "underline",
-                transform: "scale(1.05)",
-              },
-            }}
-          >
-            Inicio
-          </Button>
-          <Button
-            color="inherit"
-            onClick={() => navigate("/creators")}
-            sx={{
-              fontSize: "1.1rem",
-              fontWeight: "bold",
-              textTransform: "none",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                textDecoration: "underline",
-                transform: "scale(1.05)",
-              },
-            }}
-          >
-            Contactos
-          </Button>
+          <Button color="inherit" onClick={handleInicioClick}>Inicio</Button>
+          <Button color="inherit" onClick={() => navigate("/creators")}>Contacto</Button>
+
+          {isLoggedIn && (
+            <>
+              <Button color="inherit" onClick={() => navigate("/control/alarms")}>Alarmas</Button>
+              <Button color="inherit" onClick={() => navigate("/control/schedules")}>Horarios</Button>
+              <Button color="inherit" onClick={() => navigate("/control/allergies")}>Alergias</Button>
+              <Button color="inherit" onClick={() => navigate("/control/medications")}>Medicacion</Button>
+              <Button color="inherit" onClick={handleLogout}>Cerrar Sesión</Button>
+            </>
+          )}
 
           <IconButton color="inherit" onClick={toggleDarkMode}>
             <Brightness4Icon />
@@ -92,7 +95,7 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
             <MenuIcon />
           </IconButton>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-            <MenuItem onClick={() => { navigate("/home"); handleMenuClose(); }}>Inicio</MenuItem>
+            <MenuItem onClick={() => { handleInicioClick(); handleMenuClose(); }}>Inicio</MenuItem>
             <MenuItem onClick={() => { navigate("/creators"); handleMenuClose(); }}>Contacto</MenuItem>
 
             {isLoggedIn && (
@@ -100,7 +103,7 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
                 <MenuItem onClick={() => { navigate("/dashboard"); handleMenuClose(); }}>Dashboard</MenuItem>
                 <MenuItem onClick={() => { navigate("/control/allergies"); handleMenuClose(); }}>Allergies</MenuItem>
                 <MenuItem onClick={() => { navigate("/control/medications"); handleMenuClose(); }}>Medications</MenuItem>
-                <MenuItem onClick={() => { navigate("/control/panel"); handleMenuClose(); }}>Control Panel</MenuItem>
+                <MenuItem onClick={() => { handleLogout(); handleMenuClose(); }}>Cerrar Sesión</MenuItem>
               </>
             )}
 

@@ -1,7 +1,7 @@
 // Footer.jsx
 import { Box, Typography, Link } from '@mui/material';
 
-export default function Footer() {
+export default function Footer({ darkMode }) {
   return (
     <Box
       component="footer"
@@ -9,8 +9,11 @@ export default function Footer() {
         mt: 'auto',
         py: 4,
         px: 4,
-        bgcolor: '#1976d2',
+        bgcolor: darkMode ? '#1a1a1a' : '#1976d2',
         color: '#fff',
+        borderTop: darkMode ? '2px solid #333' : '2px solid #000',
+        textAlign: 'center',
+        width: '100%',
       }}
     >
       <Box
@@ -20,7 +23,7 @@ export default function Footer() {
           justifyContent: 'space-between', // imágenes a izquierda/derecha
         }}
       >
-      
+
         <Box
           component="img"
           src="src\assets\logo-factoria.png"
@@ -57,7 +60,7 @@ export default function Footer() {
           </Typography>
         </Box>
 
-      
+
         <Box
           component="img"
           src="src\assets\LogotipoSanitas.png"
