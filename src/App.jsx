@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Dashboard from "./pages/Dashboard";
+import Creators from "./pages/Creators";
 
 import Allergies from "./pages/control/Allergies";
 import Medications from "./pages/control/Medications";
@@ -37,6 +38,7 @@ export default function App() {
             <Route path="/login" element={<Login darkMode={darkMode} />} />
             <Route path="/create-user" element={<CreateUser darkMode={darkMode} />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/creators" element={<Creators />} />
 
             {/* Control Pages */}
             <Route path="/control/allergies" element={<Allergies />} />

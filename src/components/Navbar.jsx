@@ -26,8 +26,8 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
 
         {/* Botones escritorio */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
-          <Button color="inherit" onClick={() => navigate("/")}>Inicio</Button>
-          <Button color="inherit" onClick={() => navigate("/about")}>Nosotros</Button>
+          <Button color="inherit" onClick={() => navigate("/home")}>Inicio</Button>
+          <Button color="inherit" onClick={() => navigate("/creators")}>Contacto</Button>
 
           {isLoggedIn && (
             <>
@@ -49,8 +49,8 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn }) => {
             <MenuIcon />
           </IconButton>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-            <MenuItem onClick={() => { navigate("/"); handleMenuClose(); }}>Home</MenuItem>
-            <MenuItem onClick={() => { navigate("/about"); handleMenuClose(); }}>About</MenuItem>
+            <MenuItem onClick={() => { navigate("/home"); handleMenuClose(); }}>Inicio</MenuItem>
+            <MenuItem onClick={() => { navigate("/creators"); handleMenuClose(); }}>Contacto</MenuItem>
 
             {isLoggedIn && (
               <>
