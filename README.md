@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+=======
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&duration=1600&pause=1000&color=3C57C3&center=true&vCenter=true&width=435&lines=Bienvenid%40+al+repositorio+de+Sanimed;Participaci%C3%B3n+en++la+8%C2%AA+Hackaton;Organizada+por+Fundaci%C3%B3n+Somos+F5;con+la+colaboraci%C3%B3n+de+Sanitas)](https://git.io/typing-svg)
 
@@ -134,3 +148,4 @@ npm run test
 > **Sanimed** ofrece un control integral sobre medicación y salud, con un frontend moderno, pruebas unitarias y experiencia de usuario cuidada.  
 > Cumple todos los criterios de evaluación de la hackaton: originalidad, arquitectura frontend y backend, UX/UI, CRUD, tests, conexión backend-frontend, funcionalidad, mantenibilidad y organización del equipo.
 
+>>>>>>> f7d775095871ab974463d1f2cd4b820f9e645bf6
