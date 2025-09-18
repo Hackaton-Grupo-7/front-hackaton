@@ -50,7 +50,7 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn, setIsLoggedIn }) => {
         {/* Botones escritorio */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
           <Button color="inherit" onClick={handleInicioClick}>Inicio</Button>
-          <Button color="inherit" onClick={() => navigate("/about")}>Nosotros</Button>
+          <Button color="inherit" onClick={() => navigate("/creators")}>Contacto</Button>
 
           {isLoggedIn && (
             <>
@@ -73,15 +73,14 @@ const Navbar = ({ darkMode, toggleDarkMode, isLoggedIn, setIsLoggedIn }) => {
             <MenuIcon />
           </IconButton>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-            <MenuItem onClick={() => { handleInicioClick(); handleMenuClose(); }}>Home</MenuItem>
-            <MenuItem onClick={() => { navigate("/about"); handleMenuClose(); }}>About</MenuItem>
+            <MenuItem onClick={() => { handleInicioClick(); handleMenuClose(); }}>Inicio</MenuItem>
+            <MenuItem onClick={() => { navigate("/creators"); handleMenuClose(); }}>Contacto</MenuItem>
 
             {isLoggedIn && (
               <>
                 <MenuItem onClick={() => { navigate("/dashboard"); handleMenuClose(); }}>Dashboard</MenuItem>
                 <MenuItem onClick={() => { navigate("/control/allergies"); handleMenuClose(); }}>Allergies</MenuItem>
                 <MenuItem onClick={() => { navigate("/control/medications"); handleMenuClose(); }}>Medications</MenuItem>
-                <MenuItem onClick={() => { navigate("/control/panel"); handleMenuClose(); }}>Control Panel</MenuItem>
                 <MenuItem onClick={() => { handleLogout(); handleMenuClose(); }}>Cerrar Sesión</MenuItem>
               </>
             )}

@@ -106,9 +106,9 @@ function Schedule({ darkMode }) {
                             <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                               <Medication fontSize="small" /> {horario.medicamento}
                             </Typography>
-                            <Typography sx={{ 
-                              display: "flex", 
-                              alignItems: "center", 
+                            <Typography sx={{
+                              display: "flex",
+                              alignItems: "center",
                               gap: 1,
                               color: darkMode ? "#fff" : "text.secondary"
                             }}>
@@ -164,9 +164,9 @@ function Schedule({ darkMode }) {
                       <Typography sx={{ display:"flex", alignItems:"center", gap:1 }}>
                         <Medication /> {horario.medicamento}
                       </Typography>
-                      <Typography sx={{ 
-                        display:"flex", 
-                        alignItems:"center", 
+                      <Typography sx={{
+                        display:"flex",
+                        alignItems:"center",
                         gap:1,
                         color: darkMode ? "#fff" : "text.secondary"
                       }}>
@@ -219,9 +219,9 @@ function Schedule({ darkMode }) {
   );
 
   return (
-    <Container 
-      maxWidth="lg" 
-      sx={{ 
+    <Container
+      maxWidth="lg"
+      sx={{
         py: 4,
         bgcolor: darkMode ? "#121212" : "#f9f9f9",
         color: darkMode ? "#fff" : "#000",
@@ -233,9 +233,7 @@ function Schedule({ darkMode }) {
           <CalendarToday sx={{ fontSize:40 }} />
         </Box>
         <Typography variant="h4" fontWeight="bold" gutterBottom>Horarios y Programación</Typography>
-        <Typography variant="h6" sx={{ color: darkMode ? "#fff" : "text.secondary" }}>
-          Organiza tus medicamentos por días y horarios
-        </Typography>
+        <Typography variant="h6" color="text.secondary">Organiza tus medicamentos por días y horarios</Typography>
       </Box>
 
       <Paper sx={{ mb:4 }}>

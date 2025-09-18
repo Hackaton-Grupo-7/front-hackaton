@@ -57,7 +57,6 @@ Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación
 │ ├── Dashboard.jsx
 │ ├── Home.jsx
 │ └── Login.jsx
-
 ```
 
 ---
@@ -76,7 +75,7 @@ Cada tarjeta del dashboard incluye un **contador de elementos** y es completamen
 
 ## 🧪 Tests implementados
 
-Actualmente tenemos 3 tests unitarios para garantizar la estabilidad de las páginas críticas:
+Actualmente estamos en proceso de creación de tests unitarios para garantizar la estabilidad de las páginas críticas:
 
 1. **Login:** Comprueba que el encabezado "Iniciar Sesión" se renderiza correctamente.
 2. **Allergies:** Comprueba que el encabezado "Alergias" se renderiza.
@@ -109,10 +108,11 @@ El modo oscuro se aplica a **todas las páginas**, manteniendo contraste y visib
 
 ## 👥 Colaboradores Backend
 
-| Digital Academy             | Valencia                  |
-|-----------------------------|---------------------------|
-| **Dmytro Belei**                | **Paula Calvo García**        |
-| **Efrén Tomás Campa**          | **Saba Ur Rehman**            |
+- **Paula Calvo García** - Valencia  
+- **Saba Ur Rehman** - Valencia  
+- **Dmytro Belei** - Digital Academy  
+- **Efrén Tomás Campa** - Digital Academy
+
 ---
 
 ## ❓​ Cómo ejecutar el proyecto
@@ -128,9 +128,10 @@ npm run dev
 npm run test
 
 ```
+---
+
 > 📝 Nota final
 >
-> **Sanimed** ofrece un control integral sobre medicación y salud, con un frontend moderno, pruebas unitarias y experiencia de usuario cuidada.  
-> Cumple todos los criterios de evaluación de la hackaton: originalidad, arquitectura frontend y backend, UX/UI, CRUD, tests, conexión backend-frontend, funcionalidad, mantenibilidad y organización del equipo.
+> Sanimed ofrece un control integral sobre medicación y salud, con un frontend moderno, pruebas unitarias y experiencia de usuario cuidada.  
+> Esperamos cumplir con todos los criterios de evaluación de la hackaton: originalidad, arquitectura frontend y backend, UX/UI, CRUD, tests, conexión backend-frontend, funcionalidad, mantenibilidad y organización del equipo.
 
----

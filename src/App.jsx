@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Dashboard from "./pages/Dashboard";
+import Creators from "./pages/Creators";
 
 import Allergies from "./pages/control/Allergies";
 import Medications from "./pages/control/Medications";
@@ -29,8 +30,8 @@ export default function App() {
 
   return (
     <Router>
-      <Layout 
-        darkMode={darkMode} 
+      <Layout
+        darkMode={darkMode}
         toggleDarkMode={() => setDarkMode(!darkMode)}
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
@@ -51,11 +52,12 @@ export default function App() {
             <Route path="/login" element={<Login darkMode={darkMode} setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/create-user" element={<CreateUser darkMode={darkMode} />} />
             <Route path="/dashboard" element={<Dashboard darkMode={darkMode} />} />
+            <Route path="/creators" element={<Creators darkMode={darkMode}/>} />
 
             {/* Control Pages */}
             <Route path="/control/allergies" element={<Allergies darkMode={darkMode} />} />
             <Route path="/control/medications" element={<Medications darkMode={darkMode} />} />
-            <Route path="/control/schedules" element={<Schedule darkMode={darkMode} />} /> 
+            <Route path="/control/schedules" element={<Schedule darkMode={darkMode} />} />
             <Route path="/control/alarms" element={<Alarms darkMode={darkMode} />} /> {/* <-- Nueva ruta */}
           </Routes>
         </Box>
