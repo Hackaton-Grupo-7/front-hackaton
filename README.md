@@ -1,10 +1,9 @@
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&duration=1600&pause=1000&color=3C57C3&center=true&vCenter=true&width=435&lines=Bienvenid%40+al+repositorio+de+Sanimed;Participaci%C3%B3n+en++la+8%C2%AA+Hackaton;Organizada+por+Fundaci%C3%B3n+Somos+F5;con+la+colaboraci%C3%B3n+de+Sanitas)](https://git.io/typing-svg)
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=300&size=18&duration=2000&pause=1000&color=9D45C3&width=435&lines=Bienvenid%40+al+repositorio+de+Sanimed;proyecto+para+la+8%C2%AA+Hackaton;Organizada+por+Fundaci%C3%B3n+Somos+F5)](https://git.io/typing-svg)
+# 💊​ Sanimed - Frontend
 
-# Sanimed - Frontend
-
-**Sanimed** es una aplicación web desarrollada durante la **8ª Hackaton organizada por Fundación Somos F5**.  
-Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación, alergias y horarios de toma**, combinando una experiencia intuitiva y funcional con un frontend modular y escalable.
+**Sanimed** es una aplicación web desarrollada durante la **8ª Hackaton organizada por Fundación Somos F5 con la colaboración de Sanitas**.  
+Su objetivo es ofrecer a los usuarios un **control completo sobre su medicación, alergias y horarios de toma con alarmas**, combinando una experiencia intuitiva y funcional con un frontend modular y escalable.
 
 ---
 
