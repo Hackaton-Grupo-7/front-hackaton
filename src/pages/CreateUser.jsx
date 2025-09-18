@@ -1,3 +1,4 @@
+// CreateUser.jsx
 import { Box, Typography, TextField, Button, Container } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,20 +18,19 @@ export default function CreateUser({ darkMode }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("CreateUser data:", formData);
-    // Simulación de registro correcto
-    navigate("/dashboard");
+    console.log("Simulated registration:", formData);
+    // Simulación: redirige al login
+    navigate("/login");
   };
 
   return (
     <Box
       sx={{
-        minHeight: "calc(100vh - 124px)", // espacio navbar + footer
+        minHeight: "calc(100vh - 124px)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        bgcolor: darkMode ? "#000" : "#fff",
-        color: darkMode ? "#fff" : "#000",
+        bgcolor: darkMode ? "#121212" : "#f5f5f5",
         px: 2,
       }}
     >
@@ -44,22 +44,21 @@ export default function CreateUser({ darkMode }) {
             gap: 2,
             width: "100%",
             padding: 4,
-            border: "1px solid #ccc",
             borderRadius: 2,
-            bgcolor: darkMode ? "#333" : "#fff",
+            bgcolor: darkMode ? "#1f2937" : "#ffffff",
             color: darkMode ? "#fff" : "#000",
             boxShadow: 3,
           }}
         >
-          <Typography variant="h5" align="center">
-            Crear cuenta
-          </Typography>
+          <Typography variant="h5" align="center">Crear cuenta</Typography>
           <TextField
             label="Username"
             name="username"
             value={formData.username}
             onChange={handleChange}
             required
+            InputLabelProps={{ style: { color: darkMode ? "#ccc" : "#333" } }}
+            InputProps={{ style: { color: darkMode ? "#fff" : "#000" } }}
           />
           <TextField
             label="Name"
@@ -67,6 +66,8 @@ export default function CreateUser({ darkMode }) {
             value={formData.name}
             onChange={handleChange}
             required
+            InputLabelProps={{ style: { color: darkMode ? "#ccc" : "#333" } }}
+            InputProps={{ style: { color: darkMode ? "#fff" : "#000" } }}
           />
           <TextField
             label="Email"
@@ -75,6 +76,8 @@ export default function CreateUser({ darkMode }) {
             value={formData.email}
             onChange={handleChange}
             required
+            InputLabelProps={{ style: { color: darkMode ? "#ccc" : "#333" } }}
+            InputProps={{ style: { color: darkMode ? "#fff" : "#000" } }}
           />
           <TextField
             label="Password"
@@ -83,8 +86,10 @@ export default function CreateUser({ darkMode }) {
             value={formData.password}
             onChange={handleChange}
             required
+            InputLabelProps={{ style: { color: darkMode ? "#ccc" : "#333" } }}
+            InputProps={{ style: { color: darkMode ? "#fff" : "#000" } }}
           />
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" sx={{ bgcolor: "#3ecf8e", "&:hover": { bgcolor: "#10b981" } }}>
             Crear cuenta
           </Button>
         </Box>
