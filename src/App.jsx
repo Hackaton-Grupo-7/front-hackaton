@@ -16,6 +16,7 @@ import Allergies from "./pages/control/Allergies";
 import Medications from "./pages/control/Medications";
 import Schedule from "./pages/control/Schedules";
 import Alarms from "./pages/control/Alarms"; // <-- Importa Alarms
+import MedicationDetails from "./pages/control/MedicationDetails"
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -59,6 +60,7 @@ export default function App() {
             <Route path="/control/medications" element={<Medications darkMode={darkMode} />} />
             <Route path="/control/schedules" element={<Schedule darkMode={darkMode} />} />
             <Route path="/control/alarms" element={<Alarms darkMode={darkMode} />} /> {/* <-- Nueva ruta */}
+            <Route path="/medications/:id/details" element={<MedicationDetails darkMode={darkMode} />} />
           </Routes>
         </Box>
       </Layout>

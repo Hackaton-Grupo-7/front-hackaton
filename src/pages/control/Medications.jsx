@@ -9,7 +9,8 @@ import {
   Delete as TrashIcon,
   CheckCircle as CheckIcon,
   ArrowBack as ArrowBackIcon,
-  Home as HomeIcon
+  Home as HomeIcon,
+  Visibility as VisibilityIcon
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { clearAuth, getUser } from "../../services/authStorage";
@@ -17,6 +18,7 @@ import {
   listMedicationsByUser,
   createMedication,
   deleteMedication,
+  getMedicationById,
   markMedicationTaken,
   getMedicationSuggestions,
 } from "../../services/medicationService";
@@ -139,6 +141,17 @@ function Medications({ darkMode }) {
       console.error("Failed to mark medication as taken", error);
     }
   };
+
+
+const handleVerDetalles = async (id) => {
+  try {
+    if (id) {
+      navigate(`/medications/${id}/details`);
+    }
+  } catch (error) {
+    console.error("Failed to navigate to medication details", error);
+  }
+};
 
   return (
     <Container 
@@ -485,6 +498,13 @@ function Medications({ darkMode }) {
                     </Grid>
                     <Grid item>
                       <Stack direction="row" spacing={1}>
+                        <IconButton
+                          color="info"
+                          onClick={() => handleVerDetalles(item.id)}
+                          title="Ver detalles"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
                         {!item.tomado && (
                           <IconButton color="success" onClick={() => registrarToma(item.id)}>
                             <CheckIcon />
