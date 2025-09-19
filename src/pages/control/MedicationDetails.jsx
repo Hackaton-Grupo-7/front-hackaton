@@ -449,12 +449,6 @@ function MedicationDetails({ darkMode }) {
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} variant="outlined">
           Volver a Medicamentos
         </Button>
-        <Button startIcon={<HomeIcon />} onClick={() => navigate('/dashboard')} variant="outlined">
-          Inicio
-        </Button>
-        <Button onClick={() => { clearAuth(); navigate('/login'); }} variant="outlined" color="error">
-          Cerrar Sesión
-        </Button>
       </Box>
 
       {/* Dialog de confirmación de eliminación */}
