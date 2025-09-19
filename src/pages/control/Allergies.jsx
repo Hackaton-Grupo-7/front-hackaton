@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   Box, Container, Typography, Button, TextField,
   Card, CardContent, CardHeader, Grid, IconButton,
-  Stack, Paper
+  Stack, Paper, Snackbar, Alert
 } from "@mui/material";
 import {
   Add as AddIcon, Warning as WarningIcon,
@@ -30,11 +30,19 @@ function Allergies({ darkMode }) {
   const [listaAlergias, setListaAlergias] = useState([]);
   const [opcionesAlergias, setOpcionesAlergias] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+  // Estados para manejar notificaciones
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "info" // "success", "error", "warning", "info"
+  });
+
   const navigate = useNavigate();
 
   const fetchAllergies = useCallback(async () => {
     try {
-            const currentUser = getUser();
+      const currentUser = getUser();
       const data = await listAllMyAllergies(currentUser?.id);
       if (Array.isArray(data)) {
         const mapped = data.map((a) => ({
@@ -45,8 +53,24 @@ function Allergies({ darkMode }) {
       }
     } catch (error) {
       console.error("Failed to load allergies", error);
+      showSnackbar("Error al cargar las alergias", "error");
     }
   }, []);
+
+  const showSnackbar = (message, severity = "info") => {
+    setSnackbar({
+      open: true,
+      message,
+      severity
+    });
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbar(prev => ({ ...prev, open: false }));
+  };
 
   // Cargar datos desde backend
   useEffect(() => {
@@ -83,16 +107,35 @@ function Allergies({ darkMode }) {
       const nombreFinal = nombre === "Otro" ? nombrePersonalizado : nombre;
 
       if (nombre === "Otro" && !nombrePersonalizado.trim()) {
-        alert("Por favor ingresa el nombre de la alergia");
-      return;
-    }
+        showSnackbar("Por favor ingresa el nombre de la alergia", "warning");
+        return;
+      }
 
       const created = await createAllergy({ name: nombreFinal });
       if (created) {
         await fetchAllergies();
+        showSnackbar("Alergia agregada correctamente", "success");
       }
     } catch (error) {
       console.error("Failed to create allergy", error);
+
+      // Extraer el mensaje del error del backend
+      let errorMessage = "Error al crear la alergia";
+
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.message) {
+        // Si el mensaje viene en el formato "java.lang.RuntimeException: You have that allergy added now"
+        if (error.message.includes("RuntimeException:")) {
+          errorMessage = error.message.split("RuntimeException:")[1].trim();
+        } else if (error.message.includes("Duplicate entry") || error.message.includes("alergia")) {
+          errorMessage = "Tienes ese medicamento agregado ahora";
+        } else {
+          errorMessage = "Esta alergia ya ha sido añadida";
+        }
+      }
+
+      showSnackbar(errorMessage, "error");
     } finally {
       setNombre("");
       setNombrePersonalizado("");
@@ -104,8 +147,10 @@ function Allergies({ darkMode }) {
     try {
       if (id) await deleteAllergy(id);
       await fetchAllergies();
+      showSnackbar("Alergia eliminada correctamente", "success");
     } catch (error) {
       console.error("Failed to delete allergy", error);
+      showSnackbar("Error al eliminar la alergia", "error");
     }
   };
 
@@ -345,6 +390,29 @@ function Allergies({ darkMode }) {
           </Stack>
         )}
       </Box>
+
+      {/* Botones de navegación */}
+      <Box mt={6} display="flex" justifyContent="space-between">
+        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} variant="outlined">
+          Atrás
+        </Button>
+      </Box>
+
+      {/* Snackbar para mostrar notificaciones */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

@@ -283,14 +283,6 @@ export default function Alarms({ darkMode }) {
         >
           Atrás
         </Button>
-        <Button 
-          onClick={() => navigate('/login')} 
-          variant="outlined" 
-          color="error"
-          sx={{ flex: { xs: '1 0 100%', sm: '0 0 auto' } }}
-        >
-          Cerrar Sesión
-        </Button>
       </Box>
     </Container>
   );

@@ -9,8 +9,9 @@ import {
   CalendarToday, AccessTime, Notifications,
   Add, NotificationsActive, Delete,
   CheckCircle, Medication, NotificationsNone,
-  Schedule as ScheduleIcon
+  Schedule as ScheduleIcon, ArrowBack as ArrowBackIcon
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const medicamentosEjemplo = [
   "Paracetamol", "Ibuprofeno", "Amoxicilina",
@@ -25,11 +26,6 @@ const horasDelDia = [
 
 const diasSemana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
 
-/**
- * Schedule component for managing medication schedules
- * @param {Object} props - Component props
- * @param {boolean} props.darkMode - Whether dark mode is enabled
- */
 function Schedule({ darkMode }) {
   const [vistaActual, setVistaActual] = useState("semanal");
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
@@ -37,6 +33,8 @@ function Schedule({ darkMode }) {
   const [nuevoHorario, setNuevoHorario] = useState({
     medicamento: "", hora: "", dias: [], alarma: true, activo: true
   });
+
+  const navigate = useNavigate();
 
   // Cargar horarios guardados
   useEffect(() => {
@@ -297,6 +295,13 @@ function Schedule({ darkMode }) {
       {vistaActual==="semanal" && renderVistaSemanal()}
       {vistaActual==="diaria" && renderVistaDiaria()}
       {vistaActual==="alarmas" && renderProximasAlarmas()}
+
+      {/* Botón Atrás */}
+      <Box mt={6} display="flex" justifyContent="space-between">
+        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} variant="outlined">
+          Atrás
+        </Button>
+      </Box>
     </Container>
   );
 }

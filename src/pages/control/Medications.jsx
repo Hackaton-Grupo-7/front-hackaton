@@ -528,12 +528,6 @@ const handleVerDetalles = async (id) => {
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} variant="outlined">
           Atrás
         </Button>
-        <Button startIcon={<HomeIcon />} onClick={() => navigate('/dashboard')} variant="outlined">
-          Inicio
-        </Button>
-        <Button onClick={() => { clearAuth(); navigate('/login'); }} variant="outlined" color="error">
-          Cerrar Sesión
-        </Button>
       </Box>
     </Container>
   );
