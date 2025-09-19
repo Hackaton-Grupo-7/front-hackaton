@@ -11,9 +11,9 @@ import {
   Home as HomeIcon
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { clearAuth } from "../../services/authStorage";
+import { clearAuth, getUser  } from "../../services/authStorage";
 import {
-  listAllergies,
+  listAllMyAllergies,
   createAllergy,
   deleteAllergy,
   getAllergySuggestions,
@@ -34,7 +34,8 @@ function Allergies({ darkMode }) {
 
   const fetchAllergies = useCallback(async () => {
     try {
-      const data = await listAllergies();
+            const currentUser = getUser();
+      const data = await listAllMyAllergies(currentUser?.id);
       if (Array.isArray(data)) {
         const mapped = data.map((a) => ({
           id: a.id || Date.now() + Math.random(),

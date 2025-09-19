@@ -5,6 +5,11 @@ export async function listAllergies() {
   return data
 }
 
+export async function listAllMyAllergies() {
+  const { data } = await httpClient.get('/api/allergies/my-user')
+  return data
+}
+
 export async function createAllergy({ name }) {
   const { data } = await httpClient.post('/api/allergies', { name })
   return data
