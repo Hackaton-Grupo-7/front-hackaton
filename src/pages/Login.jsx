@@ -2,19 +2,48 @@
 import { Box, Typography, TextField, Button, Container } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { login } from "../services/authService";
+import { getMyUser } from "../services/userService";
 
-export default function Login({ darkMode }) {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+export default function Login({ darkMode, setIsLoggedIn }) {
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
   const navigate = useNavigate();
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login data:", formData);
-    // Simulación login correcto
-    navigate("/dashboard");
+    setSubmitting(true)
+    setError("")
+    try {
+      const data = await login({ username: formData.username, password: formData.password })
+      if (data?.token) {
+        localStorage.setItem('token', data.token)
+      }
+      if (data?.tokenType) {
+        localStorage.setItem('tokenType', data.tokenType)
+      } else {
+        localStorage.setItem('tokenType', 'Bearer')
+      }
+      if (data?.refreshToken) {
+        localStorage.setItem('refreshToken', data.refreshToken)
+      }
+      try {
+        const me = await getMyUser()
+        if (me) localStorage.setItem('user', JSON.stringify(me))
+      } catch {
+        // ignore
+      }
+      setIsLoggedIn(true);
+      navigate("/dashboard");
+    } catch {
+      setError("Usuario o contraseña inválidos")
+    } finally {
+      setSubmitting(false)
+    }
   };
 
   return (
@@ -49,10 +78,9 @@ export default function Login({ darkMode }) {
           </Typography>
 
           <TextField
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
+            label="Username"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             required
             sx={{
@@ -73,8 +101,12 @@ export default function Login({ darkMode }) {
             }}
           />
 
-          <Button type="submit" variant="contained" color="primary">
-            Entrar
+          {error && (
+            <Typography color="error" variant="body2">{error}</Typography>
+          )}
+
+          <Button type="submit" variant="contained" color="primary" disabled={submitting}>
+            {submitting ? 'Entrando...' : 'Entrar'}
           </Button>
 
           <Button

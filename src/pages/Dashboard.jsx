@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Grid, Paper, useTheme } from "@mui/material";
+import { Box, Typography, Grid, Paper } from "@mui/material";
 import {
   Pill,
   Bell,
@@ -69,18 +69,21 @@ const menuOptions = [
   }
 ];
 
-export default function Dashboard() {
+/**
+ * Dashboard component for medication control
+ * @param {Object} props - Component props
+ * @param {boolean} props.darkMode - Whether dark mode is enabled
+ */
+export default function Dashboard({ darkMode }) {
   const [hoveredCard, setHoveredCard] = useState(null);
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
 
   const colors = {
-    textPrimary: theme.palette.text.primary,
-    textSecondary: theme.palette.text.secondary,
-    paperBg: theme.palette.background.paper,
-    paperBorder: `1px solid ${theme.palette.divider}`,
-    pageBg: theme.palette.background.default
+    textPrimary: darkMode ? "#fff" : "#000",
+    textSecondary: darkMode ? "#b0b0b0" : "#666",
+    paperBg: darkMode ? "#1e1e1e" : "#fff",
+    paperBorder: darkMode ? "1px solid #333" : "1px solid #e0e0e0",
+    pageBg: darkMode ? "#121212" : "#f9f9f9"
   };
 
   return (
@@ -134,7 +137,7 @@ export default function Dashboard() {
         >
           {menuOptions.map((option) => {
             const Icon = option.icon;
-            const bgGradient = isDark ? option.bgGradientDark : option.bgGradient;
+            const bgGradient = darkMode ? option.bgGradientDark : option.bgGradient;
 
             return (
               <Grid
@@ -301,8 +304,8 @@ export default function Dashboard() {
                         Características
                       </Typography>
                       <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
-                        {option.features.map((f, i) => (
-                          <Box key={i} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        {option.features.map((f) => (
+                          <Box key={`${option.id}-${f.replace(/\s+/g, '-').toLowerCase()}`} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                             <Box
                               sx={{
                                 width: 6,
@@ -355,3 +358,4 @@ export default function Dashboard() {
     </Box>
   );
 }
+

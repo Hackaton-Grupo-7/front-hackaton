@@ -30,7 +30,7 @@ export default function Home({ darkMode }) {
           color: darkMode ? "#4fc3f7" : "#1976d2"  // azul claro en oscuro, azul principal en claro
         }}
       >
-        Bienvenid@s a Sanimed
+      ¡Bienvenid@s a SANIMED!
       </Typography>
 
       <Typography
@@ -44,7 +44,7 @@ export default function Home({ darkMode }) {
 
       <Button
         variant="contained"
-        color="primary"
+        color="success"
         size="large"
         sx={{ px: 5, py: 1.5, fontSize: "1.1rem", borderRadius: 2 }}
         onClick={() => navigate("/login")}
