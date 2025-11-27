@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Dashboard from "./pages/Dashboard";
 import Creators from "./pages/Creators";
+import { login } from './services/mockAuthService';
 
 import Allergies from "./pages/control/Allergies";
 import Medications from "./pages/control/Medications";
