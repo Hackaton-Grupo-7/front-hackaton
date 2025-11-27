@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://medicamentos-back-orcin.vercel.app/api/$1" }
+  ]
+}
