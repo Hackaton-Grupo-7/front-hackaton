@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { mockAuthService } from './services/mockAuthService';
+import { getMyUser } from './services/userService';
 
 const AuthContext = createContext();
 
@@ -31,52 +31,23 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    // Verificar autenticación al cargar la app
-    const user = mockAuthService.getCurrentUser();
-    if (user && mockAuthService.isAuthenticated()) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-    }
+    const checkAuth = async () => {
+      try {
+        const user = await getMyUser();
+        if (user) {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+        }
+      } catch (error) {
+        // No user logged in
+      }
+    };
+    
+    checkAuth();
   }, []);
-
-  const login = async (credentials) => {
-    dispatch({ type: 'LOGIN_START' });
-    try {
-      const result = await mockAuthService.login(credentials);
-      dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
-      return result;
-    } catch (error) {
-      dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
-      throw error;
-    }
-  };
-
-  const register = async (userData) => {
-    dispatch({ type: 'LOGIN_START' });
-    try {
-      const result = await mockAuthService.register(userData);
-      dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
-      return result;
-    } catch (error) {
-      dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
-      throw error;
-    }
-  };
-
-  const logout = async () => {
-    await mockAuthService.logout();
-    dispatch({ type: 'LOGOUT' });
-  };
-
-  const clearError = () => {
-    dispatch({ type: 'CLEAR_ERROR' });
-  };
 
   const value = {
     ...state,
-    login,
-    register,
-    logout,
-    clearError
+    dispatch
   };
 
   return (
